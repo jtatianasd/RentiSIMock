@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RentiSI.AccesoDatos;
+using RentiSI.AccesoDatos.Data.Repository.IRepository;
+using RentiSI.AccesoDatos.Data.Repository;
 using RentiSI.Modelos;
 using RentiSI.Utilidades;
 
@@ -16,6 +18,7 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options => options.Si
     .AddEntityFrameworkStores<ApplicationDbContext>().AddErrorDescriber<ErrorDescriber>().AddDefaultUI();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IContenedorTrabajo, ContenedorTrabajo>();
 //Mapeo para settear las opciones del password
 builder.Services.Configure<IdentityOptions>(options =>
 {
