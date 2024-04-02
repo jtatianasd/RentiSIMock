@@ -19,61 +19,61 @@ namespace RentiSI.Modelos
         public string NumeroPlaca { get; set; }
 
         [Display(Name = "Financiación")]
-        public string Financiacion { get; set; }
+        public string? Financiacion { get; set; }
 
         [Display(Name = "Impronta")]
-        public string Impronta { get; set; }
+        public string? Impronta { get; set; }
         [Display(Name = "Fecha de negocio")]
-        public string FechaNegocio { get; set; }
+        public string? FechaNegocio { get; set; }
         [Display(Name = "Fecha de recepción")]
-        public string FechaRecepcion { get; set; }
-        public string IdUsuarioRecibe { get; set; }
+        public string? FechaRecepcion { get; set; }
+        public string? IdUsuarioRecibe { get; set; }
 
         [ForeignKey("IdUsuarioRecibe")]
-        public ApplicationUser UsuarioRecibe { get; set; }
+        public ApplicationUser? UsuarioRecibe { get; set; }
 
         [Display(Name = "Fecha de resultado")]
-        public string FechaResultado { get; set; }
+        public string? FechaResultado { get; set; }
 
-        public string IdUsuarioResuelve { get; set; }
+        public string? IdUsuarioResuelve { get; set; }
 
         [ForeignKey("IdUsuarioResuelve")]
-        public ApplicationUser UsuarioResuelve { get; set; }
+        public ApplicationUser? UsuarioResuelve { get; set; }
         [Display(Name = "Tipificación de impronta")]
-        public string TipificacionImpronta { get; set; }
+        public string? TipificacionImpronta { get; set; }
         [Display(Name = "Tipificación casuistica impronta")]
-        public string TipificacionCasuisticaImpronta { get; set; }
+        public string? TipificacionCasuisticaImpronta { get; set; }
         [Display(Name = "Fecha de revisión")]
-        public string FechaRevision { get; set; }
-        public string IdUsuarioRevision { get; set; }
+        public string? FechaRevision { get; set; }
+        public string? IdUsuarioRevision { get; set; }
 
         [ForeignKey("IdUsuarioRevision")]
-        public ApplicationUser UsuarioRevision { get; set; }
+        public ApplicationUser? UsuarioRevision { get; set; }
         [Display(Name = "Tipificación trámite en revisión ")]
-        public string TipificacionTramiteRevision { get; set; }
+        public string? TipificacionTramiteRevision { get; set; }
         [Display(Name = "Estado revisión")]
-        public string EstadoRevision { get; set; }
+        public string? EstadoRevision { get; set; }
         [Display(Name = "Organismo de transito")]
-        public string OrganismoTransito { get; set; }
+        public string? OrganismoTransito { get; set; }
         [Display(Name = "Numero Guia")]
-        public string NumeroGuia { get; set; }
+        public string? NumeroGuia { get; set; }
         [Display(Name = "Tipificación casuistica revision")]
-        public string TipificacionCasuisticaRevision { get; set; }
+        public string? TipificacionCasuisticaRevision { get; set; }
         [Display(Name = "Fecha de gestión del tramite")]
-        public string FechaGestion { get; set; }
+        public string? FechaGestion { get; set; }
         [Display(Name = "Estado gestion revisión")]
-        public string EstadoGestion { get; set; }
+        public string? EstadoGestion { get; set; }
       
-        public string IdUsuarioGestion { get; set; }
+        public string? IdUsuarioGestion { get; set; }
 
         [ForeignKey("IdUsuarioGestion")]
-        public ApplicationUser UsuarioGestion { get; set; }
+        public ApplicationUser? UsuarioGestion { get; set; }
         [Display(Name = "Fecha de reasignación")]
-        public string FechaReasignacion { get; set; }
-        public string IdUsuarioReasignacion { get; set; }
+        public string? FechaReasignacion { get; set; }
+        public string? IdUsuarioReasignacion { get; set; }
 
         [ForeignKey("IdUsuarioReasignacion")]
-        public ApplicationUser UsuarioReasignacion { get; set; }
+        public ApplicationUser? UsuarioReasignacion { get; set; }
 
     }
 }
