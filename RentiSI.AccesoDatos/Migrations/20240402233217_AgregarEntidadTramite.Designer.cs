@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402233217_AgregarEntidadTramite")]
+    partial class AgregarEntidadTramite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,9 +241,11 @@ namespace RentiSI.AccesoDatos.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EstadoGestion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EstadoRevision")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaCreacion")
@@ -248,45 +253,59 @@ namespace RentiSI.AccesoDatos.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaGestion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaNegocio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaReasignacion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaRecepcion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaResultado")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FechaRevision")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Financiacion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdUsuarioGestion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdUsuarioReasignacion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdUsuarioRecibe")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdUsuarioResuelve")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdUsuarioRevision")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Impronta")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeroGuia")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeroPlaca")
@@ -294,18 +313,23 @@ namespace RentiSI.AccesoDatos.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrganismoTransito")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipificacionCasuisticaImpronta")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipificacionCasuisticaRevision")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipificacionImpronta")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipificacionTramiteRevision")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -401,23 +425,33 @@ namespace RentiSI.AccesoDatos.Migrations
                 {
                     b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioGestion")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioGestion");
+                        .HasForeignKey("IdUsuarioGestion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioReasignacion")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioReasignacion");
+                        .HasForeignKey("IdUsuarioReasignacion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioRecibe")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioRecibe");
+                        .HasForeignKey("IdUsuarioRecibe")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioResuelve")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioResuelve");
+                        .HasForeignKey("IdUsuarioResuelve")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioRevision")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioRevision");
+                        .HasForeignKey("IdUsuarioRevision")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UsuarioGestion");
 
