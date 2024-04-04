@@ -9,6 +9,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
     public interface IContenedorTrabajo : IDisposable
     {
         IUsuarioRepository Usuario { get; }
+
+        ITramiteRepository Tramite { get; }
         void Save();
     }
 }
