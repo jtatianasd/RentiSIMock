@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405165706_AgregarModeloRecepcion")]
+    partial class AgregarModeloRecepcion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,56 +269,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.ToTable("Gestion");
                 });
 
-            modelBuilder.Entity("RentiSI.Modelos.Impronta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("Id_Tramite")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TipificacionCasuisticaImpronta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TipificacionImpronta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_Tramite");
-
-                    b.ToTable("Impronta");
-                });
-
-            modelBuilder.Entity("RentiSI.Modelos.Reasignacion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FechaReasignacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdUsuarioReasignacion")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("Id_Tramite")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdUsuarioReasignacion");
-
-                    b.HasIndex("Id_Tramite");
-
-                    b.ToTable("Reasignacion");
-                });
-
             modelBuilder.Entity("RentiSI.Modelos.Recepcion", b =>
                 {
                     b.Property<int>("Id")
@@ -503,30 +456,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Navigation("UsuarioGestion");
 
                     b.Navigation("UsuarioResuelve");
-                });
-
-            modelBuilder.Entity("RentiSI.Modelos.Impronta", b =>
-                {
-                    b.HasOne("RentiSI.Modelos.Tramite", "Id_Tramite_Gestion")
-                        .WithMany()
-                        .HasForeignKey("Id_Tramite");
-
-                    b.Navigation("Id_Tramite_Gestion");
-                });
-
-            modelBuilder.Entity("RentiSI.Modelos.Reasignacion", b =>
-                {
-                    b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioReasignacion")
-                        .WithMany()
-                        .HasForeignKey("IdUsuarioReasignacion");
-
-                    b.HasOne("RentiSI.Modelos.Tramite", "Id_Tramite_Gestion")
-                        .WithMany()
-                        .HasForeignKey("Id_Tramite");
-
-                    b.Navigation("Id_Tramite_Gestion");
-
-                    b.Navigation("UsuarioReasignacion");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Recepcion", b =>
