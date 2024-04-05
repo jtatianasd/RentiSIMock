@@ -13,5 +13,6 @@ namespace RentiSI.AccesoDatos
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Tramite> Tramite { get; set; }
         public DbSet<Gestion> Gestion { get; set; }
+        public DbSet<Revision> Revision { get; set; }
     }
 }
