@@ -48,31 +48,31 @@ namespace RentiSI.AccesoDatos.Migrations
                         column: x => x.IdUsuarioGestion,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Tramite_AspNetUsers_IdUsuarioReasignacion",
                         column: x => x.IdUsuarioReasignacion,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Tramite_AspNetUsers_IdUsuarioRecibe",
                         column: x => x.IdUsuarioRecibe,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Tramite_AspNetUsers_IdUsuarioResuelve",
                         column: x => x.IdUsuarioResuelve,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Tramite_AspNetUsers_IdUsuarioRevision",
                         column: x => x.IdUsuarioRevision,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
