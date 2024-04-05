@@ -53,7 +53,7 @@ namespace RentiSI.Modelos
         public string? TipificacionTramiteRevision { get; set; }
         [Display(Name = "Estado revisión")]
         public string? EstadoRevision { get; set; }
-        [Display(Name = "Organismo de transito")]
+        [Display(Name = "Organismo de tránsito")]
         public string? OrganismoTransito { get; set; }
         [Display(Name = "Numero Guia")]
         public string? NumeroGuia { get; set; }

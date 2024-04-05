@@ -5,11 +5,11 @@ using System.Security.Claims;
 namespace RentiSI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class TramitesController : Controller
+    public class RevisionController : Controller
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
 
-        public TramitesController(IContenedorTrabajo contenedorTrabajo)
+        public RevisionController(IContenedorTrabajo contenedorTrabajo)
         {
             _contenedorTrabajo = contenedorTrabajo;
         }
@@ -17,8 +17,15 @@ namespace RentiSI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_contenedorTrabajo.Tramite.GetAll());
-           
+            return View(_contenedorTrabajo.Tramite.GetAll(r => r.Impronta != null));
+
+        }
+
+        [HttpGet]
+        public IActionResult ConsultarPorPlaca(string Placa)
+        {
+            return View(_contenedorTrabajo.Tramite.GetAll(r => r.NumeroPlaca == Placa));
+
         }
 
 
