@@ -15,5 +15,6 @@ namespace RentiSI.AccesoDatos
         public DbSet<Gestion> Gestion { get; set; }
         public DbSet<Revision> Revision { get; set; }
         public DbSet<Recepcion> Recepcion { get; set; }
+        public DbSet<Reasignacion> Reasignacion { get; set; }
     }
 }
