@@ -122,7 +122,7 @@ namespace RentiSI.Areas.Identity.Pages.Account
 
                 user.Nombre = Input.Nombre;
 
-                await _userStore.SetUserNameAsync(user, Input.Nombre, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -134,34 +134,36 @@ namespace RentiSI.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(CNT.Usuario));
 
                     }
-
-                    string rol = Request.Form["radRol"].ToString();
-                    if (rol == CNT.Administrador)
+                     if(!await _roleManager.RoleExistsAsync(CNT.Coordinador))
                     {
-                        await _userManager.AddToRoleAsync(user,CNT.Administrador);
+                        await _roleManager.CreateAsync(new IdentityRole(CNT.Coordinador));
+                        await _roleManager.CreateAsync(new IdentityRole(CNT.Cliente));
+                        await _roleManager.CreateAsync(new IdentityRole(CNT.Operativo));
+
                     }
-                    else
+                    string rol = Request.Form["selectRol"].ToString();
+                    switch (rol)
                     {
-                        if(rol == CNT.Usuario)
-                        {
+                        case CNT.Administrador:
+                            await _userManager.AddToRoleAsync(user, CNT.Administrador);
+                            break;
+                        case CNT.Usuario:
                             await _userManager.AddToRoleAsync(user, CNT.Usuario);
-
-                        }
+                            break;
+                        case CNT.Cliente:
+                            await _userManager.AddToRoleAsync(user, CNT.Cliente);
+                            break;
+                        case CNT.Coordinador:
+                            await _userManager.AddToRoleAsync(user, CNT.Coordinador);
+                            break;
+                        case CNT.Operativo:
+                            await _userManager.AddToRoleAsync(user, CNT.Operativo);
+                            break;
+                        default:
+                            break;
                     }
                     _logger.LogInformation("User created a new account with password.");
-/*
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-*/
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });

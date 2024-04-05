@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace RentiSI.Areas.Admin.Controllers
+namespace RentiSI.Areas.Cliente.Controllers
 {
-    [Area("Admin")]
+    [Area("Cliente")]
     public class AsignacionesController : Controller
     {
         public IActionResult Index()
