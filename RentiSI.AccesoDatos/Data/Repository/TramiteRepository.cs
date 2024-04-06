@@ -17,10 +17,5 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
         }
 
-        public void guardarTramite()
-        {
-
-        }
-
     }
 }

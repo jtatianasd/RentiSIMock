@@ -30,7 +30,9 @@ namespace RentiSI.Modelos
         public string? OrganismoTransito { get; set; }
         [Display(Name = "Numero Guia")]
         public string? NumeroGuia { get; set; }
-       
-        
+
+        [Display(Name = "Fecha Revision")]
+        public string? FechaRevision { get; set; }
+
     }
 }

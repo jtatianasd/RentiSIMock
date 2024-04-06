@@ -1,4 +1,5 @@
 ﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
+using RentiSI.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,13 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
             Usuario = new UsuarioRepository(_db);
             Tramite = new TramiteRepository(_db);
+            Revision = new RevisionRepository(_db);
         }
         public IUsuarioRepository Usuario { get; private set; }
 
         public ITramiteRepository Tramite { get; private set; }
+
+        public IRevisionRepository Revision { get; private set; }
 
         public void Dispose()
         {

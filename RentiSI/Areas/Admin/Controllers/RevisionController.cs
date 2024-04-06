@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
+using RentiSI.Modelos;
 using System.Security.Claims;
 
 namespace RentiSI.Areas.Admin.Controllers
@@ -17,7 +18,12 @@ namespace RentiSI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_contenedorTrabajo.Tramite.GetAll(r => r.Impronta != null));
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var usuarioActual = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            var revisiones = _contenedorTrabajo.Revision.ObtenerRevisiones();
+
+            return View(revisiones);
 
         }
 

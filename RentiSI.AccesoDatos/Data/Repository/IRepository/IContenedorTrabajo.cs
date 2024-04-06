@@ -11,6 +11,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IUsuarioRepository Usuario { get; }
 
         ITramiteRepository Tramite { get; }
+
+        IRevisionRepository Revision { get; }
         void Save();
     }
 }
