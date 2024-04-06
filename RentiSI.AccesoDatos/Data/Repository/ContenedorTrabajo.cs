@@ -15,11 +15,13 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
             Usuario = new UsuarioRepository(_db);
             Tramite = new TramiteRepository(_db);
+            Asignacion = new AsignacionRepository(_db);
         }
         public IUsuarioRepository Usuario { get; private set; }
 
         public ITramiteRepository Tramite { get; private set; }
 
+        public IAsignacionRepository Asignacion { get; private set; }
         public void Dispose()
         {
             _db.Dispose();
