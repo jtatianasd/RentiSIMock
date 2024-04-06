@@ -1,4 +1,4 @@
-﻿
+﻿@model RentiSI.Modelos.Tramite
 @{
     ViewData["Title"] = "Asignacion";
 }
@@ -11,13 +11,15 @@
             <small class="text-body-secondary">Asignación</small>
         </h3>
     </div>
+    <form method="POST" asp-action="Create" enctype="multipart/form-data">
     <div class="col-10 offset-1 mt-4">
         <div class="form-group row">
             <div class="col-4">
-                <label>Nombre</label>
+                <label>Numero de placa</label>
             </div>
             <div class="col-8">
-                <input class="form-control" placeholder="Ingresa el nombre" />
+                    <input asp-for="NumeroPlaca" class="form-control" placeholder="Ingresa el Numero de placa" />
+                    <span asp-validation-for="NumeroPlaca" class="text-danger"></span>
             </div>
         </div>
 
@@ -29,7 +31,8 @@
             </div>
             <div class="col-8">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="financiacionSwitch">
+                        <input asp-for="Financiacion" class="form-check-input" type="checkbox" id="financiacionSwitch">
+                        <span asp-validation-for="Financiacion" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -41,7 +44,8 @@
             </div>
             <div class="col-8">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="improntaSwitch">
+                        <input asp-for="Impronta" class="form-check-input" type="checkbox" id="improntaSwitch">
+                        <span asp-validation-for="Impronta" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -53,6 +57,7 @@
             </div>
             <div class="col-8">
                 <input type="date" id="fechaCreacion" name="fechaCreacion">
+                    <span asp-validation-for="FechaCreacion" class="text-danger"></span>
             </div>
         </div>
 
@@ -65,5 +70,5 @@
         </div>
     </div>
 
-
+    </form>
 </div>
