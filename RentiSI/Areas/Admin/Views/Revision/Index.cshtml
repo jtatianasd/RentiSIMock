@@ -1,4 +1,5 @@
-﻿@model IEnumerable<object>
+﻿@using RentiSI.Modelos.viewModels
+@model IEnumerable<RevisionViewModel>
 
 @{
     ViewData["Title"] = "Placas recibidas";
@@ -21,20 +22,26 @@
             <thead>
                 <tr>
                     <th>Numero Placa</th>
+                    <th>Fecha Revision</th>
+                    <th>Tipo Trámite</th>
+                    <th>Organismo de tránsito</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (dynamic item in Model)
+                @foreach (var item in Model)
                 {
                     <tr>
                         <td>@item.NumeroPlaca</td>
+                        <td>@item.FechaRevision</td>
+                        <td>@item.TipificacionTramiteRevision</td>
+                        <td>@item.OrganismoTransito</td>
                      
                         <td>
               
-                            @* <a class="btn btn-success text-white" asp-action="Editar" style="width:50px" asp-route-id="@item.Id">
+                            <a class="btn btn-success text-white" asp-action="Editar" style="width:50px" asp-route-id="@item.RevisionId">
                             <i class="fa-solid fa-pen-to-square"></i>
-                            </a> *@
+                            </a>
  
                         </td>
                     </tr>                    
