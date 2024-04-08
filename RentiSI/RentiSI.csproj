@@ -22,9 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Coordinador\Controllers\" />
+    <Folder Include="Areas\Admin\Views\Revision\" />
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Areas\Operativo\Controllers\" />
   </ItemGroup>
 
   <ItemGroup>

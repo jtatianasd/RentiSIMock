@@ -20,12 +20,12 @@ namespace RentiSI.AccesoDatos.Data.Repository
         }
 
 
-        public IEnumerable<RevisionViewModel> ObtenerRevisiones()
+        public IEnumerable<ResponseViewModel> ObtenerRevisiones()
         {
             var result = from tramite in _db.Tramite
                              join revision in _db.Revision
                              on tramite.Id equals revision.Id_Tramite
-                             select new RevisionViewModel
+                             select new ResponseViewModel
                              {
                                  NumeroPlaca = tramite.NumeroPlaca,
                                  FechaRevision = revision.FechaRevision,

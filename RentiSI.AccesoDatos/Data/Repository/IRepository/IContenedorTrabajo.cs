@@ -13,6 +13,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IAsignacionRepository Asignacion { get; }
 
         IRevisionRepository Revision { get; }
+
+        IRecepcionRepository Recepcion { get; }
         void Save();
     }
 }

@@ -3,14 +3,14 @@ using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using System.Security.Claims;
 
-namespace RentiSI.Areas.Admin.Controllers
+namespace RentiSI.Areas.Coordinador.Controllers
 {
-    [Area("Admin")]
-    public class RevisionController : Controller
+    [Area("Coordinador")]
+    public class RecepcionController : Controller
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
 
-        public RevisionController(IContenedorTrabajo contenedorTrabajo)
+        public RecepcionController(IContenedorTrabajo contenedorTrabajo)
         {
             _contenedorTrabajo = contenedorTrabajo;
         }
@@ -18,12 +18,12 @@ namespace RentiSI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
             var usuarioActual = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            var revisiones = _contenedorTrabajo.Revision.ObtenerRevisiones();
+            var recepciones = _contenedorTrabajo.Recepcion.ObtenerRecepciones();
 
-            return View(revisiones);
+            return View(recepciones);
 
         }
 

@@ -3,9 +3,9 @@ using RentiSI.Modelos.viewModels;
 
 namespace RentiSI.AccesoDatos.Data.Repository.IRepository
 {
-    public interface IRevisionRepository : IRepository<Revision>
+    public interface IRecepcionRepository : IRepository<Recepcion>
     {
-        IEnumerable<ResponseViewModel> ObtenerRevisiones();
+        IEnumerable<ResponseViewModel> ObtenerRecepciones();
     }
 
 }
