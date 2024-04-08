@@ -1,0 +1,85 @@
+﻿@model RentiSI.Modelos.Tramite
+@{
+    ViewData["Title"] = "Asignacion";
+}
+
+<br />
+<br />
+<div class="border">
+    <div class="row">
+        <div class="col-6 offset-2 mt-4">
+            <h3>
+                <small class="text-body-secondary">Asignación</small>
+            </h3>
+        </div>
+    </div>
+    <form method="POST" asp-action="Create" enctype="multipart/form-data">
+        <div class="col-10 offset-1 mt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Numero de placa</label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="NumeroPlaca" class="form-control" placeholder="Ingresa el Numero de placa" />
+                    <span asp-validation-for="NumeroPlaca" class="text-danger"></span>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Financiacion</label>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-switch">
+                        <input asp-for="Financiacion" class="form-check-input" type="checkbox" id="financiacionSwitch">
+                        <span asp-validation-for="Financiacion" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Impronta</label>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-switch">
+                        <input asp-for="Impronta" class="form-check-input" type="checkbox" id="improntaSwitch">
+                        <span asp-validation-for="Impronta" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Fecha de Negocio</label>
+                </div>
+                <div class="col-8">
+                    <input type="date" id="fechaNegocio" name="fechaNegocio">
+                    <span asp-validation-for="FechaNegocio" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Observaciones</label>
+                </div>
+                <div class="col-8">
+                    <textarea class="form-control" id="Observaciones" rows="3"></textarea>
+                    <span asp-validation-for="Observaciones" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+            <div class="form-group-row">
+                <div class="col-8">
+                    <partial name="_VistaCrearVolver" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

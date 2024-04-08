@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RentiSI.Areas.Cliente.Controllers
 {
@@ -18,10 +19,15 @@ namespace RentiSI.Areas.Cliente.Controllers
         {
             return View();
         }
-
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Create(Tramite tramite)
         {
+            tramite.FechaCreacion = DateTime.Now.ToShortDateString();
             if (ModelState.IsValid)
             {
                 if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramite.NumeroPlaca)) 
@@ -31,11 +37,13 @@ namespace RentiSI.Areas.Cliente.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            else
-            {
-                return View(ModelState);
-            }
             return View(tramite);
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _contenedorTrabajo.Asignacion.GetAll() });
         }
     }
 }

@@ -12,9 +12,8 @@ namespace RentiSI.Modelos
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "La fecha es requerida")]
         [Display(Name = "Fecha de Creación")]
-        public string FechaCreacion { get; set; }
+        public string? FechaCreacion { get; set; }
         [Required(ErrorMessage = "El numero de placa es requerido")]
         [Display(Name = "Numero de placa")]
         public string NumeroPlaca { get; set; }
@@ -24,5 +23,10 @@ namespace RentiSI.Modelos
 
         [Display(Name = "Impronta")]
         public string? Impronta { get; set; }
+        [Display(Name = "Fecha de negocio")]
+        [Required(ErrorMessage = "La fecha de negocio es requerida")]
+        public string? FechaNegocio { get; set; }
+        [Display(Name = "Observaciones")]
+        public string? Observaciones { get; set; }
     }
 }
