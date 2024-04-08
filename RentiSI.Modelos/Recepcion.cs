@@ -20,6 +20,8 @@ namespace RentiSI.Modelos
         public string? FechaRecepcion { get; set; }
         public string? IdUsuarioRecepcion { get; set; }
 
+        public string? Observacion { get; set; }
+
         [ForeignKey("IdUsuarioRecepcion")]
         public ApplicationUser? UsuarioRecepcion { get; set; }
     }

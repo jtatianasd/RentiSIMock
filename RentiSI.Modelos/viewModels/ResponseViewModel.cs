@@ -19,6 +19,7 @@ namespace RentiSI.Modelos.viewModels
 
         public string FechaRecepcion { get; set; }
 
+
         public int RecepcionId { get; set; }
 
         public string Impronta { get; set; }
@@ -26,6 +27,10 @@ namespace RentiSI.Modelos.viewModels
         public string FechaAsignacion { get; set; }
 
         public string UsuarioRecibe { get; set; }
+
+        public string Observacion { get; set; }
+
+        public bool IsFechaAsignacion { get; set; }
 
 
 

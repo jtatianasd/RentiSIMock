@@ -34,6 +34,13 @@ namespace RentiSI.Areas.Coordinador.Controllers
 
         }
 
+        [HttpGet("/Coordinador/Recepcion/Edit/{recepcionId}")]
+        public IActionResult Edit(int recepcionId)
+        {
+            var recepciones = _contenedorTrabajo.Recepcion.ObtenerRecepcionesPorId(recepcionId);
+            return View(recepciones);
+        }
+
 
     }
 }
