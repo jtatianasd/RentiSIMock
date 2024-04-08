@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using System.Security.Claims;
 
 namespace RentiSI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     [Area("Admin")]
     public class UsuariosController : Controller
     {
@@ -17,11 +19,6 @@ namespace RentiSI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //Opción 1: Obtener todos los usuario
-            //return View(_contenedorTrabajo.Usuario.GetAll());
-
-            //Opción 2: Obtener todos los usuarios menos el que esté logueado, para no bloquearse el mismo
-
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var usuarioActual = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             if(usuarioActual != null)
