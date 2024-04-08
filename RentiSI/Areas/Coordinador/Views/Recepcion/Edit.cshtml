@@ -1,0 +1,61 @@
+﻿@using RentiSI.Modelos.viewModels
+@model ResponseViewModel
+@{
+    ViewData["Title"] = "Recepcion";
+}
+
+<br />
+<br />
+<div class="border">
+    <div class="row">
+        <div class="col-6 offset-2 mt-4">
+            <h3>
+                <small class="text-body-secondary">Recepción</small>
+            </h3>
+        </div>
+    </div>
+    <form method="POST" asp-action="Create" enctype="multipart/form-data">
+        <div class="col-10 offset-1 mt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Numero de placa</label>
+                </div>
+                <div class="col-8">
+                    <label asp-for="FechaAsignacion">@Model.NumeroPlaca</label>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Fecha Asignacion</label>
+                </div>
+                <div class="col-8">
+                    <div class="">
+                        <label asp-for="FechaAsignacion">@Model.FechaAsignacion</label>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Observaciones</label>
+                </div>
+                <div class="col-8">
+                    <textarea class="form-control" id="Observaciones" rows="3">@Model.Observacion</textarea>
+                    <span asp-validation-for="Observacion" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+            <div class="form-group-row">
+                <div class="col-8">
+                    <partial name="_VistaCrearVolver" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

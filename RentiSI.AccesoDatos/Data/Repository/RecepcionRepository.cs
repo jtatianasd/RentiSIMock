@@ -46,8 +46,22 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         }
 
+        public ResponseViewModel ObtenerRecepcionesPorId(int RevisionId)
+        {
+            var result = (from tramite in _db.Tramite
+                         join recepcion in _db.Recepcion
+                         on tramite.Id equals recepcion.Id_Tramite
+                         where recepcion.Id == RevisionId
+                         select new ResponseViewModel
+                         {
+                             NumeroPlaca = tramite.NumeroPlaca,
+                             FechaRecepcion = recepcion.FechaRecepcion,
+                             FechaAsignacion = tramite.FechaCreacion,
+                             Observacion = recepcion.Observacion
+                         }).FirstOrDefault();
 
 
-
+            return result;
+        }
     }
 }
