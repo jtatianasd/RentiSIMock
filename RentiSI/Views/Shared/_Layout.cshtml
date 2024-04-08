@@ -47,7 +47,7 @@
                         @if (User.IsInRole(CNT.Coordinador))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tramites" asp-action="Index">Recepción</a>
+                                <a class="nav-link text-dark" asp-area="Coordinador" asp-controller="Recepcion" asp-action="Index">Recepción</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Reasignación</a>
@@ -63,7 +63,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Gestion de Tramites</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Revisión</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Revision" asp-action="">Revisión</a>
                             </li>
                         }
                     </ul>

@@ -22,9 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Coordinador\Controllers\" />
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Areas\Operativo\Controllers\" />
   </ItemGroup>
 
   <ItemGroup>

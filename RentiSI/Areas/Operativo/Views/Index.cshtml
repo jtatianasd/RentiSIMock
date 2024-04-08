@@ -1,0 +1,54 @@
+﻿@using RentiSI.Modelos.viewModels
+@model IEnumerable<ResponseViewModel>
+
+@{
+    ViewData["Title"] = "Placas recibidas";
+}
+
+<div class="form-group row mt-5 mb-5">
+
+    <label class="col-sm-2 col-form-label">Número de placa: </label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" value="" placeholder="Número de placa">
+    </div>
+
+</div>
+
+<div class="border">
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-striped table-bordered" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Numero Placa</th>
+                    <th>Fecha Revision</th>
+                    <th>Tipo Trámite</th>
+                    <th>Organismo de tránsito</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NumeroPlaca</td>
+                        <td>@item.FechaRevision</td>
+                        <td>@item.TipificacionTramiteRevision</td>
+                        <td>@item.OrganismoTransito</td>
+                     
+                        <td>
+              
+                            <a class="btn btn-success text-white" asp-action="Editar" style="width:50px" asp-route-id="@item.RevisionId">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+ 
+                        </td>
+                    </tr>                    
+                }
+            </tbody>
+        </table>
+
+        
+    }
+</div>

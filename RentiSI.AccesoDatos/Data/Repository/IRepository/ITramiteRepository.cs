@@ -9,6 +9,5 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
 {
     public interface ITramiteRepository : IRepository<Tramite>
     {
-        void guardarTramite();
     }
 }
