@@ -10,5 +10,8 @@ namespace RentiSI.Utilidades
     {
         public const string Administrador = "Administrador";
         public const string Usuario = "Usuario";
+        public const string Cliente = "Cliente";
+        public const string Coordinador = "Coordinador";
+        public const string Operativo = "Operativo";
     }
 }

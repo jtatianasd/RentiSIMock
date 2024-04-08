@@ -35,12 +35,18 @@
             </div>
             <!--Selector de Roles-->
             <div class="form-group row">
-                <div class="col-6"><h4>Seleccionar Rol de Usuario</h4></div>
-                <div class="col-5">
-                    <input type="radio" name="radRol" value="@CNT.Administrador"/>@CNT.Administrador
-                    <input type="radio" name="radRol" value="@CNT.Usuario" />@CNT.Usuario
+                <div class="col-4"><h4><small>Seleccionar Rol de Usuario:</small></h4></div>
+                <div class="col-6">
+                    <select class="form-select" id="selectRol" name="selectRol">
+                        <option value="@CNT.Administrador">@CNT.Administrador</option>
+                        <option value="@CNT.Usuario">@CNT.Usuario</option>
+                        <option value="@CNT.Cliente">@CNT.Cliente</option>
+                        <option value="@CNT.Coordinador">@CNT.Coordinador</option>
+                        <option value="@CNT.Operativo">@CNT.Operativo</option>
+                    </select>
                 </div>
             </div>
+            <br />
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Enviar Registro</button>
         </form>
     </div>
