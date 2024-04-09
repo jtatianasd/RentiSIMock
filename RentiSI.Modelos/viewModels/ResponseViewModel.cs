@@ -30,7 +30,7 @@ namespace RentiSI.Modelos.viewModels
 
         public string Observacion { get; set; }
 
-        public bool IsFechaAsignacion { get; set; }
+        public bool EsFechaRecepcion { get; set; }
 
 
 

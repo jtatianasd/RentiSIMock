@@ -8,6 +8,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IEnumerable<ResponseViewModel> ObtenerRecepciones();
 
         ResponseViewModel ObtenerRecepcionesPorId(int RevisionId);
+
+        void Actualizar(Recepcion recepcion);
     }
 
 }

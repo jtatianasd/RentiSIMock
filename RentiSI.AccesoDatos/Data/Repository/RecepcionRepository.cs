@@ -20,6 +20,16 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
         }
 
+        public ResponseViewModel Actualizar(ResponseViewModel responseViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Actualizar(Recepcion recepcion)
+        {
+            _db.Update(recepcion);
+            _db.SaveChangesAsync();
+        }
 
         public IEnumerable<ResponseViewModel> ObtenerRecepciones()
         {
@@ -57,7 +67,8 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
                              FechaAsignacion = tramite.FechaCreacion,
-                             Observacion = recepcion.Observacion
+                             Observacion = recepcion.Observacion,
+                             RecepcionId = recepcion.Id,
                          }).FirstOrDefault();
 
 
