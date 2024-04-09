@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409030951_AgregarModeloOrganismoDeTransito")]
+    partial class AgregarModeloOrganismoDeTransito
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -430,12 +433,12 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("Observaciones")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrganismoDeTransitoId")
+                    b.Property<int?>("OrganismoDeTransito")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganismoDeTransitoId");
+                    b.HasIndex("OrganismoDeTransito");
 
                     b.ToTable("Tramite");
                 });
@@ -591,13 +594,11 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Tramite", b =>
                 {
-                    b.HasOne("RentiSI.Modelos.OrganismosDeTransito", "OrganismosDeTransito")
+                    b.HasOne("RentiSI.Modelos.OrganismosDeTransito", "OrganismoTransito")
                         .WithMany()
-                        .HasForeignKey("OrganismoDeTransitoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrganismoDeTransito");
 
-                    b.Navigation("OrganismosDeTransito");
+                    b.Navigation("OrganismoTransito");
                 });
 #pragma warning restore 612, 618
         }
