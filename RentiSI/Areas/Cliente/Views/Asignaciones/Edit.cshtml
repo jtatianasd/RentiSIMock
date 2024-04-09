@@ -1,27 +1,31 @@
 ﻿@model RentiSI.Modelos.Tramite
 @{
-    ViewData["Title"] = "Asignacion";
-    var ParametrosBotones = new { LabelBoton = "Asignar", ClaseBoton = "success" };
+    ViewData["Title"] = "Editar Tramite";
+    // Convertir la cadena a un objeto DateTime
+    DateTime fechaCreacion = DateTime.Parse(Model.FechaCreacion);
+
+    // Formatear la fecha como una cadena usando ToString con el formato deseado
+    string fechaFormateada = fechaCreacion.ToString("dd/MM/yyyy");
 }
 
 <br />
 <br />
 <div class="border">
     <div class="row">
-        <div class="col-2 offset-5">
+        <div class="col-4 offset-4">
             <h3>
-                <small class="text-body-secondary">Asignación</small>
+                <small class="text-body-secondary">Editar Tramite</small>
             </h3>
         </div>
     </div>
-    <form method="POST" asp-action="Create" enctype="multipart/form-data">
+    <form method="POST" asp-action="Edit" enctype="multipart/form-data">
         <div class="col-10 offset-1 mt-4">
             <div class="form-group row">
                 <div class="col-4">
                     <label>Numero de placa</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="NumeroPlaca" class="form-control" placeholder="Ingresa el Numero de placa" />
+                    <input asp-for="NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Numero de placa" />
                     <span asp-validation-for="NumeroPlaca" class="text-danger"></span>
                 </div>
             </div>
@@ -64,11 +68,24 @@
                 </div>
             </div>
             <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Observaciones</label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
+                    <span asp-validation-for="Observaciones" class="text-danger"></span>
+                </div>
+            </div>
             <br />
 
-            <div class="form-group-row">
-                <div class="col-8">
-                    <partial name="_VistaCrearVolver" />
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary form-control">Editar Artículo</button>
+                </div>
+                &nbsp;
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-success form-control">Volver atrás</a>
                 </div>
             </div>
         </div>
