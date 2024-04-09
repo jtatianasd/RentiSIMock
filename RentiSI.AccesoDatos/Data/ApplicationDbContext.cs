@@ -17,5 +17,6 @@ namespace RentiSI.AccesoDatos
         public DbSet<Recepcion> Recepcion { get; set; }
         public DbSet<Reasignacion> Reasignacion { get; set; }
         public DbSet<Impronta> Impronta { get; set; }
+        public DbSet<OrganismosDeTransito> OrganismosDeTransito { get; set; }
     }
 }
