@@ -45,5 +45,33 @@ namespace RentiSI.Areas.Cliente.Controllers
         {
             return Json(new { data = _contenedorTrabajo.Asignacion.GetAll() });
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Tramite tramite = new Tramite();
+            tramite = _contenedorTrabajo.Asignacion.Get(id);
+            if (tramite == null)
+            {
+                return NotFound();
+            }
+
+            return View(tramite);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Tramite tramite)
+        {
+            if (ModelState.IsValid)
+            {
+                //Logica para actualizar en BD
+                _contenedorTrabajo.Asignacion.Update(tramite);
+                _contenedorTrabajo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(tramite);
+        }
     }
 }
