@@ -28,5 +28,11 @@ namespace RentiSI.Modelos
         public string? FechaNegocio { get; set; }
         [Display(Name = "Observaciones")]
         public string? Observaciones { get; set; }
+        [Required(ErrorMessage = "El organismo de transito es requerido")]
+        public int OrganismoDeTransitoId { get; set; }
+
+        [ForeignKey("OrganismoDeTransitoId")]
+        public OrganismosDeTransito? OrganismosDeTransito { get; set; }
+
     }
 }

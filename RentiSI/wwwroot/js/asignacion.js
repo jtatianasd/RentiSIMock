@@ -19,6 +19,7 @@ function cargarDatatable() {
             { "data": "financiacion", "width": "5%" },
             { "data": "impronta", "width": "5%" },
             { "data": "fechaNegocio", "width": "10%" },
+            { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "observaciones", "width": "20%" },
             {
                 "data": "id",

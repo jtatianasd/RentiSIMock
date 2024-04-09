@@ -1,11 +1,6 @@
-﻿@model RentiSI.Modelos.Tramite
+﻿@model RentiSI.Modelos.viewModels.TramiteVM
 @{
     ViewData["Title"] = "Editar Tramite";
-    // Convertir la cadena a un objeto DateTime
-    DateTime fechaCreacion = DateTime.Parse(Model.FechaCreacion);
-
-    // Formatear la fecha como una cadena usando ToString con el formato deseado
-    string fechaFormateada = fechaCreacion.ToString("dd/MM/yyyy");
 }
 
 <br />
@@ -19,14 +14,15 @@
         </div>
     </div>
     <form method="POST" asp-action="Edit" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Tramite.Id" />
         <div class="col-10 offset-1 mt-4">
             <div class="form-group row">
                 <div class="col-4">
                     <label>Numero de placa</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Numero de placa" />
-                    <span asp-validation-for="NumeroPlaca" class="text-danger"></span>
+                    <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Numero de placa" />
+                    <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
                 </div>
             </div>
 
@@ -38,8 +34,8 @@
                 </div>
                 <div class="col-8">
                     <div class="form-check form-switch">
-                        <input asp-for="Financiacion" class="form-check-input" type="checkbox" id="financiacionSwitch">
-                        <span asp-validation-for="Financiacion" class="text-danger"></span>
+                        <input asp-for="Tramite.Financiacion" class="form-check-input" type="checkbox" id="financiacionSwitch">
+                        <span asp-validation-for="Tramite.Financiacion" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -51,8 +47,8 @@
                 </div>
                 <div class="col-8">
                     <div class="form-check form-switch">
-                        <input asp-for="Impronta" class="form-check-input" type="checkbox" id="improntaSwitch">
-                        <span asp-validation-for="Impronta" class="text-danger"></span>
+                        <input asp-for="Tramite.Impronta" class="form-check-input" type="checkbox" id="improntaSwitch">
+                        <span asp-validation-for="Tramite.Impronta" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -63,8 +59,19 @@
                     <label>Fecha de Negocio</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="FechaNegocio" type="date" id="fechaNegocio" name="fechaNegocio">
-                    <span asp-validation-for="FechaNegocio" class="text-danger"></span>
+                    <input asp-for="Tramite.FechaNegocio" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
+                    <span asp-validation-for="Tramite.FechaNegocio" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Organismo de transito</label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
+                             "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
+                    <span asp-validation-for="Tramite.OrganismoDeTransitoId" class="text-danger"></span>
                 </div>
             </div>
             <br />
@@ -73,19 +80,19 @@
                     <label>Observaciones</label>
                 </div>
                 <div class="col-8">
-                    <textarea asp-for="Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
-                    <span asp-validation-for="Observaciones" class="text-danger"></span>
+                    <textarea asp-for="Tramite.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
+                    <span asp-validation-for="Tramite.Observaciones" class="text-danger"></span>
                 </div>
             </div>
             <br />
 
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary form-control">Editar Artículo</button>
+                    <button type="submit" class="btn btn-primary form-control">Aceptar</button>
                 </div>
                 &nbsp;
                 <div class="col">
-                    <a asp-action="Index" class="btn btn-success form-control">Volver atrás</a>
+                    <a asp-action="Index" class="btn btn-success form-control">Cancelar</a>
                 </div>
             </div>
         </div>
