@@ -23,20 +23,47 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public IEnumerable<ResponseViewModel> ObtenerRevisiones()
         {
             var result = from tramite in _db.Tramite
-                             join revision in _db.Revision
-                             on tramite.Id equals revision.Id_Tramite
-                             select new ResponseViewModel
-                             {
-                                 NumeroPlaca = tramite.NumeroPlaca,
-                                 FechaRevision = revision.FechaRevision,
-                                 TipificacionTramiteRevision = revision.TipificacionTramiteRevision,
-                                 OrganismoTransito = revision.OrganismoTransito,
-                                 RevisionId = revision.Id
+                         join revision in _db.Revision
+                         on tramite.Id equals revision.Id_Tramite
+                         join recepcion in _db.Recepcion
+                         on tramite.Id equals recepcion.Id_Tramite
+                         join transito in _db.OrganismosDeTransito
+                        on tramite.OrganismoDeTransitoId equals transito.Id
+                         select new ResponseViewModel
+                         {
+                             NumeroPlaca = tramite.NumeroPlaca,
+                             FechaRevision = revision.FechaRevision,
+                             TipificacionTramiteRevision = revision.TipificacionTramiteRevision,
+                             OrganismoTransito = transito.Municipio,
+                             RevisionId = revision.Id,
+                             FechaRecepcion =recepcion.FechaRecepcion,
 
-                             };
-                                
+                         };
+
             return result.ToList();
 
+        }
+
+
+        public ResponseViewModel ObtenerRevisionesPorId(int RevisionId)
+        {
+            var result = (from tramite in _db.Tramite
+                          join revision in _db.Revision
+                          on tramite.Id equals revision.Id_Tramite
+                          join recepcion in _db.Recepcion
+                          on tramite.Id equals recepcion.Id_Tramite
+                          where revision.Id == RevisionId
+                          select new ResponseViewModel
+                          {
+                              NumeroPlaca = tramite.NumeroPlaca,
+                              FechaRecepcion = recepcion.FechaRecepcion,
+                              FechaAsignacion = tramite.FechaCreacion,
+                              Observacion = recepcion.Observacion,
+                              RevisionId = revision.Id,
+                          }).FirstOrDefault();
+
+
+            return result;
         }
 
 

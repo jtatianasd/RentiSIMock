@@ -1,6 +1,7 @@
 ﻿@model RentiSI.Modelos.viewModels.TramiteVM
 @{
     ViewData["Title"] = "Asignacion";
+    var ParametrosBotones = new { LabelBoton = "Asignar", ClaseBoton = "success" };
 }
 
 <br />
@@ -88,7 +89,7 @@
 
             <div class="form-group-row">
                 <div class="col-8">
-                    <partial name="_VistaCrearVolver" />
+                    <partial name="_VistaCrearVolver" model="ParametrosBotones" />
                 </div>
             </div>
         </div>

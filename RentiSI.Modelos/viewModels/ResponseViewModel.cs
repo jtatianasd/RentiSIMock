@@ -26,11 +26,11 @@ namespace RentiSI.Modelos.viewModels
 
         public string FechaAsignacion { get; set; }
 
-        public string UsuarioRecibe { get; set; }
+        public string? UsuarioRecibe { get; set; }
 
         public string Observacion { get; set; }
 
-        public bool IsFechaAsignacion { get; set; }
+        public bool EsFechaRecepcion { get; set; }
 
 
 

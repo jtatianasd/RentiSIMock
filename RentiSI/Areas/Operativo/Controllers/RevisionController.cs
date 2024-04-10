@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace RentiSI.Areas.Operativo.Controllers
 {
-    [Area("Admin")]
+    [Area("Operativo")]
     public class RevisionController : Controller
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
@@ -15,25 +15,24 @@ namespace RentiSI.Areas.Operativo.Controllers
             _contenedorTrabajo = contenedorTrabajo;
         }
 
-        [HttpGet]
         public IActionResult Index()
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var usuarioActual = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
-            var revisiones = _contenedorTrabajo.Revision.ObtenerRevisiones();
-
-            return View(revisiones);
-
+            return View();
         }
+
 
         [HttpGet]
-        public IActionResult ConsultarPorPlaca(string Placa)
+        public IActionResult GetAll()
         {
-            return View(_contenedorTrabajo.Tramite.GetAll(r => r.NumeroPlaca == Placa));
-
+            return Json(new { data = _contenedorTrabajo.Revision.ObtenerRevisiones() });
         }
 
+        [HttpGet("/Operativo/Revision/Edit/{revisionId}")]
+        public IActionResult Edit(int revisionId)
+        {
+            var recepciones = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
+            return View(recepciones);
+        }
 
     }
 }

@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RentiSI.Areas.Cliente.Controllers
 {
-    [Authorize(Roles = "Cliente")]
+    [Authorize(Roles = "Cliente, Administrador")]
     [Area("Cliente")]
     public class AsignacionesController : Controller
     {

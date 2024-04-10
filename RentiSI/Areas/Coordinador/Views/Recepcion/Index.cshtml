@@ -1,57 +1,36 @@
-﻿@using RentiSI.Modelos.viewModels
-@model IEnumerable<ResponseViewModel>
-
-@{
-    ViewData["Title"] = "Placas recibidas";
+﻿@{
+    ViewData["Title"] = "Recepcion";
 }
 
-<div class="form-group row mt-5 mb-5">
+<div class="container mt-5">
 
-    <label class="col-sm-2 col-form-label">Número de placa: </label>
-    <div class="col-sm-4">
-        <input type="text" class="form-control" value="" placeholder="Número de placa">
+    <div class="">
+        <div class="row">
+            <div class="col-2 offset-5">
+                <h3>
+                    <small class="text-body-secondary">Recepción</small>
+                </h3>
+            </div>
+        </div>
     </div>
 
+    <table id="tblRecepcion" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha Recepción</th>
+                <th>Numero Placa</th>
+                <th>Quien Recibe</th>
+                <th>Organismo Tránsito</th>
+                <th>Fecha Asignación</th>
+                <th>Impronta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    </table>
+
 </div>
 
-<div class="border">
-
-    @if (Model.Count() > 0)
-    {
-        <table class="table table-striped table-bordered" style="width: 100%">
-            <thead>
-                <tr>
-                    <th>Fecha Recepción</th>
-                    <th>Numero Placa</th>
-                    <th>Quien Recibe</th>
-                    <th>Fecha Asignación</th>
-                    <th>Impronta</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-
-                        <td>@item.FechaRecepcion</td>
-                        <td>@item.NumeroPlaca</td>
-                        <td>@item.UsuarioRecibe</td>
-                        <td>@item.FechaAsignacion</td>
-                        <td>@item.Impronta</td>
-                 
-                        <td>
-              
-                            <a class="btn btn-success text-white" asp-action="Edit" style="width:50px" asp-route-id="@item.RecepcionId">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
- 
-                        </td>
-                    </tr>                    
-                }
-            </tbody>
-        </table>
-
-        
-    }
-</div>
+@section Scripts {
+    <script src="~/js/recepcion.js"></script>
+}
