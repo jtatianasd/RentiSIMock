@@ -34,42 +34,43 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public IEnumerable<ResponseViewModel> ObtenerRecepciones()
         {
             var result = from tramite in _db.Tramite
-                             join recepcion in _db.Recepcion
-                             on tramite.Id equals recepcion.Id_Tramite
-                             join impronta in _db.Impronta
-                             on tramite.Id equals impronta.Id_Tramite
-                             join usuarios in _db.ApplicationUser
-                             on recepcion.IdUsuarioRecepcion equals usuarios.Id into recepciono
-                             from recepcionRecepcion in recepciono.DefaultIfEmpty()
-                         select new ResponseViewModel
-                             {
-                                 NumeroPlaca = tramite.NumeroPlaca,
-                                 FechaRecepcion = recepcion.FechaRecepcion,
-                                 RecepcionId = recepcion.Id,
-                                 Impronta    = tramite.Impronta,
-                                 FechaAsignacion = tramite.FechaCreacion,
-                                 UsuarioRecibe = recepcionRecepcion.Nombre
-
-                         };
-                                
-            return result.ToList();
-
-        }
-
-        public ResponseViewModel ObtenerRecepcionesPorId(int RevisionId)
-        {
-            var result = (from tramite in _db.Tramite
                          join recepcion in _db.Recepcion
                          on tramite.Id equals recepcion.Id_Tramite
-                         where recepcion.Id == RevisionId
+                         join usuarios in _db.ApplicationUser
+                         on recepcion.IdUsuarioRecepcion equals usuarios.Id into usuariosLeftJoin
+                         from recepcionRecepcion in usuariosLeftJoin.DefaultIfEmpty()
+                         join transito in _db.OrganismosDeTransito
+                         on tramite.OrganismoDeTransitoId equals transito.Id
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
-                             FechaAsignacion = tramite.FechaCreacion,
-                             Observacion = recepcion.Observacion,
                              RecepcionId = recepcion.Id,
-                         }).FirstOrDefault();
+                             Impronta = tramite.Impronta != null ? "Si": "NO",
+                             OrganismoTransito = transito.Municipio,
+                             FechaAsignacion = tramite.FechaCreacion,
+                             UsuarioRecibe = recepcionRecepcion.Nombre
+
+                         };
+
+            return result.ToList();
+
+        }
+
+        public ResponseViewModel ObtenerRecepcionesPorId(int RecepcionId)
+        {
+            var result = (from tramite in _db.Tramite
+                          join recepcion in _db.Recepcion
+                          on tramite.Id equals recepcion.Id_Tramite
+                          where recepcion.Id == RecepcionId
+                          select new ResponseViewModel
+                          {
+                              NumeroPlaca = tramite.NumeroPlaca,
+                              FechaRecepcion = recepcion.FechaRecepcion,
+                              FechaAsignacion = tramite.FechaCreacion,
+                              Observacion = recepcion.Observacion,
+                              RecepcionId = recepcion.Id,
+                          }).FirstOrDefault();
 
 
             return result;

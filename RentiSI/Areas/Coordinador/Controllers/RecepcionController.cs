@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using RentiSI.AccesoDatos.Data.Repository;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
@@ -21,20 +22,15 @@ namespace RentiSI.Areas.Coordinador.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
         public IActionResult Index()
         {
-            var recepciones = _contenedorTrabajo.Recepcion.ObtenerRecepciones();
-
-            return View(recepciones);
-
+            return View();
         }
 
         [HttpGet]
-        public IActionResult ConsultarPorPlaca(string Placa)
+        public IActionResult GetAll()
         {
-            return View(_contenedorTrabajo.Tramite.GetAll(r => r.NumeroPlaca == Placa));
-
+            return Json(new { data = _contenedorTrabajo.Recepcion.ObtenerRecepciones() });
         }
 
         [HttpGet("/Coordinador/Recepcion/Edit/{recepcionId}")]
@@ -54,15 +50,15 @@ namespace RentiSI.Areas.Coordinador.Controllers
 
             if(responseViewModel.EsFechaRecepcion)
             {
-                var usuario = _userManager.GetUserId(User);
-
-
                 var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.Id == responseViewModel.RecepcionId).FirstOrDefault();
-                recepcion.Observacion = responseViewModel.Observacion;
-                recepcion.FechaRecepcion = DateTime.Now.ToString("yyy-MM-dd");
-                recepcion.IdUsuarioRecepcion = usuario;
+                if(recepcion != null)
+                {
+                    recepcion.Observacion = responseViewModel.Observacion;
+                    recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
+                    recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
 
-                _contenedorTrabajo.Recepcion.Actualizar(recepcion);
+                    _contenedorTrabajo.Recepcion.Actualizar(recepcion);
+                }
 
             }
 
