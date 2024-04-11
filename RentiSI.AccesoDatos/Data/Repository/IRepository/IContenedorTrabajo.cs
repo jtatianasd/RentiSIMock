@@ -14,6 +14,9 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IRevisionRepository Revision { get; }
         IRecepcionRepository Recepcion { get; }
         IOrganismoTransitoRepository OrganismoTransito { get; }
+        IGestionImprontaRepository GestionImpronta { get; }
+
+
         void Save();
     }
 }

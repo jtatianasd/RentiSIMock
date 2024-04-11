@@ -11,6 +11,10 @@ namespace RentiSI.Modelos.viewModels
         public string NumeroPlaca { get; set; }
         public int RevisionId { get; set; }
 
+        public int ImprontaId { get; set; }
+
+        public int TramiteId { get; set; }
+
         public string FechaRevision { get; set; }
 
         public string TipificacionTramiteRevision { get; set; }
