@@ -11,22 +11,26 @@ using System.Xml.Serialization;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
-    public class RecepcionRepository : Repository<Recepcion>, IRecepcionRepository
+    public class GestionImprontaRepository : Repository<Impronta>, IGestionImprontaRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public RecepcionRepository(ApplicationDbContext db) : base(db)
+        public GestionImprontaRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Actualizar(Recepcion recepcion)
+        public void Actualizar(Impronta impronta)
         {
-            _db.Update(recepcion);
+            _db.Update(impronta);
             _db.SaveChangesAsync();
         }
 
-        public IEnumerable<ResponseViewModel> ObtenerRecepciones()
+        /// <summary>
+        /// To Do
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ResponseViewModel> ObtenerImprontas()
         {
             var result = from tramite in _db.Tramite
                          join recepcion in _db.Recepcion
@@ -40,7 +44,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
-                             RecepcionId = recepcion.Id,
+                             TramiteId = tramite.Id,
                              Impronta = tramite.Impronta != null ? "Si": "No",
                              OrganismoTransito = transito.Municipio,
                              FechaAsignacion = tramite.FechaCreacion,
@@ -52,12 +56,12 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         }
 
-        public ResponseViewModel ObtenerRecepcionesPorId(int RecepcionId)
+        public ResponseViewModel ObtenerImpronrasPorId(int improntaId)
         {
             var result = (from tramite in _db.Tramite
                           join recepcion in _db.Recepcion
                           on tramite.Id equals recepcion.Id_Tramite
-                          where recepcion.Id == RecepcionId
+                          where recepcion.Id == improntaId
                           select new ResponseViewModel
                           {
                               NumeroPlaca = tramite.NumeroPlaca,
@@ -70,5 +74,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
             return result;
         }
+
+       
     }
 }
