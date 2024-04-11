@@ -7,36 +7,44 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
-    public class RevisionRepository : Repository<Revision>, IRevisionRepository
+    public class GestionImprontaRepository : Repository<Gestion>, IGestionImprontaRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public RevisionRepository(ApplicationDbContext db) : base(db)
+        public GestionImprontaRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
+        public void Actualizar(Gestion impronta)
+        {
+            _db.Update(impronta);
+            _db.SaveChangesAsync();
+        }
 
-        public IEnumerable<ResponseViewModel> ObtenerRevisiones()
+        /// <summary>
+        /// To Do
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ResponseViewModel> ObtenerImprontas()
         {
             var result = from tramite in _db.Tramite
-                         join revision in _db.Revision
-                         on tramite.Id equals revision.Id_Tramite
                          join recepcion in _db.Recepcion
                          on tramite.Id equals recepcion.Id_Tramite
                          join transito in _db.OrganismosDeTransito
-                        on tramite.OrganismoDeTransitoId equals transito.Id
+                         on tramite.OrganismoDeTransitoId equals transito.Id
+                         join gestion in _db.Gestion
+                         on tramite.Id equals gestion.Id_Tramite
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
-                             FechaRevision = revision.FechaRevision,
-                             TipificacionTramiteRevision = revision.TipificacionTramiteRevision,
+                             FechaRecepcion = recepcion.FechaRecepcion,
+                             GestionId = gestion.Id,
                              OrganismoTransito = transito.Municipio,
-                             RevisionId = revision.Id,
-                             FechaRecepcion =recepcion.FechaRecepcion,
 
                          };
 
@@ -44,30 +52,27 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         }
 
-
-        public ResponseViewModel ObtenerRevisionesPorId(int GestionId)
+        public ResponseViewModel ObtenerImprontasPorId(int gestionId)
         {
             var result = (from tramite in _db.Tramite
-                          join revision in _db.Revision
-                          on tramite.Id equals revision.Id_Tramite
                           join recepcion in _db.Recepcion
                           on tramite.Id equals recepcion.Id_Tramite
-                          where recepcion.Id == GestionId
+                          join gestion in _db.Gestion
+                          on tramite.Id equals gestion.Id_Tramite
+                          where recepcion.Id == gestionId
                           select new ResponseViewModel
                           {
                               NumeroPlaca = tramite.NumeroPlaca,
                               FechaRecepcion = recepcion.FechaRecepcion,
                               FechaAsignacion = tramite.FechaCreacion,
                               Observacion = recepcion.Observacion,
-                              RevisionId = revision.Id,
+                              GestionId = gestion.Id,
                           }).FirstOrDefault();
 
 
             return result;
         }
 
-
-
-
+       
     }
 }
