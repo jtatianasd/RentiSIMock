@@ -24,7 +24,7 @@ namespace RentiSI.Areas.Operativo.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _contenedorTrabajo.GestionImpronta.ObtenerImprontas() });
+            return Json(new { data = _contenedorTrabajo.Tramite.GetAll()});
         }
 
         [HttpGet("/Operativo/GestionTramite/Edit/{revisionId}")]

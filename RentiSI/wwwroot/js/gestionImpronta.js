@@ -13,14 +13,14 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "improntaId", "width": "5%" },
+            { "data": "gestionId", "width": "5%" },
             { "data": "numeroPlaca", "width": "15%" },
             { "data": "organismoTransito", "width": "15%" },
-            { "data": "tipoGestionImpronta", "width": "15%" },
-            { "data": "tipoNoGestion", "width": "15%" },
+            { "data": "numeroPlaca", "width": "15%" },
+            { "data": "numeroPlaca", "width": "15%" },
             { "data": "fechaRecepcion", "width": "5%" },
             {
-                "data": "improntaId",
+                "data": "gestionId",
                 "render": function (data) {
                     return `<div class="text-center">
                                 <a href="/Operativo/GestionImpronta/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">

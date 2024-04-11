@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
-    public class GestionImprontaRepository : Repository<Impronta>, IGestionImprontaRepository
+    public class GestionImprontaRepository : Repository<Gestion>, IGestionImprontaRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -20,7 +20,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
         }
 
-        public void Actualizar(Impronta impronta)
+        public void Actualizar(Gestion impronta)
         {
             _db.Update(impronta);
             _db.SaveChangesAsync();
@@ -40,12 +40,13 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          from recepcionRecepcion in usuariosLeftJoin.DefaultIfEmpty()
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
+                         join gestion in _db.Gestion
+                         on tramite.Id equals gestion.Id_Tramite
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
-                             TramiteId = tramite.Id,
-                             Impronta = tramite.Impronta != null ? "Si": "No",
+                             GestionId = gestion.Id,
                              OrganismoTransito = transito.Municipio,
                              FechaAsignacion = tramite.FechaCreacion,
                              UsuarioRecibe = recepcionRecepcion.Nombre
@@ -56,19 +57,21 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         }
 
-        public ResponseViewModel ObtenerImpronrasPorId(int improntaId)
+        public ResponseViewModel ObtenerImprontasPorId(int gestionId)
         {
             var result = (from tramite in _db.Tramite
                           join recepcion in _db.Recepcion
                           on tramite.Id equals recepcion.Id_Tramite
-                          where recepcion.Id == improntaId
+                          join gestion in _db.Gestion
+                          on tramite.Id equals gestion.Id_Tramite
+                          where recepcion.Id == gestionId
                           select new ResponseViewModel
                           {
                               NumeroPlaca = tramite.NumeroPlaca,
                               FechaRecepcion = recepcion.FechaRecepcion,
                               FechaAsignacion = tramite.FechaCreacion,
                               Observacion = recepcion.Observacion,
-                              RecepcionId = recepcion.Id,
+                              GestionId = gestion.Id,
                           }).FirstOrDefault();
 
 

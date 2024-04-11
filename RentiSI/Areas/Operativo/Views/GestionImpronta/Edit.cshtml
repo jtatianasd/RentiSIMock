@@ -2,22 +2,22 @@
 @model ResponseViewModel
 @{
     ViewData["Title"] = "Revision";
-    var ParametrosBotones = new { LabelBoton = "Revisado", ClaseBoton = "warning" };
+    var ParametrosBotones = new { LabelBoton = "Resolver Gestión", ClaseBoton = "warning" };
 }
 
 <div class="mt-5">
     <div class="row">
         <div class="col-6 offset-2 mt-4 text-center">
             <h3>
-                <small class="text-body-secondary">Editar Revisión</small>
+                <small class="text-body-secondary">Editar Gestión Impronta</small>
             </h3>
         </div>
     </div>
     <form method="POST" asp-action="Update">
-        <input type="hidden" asp-for="TramiteId" value="@Model.TramiteId" />
+        <input type="hidden" asp-for="GestionId" value="@Model.GestionId" />
         <div class="col-10 offset-1 mt-4">
             <div class="row mt-2 mb-2">
-                <div class="col-2">
+                <div class="col-3">
                     <label class="fw-bold">Numero de placa</label>
                 </div>
                 <div class="col-6">
@@ -26,18 +26,41 @@
             </div>
 
             <div class="row mt-2 mb-2">
-                <div class="col-2">
-                    <label class="fw-bold">Fecha Asignacion</label>
+                <div class="col-3">
+                    <label class="fw-bold">Tipo Gestión Impronta</label>
                 </div>
                 <div class="col-6">
                     <div class="">
-                        <label asp-for="FechaAsignacion">@Model.FechaAsignacion</label>
+                       <select></select>
                     </div>
                 </div>
             </div>
 
             <div class="row mt-2 mb-2">
-                <div class="col-2">
+                <div class="col-3">
+                    <label class="fw-bold">Casuistica Gestión Impronta</label>
+                </div>
+                <div class="col-6">
+                    <div class="">
+                        <select></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
+                    <label class="fw-bold">Organismo Tránsito</label>
+                </div>
+                <div class="col-6">
+                    <div class="">
+                        @Html.DropDownListFor(m => m.ListaOrganismosTransito, Model.ListaOrganismosTransito,
+                                 "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
                     <label class="fw-bold">Observación</label>
                 </div>
                 <div class="col-6">
@@ -47,11 +70,11 @@
 
             <div class="row mt-2 mb-2">
                 <div class="col-2">
-                    <label class="fw-bold">Recepción</label>
+                    <label class="fw-bold">Resuelto</label>
                 </div>
                 <div class="col-6">
                     <div class="form-check form-switch">
-                        <input asp-for="EsFechaRecepcion" class="form-check-input" type="checkbox" id="fechaRecepcionSwitch">
+                        <input asp-for="EsResuelto" class="form-check-input" type="checkbox" id="EsResueltoSwitch">
                         <span asp-validation-for="EsFechaRecepcion" class="text-danger"></span>
                     </div>
                 </div>

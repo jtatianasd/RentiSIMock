@@ -45,14 +45,14 @@ namespace RentiSI.AccesoDatos.Data.Repository
         }
 
 
-        public ResponseViewModel ObtenerRevisionesPorId(int RevisionId)
+        public ResponseViewModel ObtenerRevisionesPorId(int GestionId)
         {
             var result = (from tramite in _db.Tramite
                           join revision in _db.Revision
                           on tramite.Id equals revision.Id_Tramite
                           join recepcion in _db.Recepcion
                           on tramite.Id equals recepcion.Id_Tramite
-                          where revision.Id == RevisionId
+                          where recepcion.Id == GestionId
                           select new ResponseViewModel
                           {
                               NumeroPlaca = tramite.NumeroPlaca,

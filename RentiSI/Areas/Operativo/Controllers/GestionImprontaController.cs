@@ -24,14 +24,20 @@ namespace RentiSI.Areas.Operativo.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _contenedorTrabajo.GestionImpronta.ObtenerImprontas() });
+
+            return Json(new { data = _contenedorTrabajo.Gestion.ObtenerImprontas() });
         }
 
-        [HttpGet("/Operativo/GestionImpronta/Edit/{revisionId}")]
-        public IActionResult Edit(int revisionId)
+        [HttpGet("/Operativo/GestionImpronta/Edit/{gestionId}")]
+        public IActionResult Edit(int gestionId)
         {
-            var recepciones = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
-            return View(recepciones);
+            var gestionImprontas = _contenedorTrabajo.Gestion.ObtenerImprontasPorId(gestionId);
+            if(gestionImprontas != null)
+            {
+                gestionImprontas.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+            }
+          
+            return View(gestionImprontas);
         }
 
     }
