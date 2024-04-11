@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411032939_AgregarModeloCasuistica")]
+    partial class AgregarModeloCasuistica
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -469,8 +472,6 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasKey("Id_tramite", "Id_Casuistica");
 
-                    b.HasIndex("Id_Casuistica");
-
                     b.ToTable("TramiteCasuistica");
                 });
 
@@ -632,25 +633,6 @@ namespace RentiSI.AccesoDatos.Migrations
                         .IsRequired();
 
                     b.Navigation("OrganismosDeTransito");
-                });
-
-            modelBuilder.Entity("RentiSI.Modelos.TramiteCasuistica", b =>
-                {
-                    b.HasOne("RentiSI.Modelos.TipoCasuistica", "TipoCasuistica")
-                        .WithMany()
-                        .HasForeignKey("Id_Casuistica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RentiSI.Modelos.Tramite", "Tramite")
-                        .WithMany()
-                        .HasForeignKey("Id_tramite")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TipoCasuistica");
-
-                    b.Navigation("Tramite");
                 });
 #pragma warning restore 612, 618
         }
