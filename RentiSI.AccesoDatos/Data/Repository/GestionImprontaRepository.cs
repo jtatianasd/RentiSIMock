@@ -40,21 +40,22 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          from recepcionRecepcion in usuariosLeftJoin.DefaultIfEmpty()
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
-                         join gestion in _db.Gestion
-                         on tramite.Id equals gestion.Id_Tramite
+                         join Impronta in _db.Impronta
+                         on tramite.Id equals Impronta.Id_Tramite into improntaLeftJoin
+                         from impronta in improntaLeftJoin.DefaultIfEmpty()
+                         where tramite.Impronta == "true"
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
-                             GestionId = gestion.GestionId,
                              OrganismoTransito = transito.Municipio,
                              FechaAsignacion = tramite.FechaCreacion,
-                             UsuarioRecibe = recepcionRecepcion.Nombre
-
+                             UsuarioRecibe = recepcionRecepcion.Nombre,
+                             ImprontaId = impronta != null ? impronta.ImprontaId : 0,
+                             TramiteId = tramite.Id
                          };
 
             return result.ToList();
-
         }
 
         public ResponseViewModel ObtenerImprontasPorId(int gestionId)
