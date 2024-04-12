@@ -1,4 +1,5 @@
-﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
 using System;
@@ -11,7 +12,7 @@ using System.Xml.Serialization;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
-    public class GestionImprontaRepository : Repository<Gestion>, IGestionImprontaRepository
+    public class GestionImprontaRepository : Repository<Impronta>, IGestionImprontaRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -30,7 +31,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         /// To Do
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ResponseViewModel> ObtenerImprontas()
+        public IEnumerable<ImprontaVM> ObtenerImprontas()
         {
             var result = from tramite in _db.Tramite
                          join recepcion in _db.Recepcion
@@ -43,16 +44,21 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join Impronta in _db.Impronta
                          on tramite.Id equals Impronta.Id_Tramite into improntaLeftJoin
                          from impronta in improntaLeftJoin.DefaultIfEmpty()
+                         join tramiteCasuistica in _db.TramiteCasuistica
+                         on impronta.ImprontaId equals tramiteCasuistica.Id_tramite into tramiteCasuisticaLeftJoin
+                         from tramiteCasuistica in tramiteCasuisticaLeftJoin.DefaultIfEmpty()
+                         join tipoCasuistica in _db.TipoCasuistica
+                         on tramiteCasuistica.Id_Casuistica equals tipoCasuistica.Id into tipoCasuisticaLeftJoin
+                         from tipoCasuistica in tipoCasuisticaLeftJoin.DefaultIfEmpty()
                          where tramite.Impronta == "true"
-                         select new ResponseViewModel
+                         select new ImprontaVM
                          {
-                             NumeroPlaca = tramite.NumeroPlaca,
-                             FechaRecepcion = recepcion.FechaRecepcion,
-                             OrganismoTransito = transito.Municipio,
-                             FechaAsignacion = tramite.FechaCreacion,
-                             UsuarioRecibe = recepcionRecepcion.Nombre,
-                             ImprontaId = impronta != null ? impronta.ImprontaId : 0,
-                             TramiteId = tramite.Id
+                             Tramite = tramite,
+                             Recepcion = recepcion,
+                             Impronta = impronta ?? new Impronta(),
+                             OrganismosDeTransito = transito,
+                             TramiteCasuistica = tramiteCasuistica ?? new TramiteCasuistica(),
+                             TipoCasuistica = tipoCasuistica ?? new TipoCasuistica(),
                          };
 
             return result.ToList();
@@ -79,6 +85,5 @@ namespace RentiSI.AccesoDatos.Data.Repository
             return result;
         }
 
-       
     }
 }

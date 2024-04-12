@@ -1,4 +1,5 @@
-﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,26 @@ namespace RentiSI.AccesoDatos.Data.Repository
         {
             _db = db;
         }
+        public IEnumerable<SelectListItem> GetListaTipoCasuistica()
+        {
+            return _db.TipoCasuistica.Select(tc => new SelectListItem()
+            {
+                Value = tc.Id.ToString(),
+                Text = tc.Descripcion
+            });
+        }
+        public IEnumerable<SelectListItem> GetListaTipoCasuisticaPorModulo(string modulo)
+        {
+            return _db.TipoCasuistica
+              .Where(tc => tc.Modulo == modulo)
+              .OrderBy(tc => tc.Descripcion)
+              .Select(tc => new SelectListItem
+              {
+                  Value = tc.Id.ToString(),
+                  Text = tc.Descripcion
+              })
+              .ToList();
+        }
+
     }
 }

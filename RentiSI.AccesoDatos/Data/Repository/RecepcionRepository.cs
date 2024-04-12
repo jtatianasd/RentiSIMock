@@ -41,7 +41,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
                              RecepcionId = recepcion.RecepcionId,
-                             Impronta = tramite.Impronta != null ? "Si": "No",
+                             Impronta = tramite.Impronta != "false" ? "Si": "No",
                              OrganismoTransito = transito.Municipio,
                              FechaAsignacion = tramite.FechaCreacion,
                              UsuarioRecibe = recepcionRecepcion.Nombre

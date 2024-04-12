@@ -1,0 +1,99 @@
+﻿@model RentiSI.Modelos.viewModels.ImprontaVM
+@{
+    ViewData["Title"] = "Gestion Impronta";
+    var ParametrosBotones = new { LabelBoton = "Asignar", ClaseBoton = "success" };
+}
+<br />
+<br />
+<div class="border">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <h3>
+                <small class="text-body-secondary">Gestión Impronta</small>
+            </h3>
+        </div>
+    </div>
+    <form method="POST" asp-action="Create" enctype="multipart/form-data">
+        <div class="col-10 offset-1 mt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Numero de placa</label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Tramite.NumeroPlaca" class="form-control" placeholder="Ingresa el Numero de placa" />
+                    <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Tipo gestion impronta</label>
+                </div>
+                <div class="col-8">
+                    <select class="form-select" id="tipificacionImpronta" name="tipificacionImpronta" asp-for="Impronta.TipificacionImpronta">
+                        <option value="">Por favor seleccione un tipo de gestion de impronta</option>
+                        <option value="Foranea ">Foranea</option>
+                        <option value="Local">Local</option>
+                    </select>
+                    <span asp-validation-for="Impronta.TipificacionImpronta" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Tipo casuistica gestion impronta</label>
+                </div>
+                @Html.CheckBoxFor
+                <div class="col-8 wrapper">
+                    @for (int i = 0; i < Model.EmploymentType.Count; i++)
+                    {
+                        @Html.CheckBoxFor(m => m.EmploymentType[i].Checked, new { id = "employmentType_" + i })
+                        @Html.HiddenFor(m => m.EmploymentType[i].Text)
+                        @Html.DisplayFor(m => m.EmploymentType[i].Text)
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Organismo de transito</label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Impronta.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
+                             "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Observaciones</label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Impronta.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
+                    <span asp-validation-for="Impronta.Observaciones" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Resuelto</label>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-switch">
+                        <input asp-for="Impronta.EsResuelto" class="form-check-input" type="checkbox" id="resueltoSwitch">
+                        <span asp-validation-for="Impronta.EsResuelto" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+
+            <div class="form-group-row">
+                <div class="col-8">
+                    <partial name="_VistaCrearVolver" model="ParametrosBotones"/>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

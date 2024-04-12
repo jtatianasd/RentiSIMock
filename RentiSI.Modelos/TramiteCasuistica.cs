@@ -21,5 +21,10 @@ namespace RentiSI.Modelos
 
         [ForeignKey("Id_Casuistica")]
         public virtual TipoCasuistica? TipoCasuistica { get; set; }
+        [ForeignKey("Id_tramite")]
+        public virtual Impronta? Impronta { get; set; }
+        [ForeignKey("Id_tramite")]
+        public virtual Revision? Revision { get; set; }
+
     }
 }

@@ -3,9 +3,9 @@ using RentiSI.Modelos.viewModels;
 
 namespace RentiSI.AccesoDatos.Data.Repository.IRepository
 {
-    public interface IGestionImprontaRepository : IRepository<Gestion>
+    public interface IGestionImprontaRepository : IRepository<Impronta>
     {
-        IEnumerable<ResponseViewModel> ObtenerImprontas();
+        IEnumerable<ImprontaVM> ObtenerImprontas();
 
         ResponseViewModel ObtenerImprontasPorId(int improntaId);
 

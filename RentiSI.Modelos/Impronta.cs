@@ -26,6 +26,6 @@ namespace RentiSI.Modelos
 
         [ForeignKey("OrganismoDeTransitoId")]
         public OrganismosDeTransito? OrganismosDeTransito { get; set; }
-        public bool? EsResultado { get; set; }
+        public string? EsResuelto { get; set; }
     }
 }
