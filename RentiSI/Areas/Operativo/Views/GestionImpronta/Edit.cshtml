@@ -1,0 +1,92 @@
+﻿@using RentiSI.Modelos.viewModels
+@model ResponseViewModel
+@{
+    ViewData["Title"] = "Revision";
+    var ParametrosBotones = new { LabelBoton = "Resolver Gestión", ClaseBoton = "warning" };
+}
+
+<div class="mt-5">
+    <div class="row">
+        <div class="col-6 offset-2 mt-4 text-center">
+            <h3>
+                <small class="text-body-secondary">Editar Gestión Impronta</small>
+            </h3>
+        </div>
+    </div>
+    <form method="POST" asp-action="Update">
+        <input type="hidden" asp-for="GestionId" value="@Model.GestionId" />
+        <div class="col-10 offset-1 mt-4">
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
+                    <label class="fw-bold">Numero de placa</label>
+                </div>
+                <div class="col-6">
+                    <label asp-for="FechaAsignacion">@Model.NumeroPlaca</label>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
+                    <label class="fw-bold">Tipo Gestión Impronta</label>
+                </div>
+                <div class="col-6">
+                    <div class="">
+                       <select></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
+                    <label class="fw-bold">Casuistica Gestión Impronta</label>
+                </div>
+                <div class="col-6">
+                    <div class="">
+                        <select></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
+                    <label class="fw-bold">Organismo Tránsito</label>
+                </div>
+                <div class="col-6">
+                    <div class="">
+                        @Html.DropDownListFor(m => m.ListaOrganismosTransito, Model.ListaOrganismosTransito,
+                                 "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-3">
+                    <label class="fw-bold">Observación</label>
+                </div>
+                <div class="col-6">
+                    <textarea class="form-control" id="Observacion" rows="3" asp-for="@Model.Observacion">@Model.Observacion"</textarea>
+                </div>
+            </div>
+
+            <div class="row mt-2 mb-2">
+                <div class="col-2">
+                    <label class="fw-bold">Resuelto</label>
+                </div>
+                <div class="col-6">
+                    <div class="form-check form-switch">
+                        <input asp-for="EsResuelto" class="form-check-input" type="checkbox" id="EsResueltoSwitch">
+                        <span asp-validation-for="EsFechaRecepcion" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group-row mt-4">
+                <div class="col-8">
+                    
+                    <partial name="_VistaCrearVolver" model="ParametrosBotones" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

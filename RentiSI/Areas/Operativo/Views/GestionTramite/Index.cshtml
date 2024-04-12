@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Gestión Tramite";
+}
+
+<div class="container mt-5">
+
+    <div class="">
+        <div class="row">
+            <div class="col-2 offset-5">
+                <h3>
+                    <small class="text-body-secondary">Gestión Trámite</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <table id="tblGestionTramite" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Número Placa</th>
+                <th>Quien Gestionó</th>
+                <th>Organismo Tránsito</th>
+                <th>Detalle Tránsito</th>
+                <th>Casuistica</th>
+                <th>Tiempo Gestión</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section Scripts {
+    <script src="~/js/gestionTramite.js"></script>
+}

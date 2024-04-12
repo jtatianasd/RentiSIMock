@@ -20,11 +20,6 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
         }
 
-        public ResponseViewModel Actualizar(ResponseViewModel responseViewModel)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Actualizar(Recepcion recepcion)
         {
             _db.Update(recepcion);
@@ -46,7 +41,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
                              RecepcionId = recepcion.Id,
-                             Impronta = tramite.Impronta != null ? "Si": "NO",
+                             Impronta = tramite.Impronta != null ? "Si": "No",
                              OrganismoTransito = transito.Municipio,
                              FechaAsignacion = tramite.FechaCreacion,
                              UsuarioRecibe = recepcionRecepcion.Nombre
