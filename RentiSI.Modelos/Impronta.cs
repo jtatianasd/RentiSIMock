@@ -11,14 +11,21 @@ namespace RentiSI.Modelos
     public class Impronta
     {
         [Key]
-        public int Id { get; set; }
+        public int ImprontaId { get; set; }
         public int? Id_Tramite { get; set; }
 
         [ForeignKey("Id_Tramite")]
         public Tramite? Id_Tramite_Gestion { get; set; }
         [Display(Name = "Tipificación de impronta")]
         public string? TipificacionImpronta { get; set; }
-        [Display(Name = "Tipificación casuistica impronta")]
-        public string? TipificacionCasuisticaImpronta { get; set; }
+
+        [Display(Name = "Observaciones")]
+        public string? Observaciones { get; set; }
+        [Required(ErrorMessage = "El organismo de transito es requerido")]
+        public int OrganismoDeTransitoId { get; set; }
+
+        [ForeignKey("OrganismoDeTransitoId")]
+        public OrganismosDeTransito? OrganismosDeTransito { get; set; }
+        public bool? EsResultado { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRecepcion = recepcion.FechaRecepcion,
-                             GestionId = gestion.Id,
+                             GestionId = gestion.GestionId,
                              OrganismoTransito = transito.Municipio,
                              FechaAsignacion = tramite.FechaCreacion,
                              UsuarioRecibe = recepcionRecepcion.Nombre
@@ -64,14 +64,14 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           on tramite.Id equals recepcion.Id_Tramite
                           join gestion in _db.Gestion
                           on tramite.Id equals gestion.Id_Tramite
-                          where recepcion.Id == gestionId
+                          where recepcion.RecepcionId == gestionId
                           select new ResponseViewModel
                           {
                               NumeroPlaca = tramite.NumeroPlaca,
                               FechaRecepcion = recepcion.FechaRecepcion,
                               FechaAsignacion = tramite.FechaCreacion,
                               Observacion = recepcion.Observacion,
-                              GestionId = gestion.Id,
+                              GestionId = gestion.GestionId,
                           }).FirstOrDefault();
 
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240412051420_RenombrarKeyRecepcion")]
+    partial class RenombrarKeyRecepcion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,11 +374,11 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Revision", b =>
                 {
-                    b.Property<int>("RevisionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RevisionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EstadoRevision")
                         .HasColumnType("nvarchar(max)");
@@ -401,7 +404,7 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("TipificacionTramiteRevision")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RevisionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdUsuarioRevision");
 

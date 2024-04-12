@@ -50,7 +50,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
 
             if(responseViewModel.EsFechaRecepcion)
             {
-                var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.Id == responseViewModel.RecepcionId).FirstOrDefault();
+                var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.RecepcionId).FirstOrDefault();
                 if(recepcion != null)
                 {
                     recepcion.Observacion = responseViewModel.Observacion;
