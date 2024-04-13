@@ -30,7 +30,6 @@ function cargarDatatable() {
                                 &nbsp;
                           </div>
                          `;
-
                     }
                     else
                     {

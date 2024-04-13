@@ -9,14 +9,15 @@ namespace RentiSI.Modelos.viewModels
 {
     public class ImprontaVM
     {
-        public Tramite Tramite { get; set; }
-        public Recepcion Recepcion { get; set; }
-        public Impronta Impronta { get; set; }
-        public TipoCasuistica TipoCasuistica { get; set; }
-        public OrganismosDeTransito OrganismosDeTransito { get; set; }
-        public TramiteCasuistica TramiteCasuistica { get; set; }
+        public Tramite? Tramite { get; set; }
+        public Recepcion? Recepcion { get; set; }
+        public Impronta? Impronta { get; set; }
+        public TipoCasuistica? TipoCasuistica { get; set; }
+        public OrganismosDeTransito? OrganismosDeTransito { get; set; }
+        public TramiteCasuistica? TramiteCasuistica { get; set; }
         public IEnumerable<SelectListItem>? ListaOrganismosTransito { get; set; }
         public IEnumerable<SelectListItem>? ListaCasuisticas { get; set; }
+        public int[]? SelectedCasuisticasIds { get; set; }
 
     }
 }

@@ -20,38 +20,49 @@ namespace RentiSI.Areas.Operativo.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult Create()
+        [HttpGet("/Operativo/GestionImpronta/Create/{data}")]
+        public IActionResult Create(string data)
         {
+
 
             ImprontaVM improntaVM = new ImprontaVM()
             {
-                
-                Tramite = new RentiSI.Modelos.Tramite(),  
-                Recepcion= new RentiSI.Modelos.Recepcion(),
+
+                Tramite = new RentiSI.Modelos.Tramite(),
+                Recepcion = new RentiSI.Modelos.Recepcion(),
                 Impronta = new RentiSI.Modelos.Impronta(),
                 TramiteCasuistica = new RentiSI.Modelos.TramiteCasuistica(),
                 ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("GESTION_IMPRONTAS"),
-                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
+                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                SelectedCasuisticasIds = new int[]{}
             };
-           
+           improntaVM.Tramite.NumeroPlaca = data;
             return View(improntaVM);
         }
         [HttpPost]
         public IActionResult Create(ImprontaVM improntaVM)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
+              
                     _contenedorTrabajo.GestionImpronta.Add(improntaVM.Impronta);
                     _contenedorTrabajo.Save();
-                    foreach (var item in improntaVM.ListaCasuisticas)
+                    if (improntaVM.SelectedCasuisticasIds != null)
                     {
-
+                        foreach (var casuisticaId in improntaVM.SelectedCasuisticasIds)
+                        {
+                            _contenedorTrabajo.TramiteCasuistica.Add(new TramiteCasuistica()
+                            {
+                                Id_tramite = improntaVM.Impronta.ImprontaId,
+                                Id_Casuistica = casuisticaId
+                            });
+                         _contenedorTrabajo.Save();
+                        }
                     }
-
-                    return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction(nameof(Index));
             }
+            improntaVM.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuistica();
             improntaVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(improntaVM);
         }

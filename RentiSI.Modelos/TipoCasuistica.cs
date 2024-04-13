@@ -16,5 +16,7 @@ namespace RentiSI.Modelos
         public string? Modulo { get; set; }
         [Display(Name = "Descripcion")]
         public string? Descripcion { get; set; }
+        [NotMapped]
+        public bool IsChecked { get; set; }
     }
 }
