@@ -1,4 +1,5 @@
-﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
 using System;
@@ -11,7 +12,7 @@ using System.Xml.Serialization;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
-    public class GestionImprontaRepository : Repository<Gestion>, IGestionImprontaRepository
+    public class GestionImprontaRepository : Repository<Impronta>, IGestionImprontaRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -30,7 +31,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         /// To Do
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ResponseViewModel> ObtenerImprontas()
+        public IEnumerable<ImprontaVM> ObtenerImprontas()
         {
             var result = from tramite in _db.Tramite
                          join recepcion in _db.Recepcion
@@ -40,21 +41,27 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          from recepcionRecepcion in usuariosLeftJoin.DefaultIfEmpty()
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
-                         join gestion in _db.Gestion
-                         on tramite.Id equals gestion.Id_Tramite
-                         select new ResponseViewModel
+                         join Impronta in _db.Impronta
+                         on tramite.Id equals Impronta.Id_Tramite into improntaLeftJoin
+                         from impronta in improntaLeftJoin.DefaultIfEmpty()
+                         join tramiteCasuistica in _db.TramiteCasuistica
+                         on impronta.ImprontaId equals tramiteCasuistica.Id_tramite into tramiteCasuisticaLeftJoin
+                         from tramiteCasuistica in tramiteCasuisticaLeftJoin.DefaultIfEmpty()
+                         join tipoCasuistica in _db.TipoCasuistica
+                         on tramiteCasuistica.Id_Casuistica equals tipoCasuistica.Id into tipoCasuisticaLeftJoin
+                         from tipoCasuistica in tipoCasuisticaLeftJoin.DefaultIfEmpty()
+                         where tramite.Impronta == "true"
+                         select new ImprontaVM
                          {
-                             NumeroPlaca = tramite.NumeroPlaca,
-                             FechaRecepcion = recepcion.FechaRecepcion,
-                             GestionId = gestion.Id,
-                             OrganismoTransito = transito.Municipio,
-                             FechaAsignacion = tramite.FechaCreacion,
-                             UsuarioRecibe = recepcionRecepcion.Nombre
-
+                             Tramite = tramite,
+                             Recepcion = recepcion,
+                             Impronta = impronta ?? new Impronta(),
+                             OrganismosDeTransito = transito,
+                             TramiteCasuistica = tramiteCasuistica ?? new TramiteCasuistica(),
+                             TipoCasuistica = tipoCasuistica ?? new TipoCasuistica(),
                          };
 
             return result.ToList();
-
         }
 
         public ResponseViewModel ObtenerImprontasPorId(int gestionId)
@@ -64,20 +71,19 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           on tramite.Id equals recepcion.Id_Tramite
                           join gestion in _db.Gestion
                           on tramite.Id equals gestion.Id_Tramite
-                          where recepcion.Id == gestionId
+                          where recepcion.RecepcionId == gestionId
                           select new ResponseViewModel
                           {
                               NumeroPlaca = tramite.NumeroPlaca,
                               FechaRecepcion = recepcion.FechaRecepcion,
                               FechaAsignacion = tramite.FechaCreacion,
                               Observacion = recepcion.Observacion,
-                              GestionId = gestion.Id,
+                              GestionId = gestion.GestionId,
                           }).FirstOrDefault();
 
 
             return result;
         }
 
-       
     }
 }

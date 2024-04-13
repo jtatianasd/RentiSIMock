@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240412050952_RenombrarKeyImpronta")]
+    partial class RenombrarKeyImpronta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,11 +234,11 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Gestion", b =>
                 {
-                    b.Property<int>("GestionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GestionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EstadoGestion")
                         .HasColumnType("nvarchar(max)");
@@ -255,7 +258,7 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<int?>("Id_Tramite")
                         .HasColumnType("int");
 
-                    b.HasKey("GestionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdUsuarioGestion");
 
@@ -274,8 +277,8 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImprontaId"));
 
-                    b.Property<string>("EsResuelto")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("EsResultado")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("Id_Tramite")
                         .HasColumnType("int");
@@ -316,11 +319,11 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Reasignacion", b =>
                 {
-                    b.Property<int>("ReasignacionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReasignacionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FechaReasignacion")
                         .HasColumnType("nvarchar(max)");
@@ -331,7 +334,7 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<int?>("Id_Tramite")
                         .HasColumnType("int");
 
-                    b.HasKey("ReasignacionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdUsuarioReasignacion");
 
@@ -342,11 +345,11 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Recepcion", b =>
                 {
-                    b.Property<int>("RecepcionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecepcionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FechaRecepcion")
                         .HasColumnType("nvarchar(max)");
@@ -360,7 +363,7 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("Observacion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RecepcionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdUsuarioRecepcion");
 
@@ -371,11 +374,11 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Revision", b =>
                 {
-                    b.Property<int>("RevisionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RevisionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EstadoRevision")
                         .HasColumnType("nvarchar(max)");
@@ -401,7 +404,7 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("TipificacionTramiteRevision")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RevisionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdUsuarioRevision");
 
@@ -476,6 +479,8 @@ namespace RentiSI.AccesoDatos.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id_tramite", "Id_Casuistica");
+
+                    b.HasIndex("Id_Casuistica");
 
                     b.ToTable("TramiteCasuistica");
                 });
@@ -646,6 +651,25 @@ namespace RentiSI.AccesoDatos.Migrations
                         .IsRequired();
 
                     b.Navigation("OrganismosDeTransito");
+                });
+
+            modelBuilder.Entity("RentiSI.Modelos.TramiteCasuistica", b =>
+                {
+                    b.HasOne("RentiSI.Modelos.TipoCasuistica", "TipoCasuistica")
+                        .WithMany()
+                        .HasForeignKey("Id_Casuistica")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RentiSI.Modelos.Tramite", "Tramite")
+                        .WithMany()
+                        .HasForeignKey("Id_tramite")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoCasuistica");
+
+                    b.Navigation("Tramite");
                 });
 #pragma warning restore 612, 618
         }

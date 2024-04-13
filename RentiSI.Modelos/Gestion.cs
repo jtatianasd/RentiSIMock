@@ -11,7 +11,7 @@ namespace RentiSI.Modelos
     public class Gestion
     {
         [Key]
-        public int Id { get; set; }
+        public int GestionId { get; set; }
         public int? Id_Tramite { get; set; }
 
         [ForeignKey("Id_Tramite")]

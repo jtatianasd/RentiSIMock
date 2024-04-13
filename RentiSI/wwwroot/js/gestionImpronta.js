@@ -13,22 +13,34 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "gestionId", "width": "5%" },
-            { "data": "numeroPlaca", "width": "15%" },
-            { "data": "organismoTransito", "width": "15%" },
-            { "data": "numeroPlaca", "width": "15%" },
-            { "data": "numeroPlaca", "width": "15%" },
-            { "data": "fechaRecepcion", "width": "5%" },
+            { "data": "tramite.numeroPlaca", "width": "10%" },
+            { "data": "organismosDeTransito.municipio", "width": "15%" },
+            { "data": "impronta.tipificacionImpronta", "width": "20%" },
+            { "data": "tipoCasuistica.descripcion", "width": "20%" },
+            { "data": "recepcion.fechaRecepcion", "width": "5%" },
             {
-                "data": "gestionId",
+                "data": "impronta.improntaId",
+                "data": "tramite.numeroPlaca",
                 "render": function (data) {
-                    return `<div class="text-center">
+                    if (data > 0) {
+                        return `<div class="text-center">
                                 <a href="/Operativo/GestionImpronta/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
                           </div>
                          `;
+                    }
+                    else
+                    {
+                        return `<div class="text-center">
+                                <a href="/Operativo/GestionImpronta/Create/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <i class="far fa-edit"></i> Gestionar
+                                </a>
+                                &nbsp;
+                          </div>
+                         `;
+                    }
                 }, "width": "30%"
             }
         ],
