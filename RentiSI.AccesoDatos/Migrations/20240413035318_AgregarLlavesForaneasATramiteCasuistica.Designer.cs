@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413035318_AgregarLlavesForaneasATramiteCasuistica")]
+    partial class AgregarLlavesForaneasATramiteCasuistica
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,21 +269,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.ToTable("Gestion");
                 });
 
-            modelBuilder.Entity("RentiSI.Modelos.GestionCasuistica", b =>
-                {
-                    b.Property<int>("GestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CasuisticaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GestionId", "CasuisticaId");
-
-                    b.HasIndex("CasuisticaId");
-
-                    b.ToTable("GestionCasuistica");
-                });
-
             modelBuilder.Entity("RentiSI.Modelos.Impronta", b =>
                 {
                     b.Property<int>("ImprontaId")
@@ -423,21 +411,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.HasIndex("Id_Tramite");
 
                     b.ToTable("Revision");
-                });
-
-            modelBuilder.Entity("RentiSI.Modelos.RevisionCasuistica", b =>
-                {
-                    b.Property<int>("RevisionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CasuisticaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RevisionId", "CasuisticaId");
-
-                    b.HasIndex("CasuisticaId");
-
-                    b.ToTable("RevisionCasuistica");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.TipoCasuistica", b =>
@@ -607,25 +580,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Navigation("UsuarioResuelve");
                 });
 
-            modelBuilder.Entity("RentiSI.Modelos.GestionCasuistica", b =>
-                {
-                    b.HasOne("RentiSI.Modelos.TipoCasuistica", "TipoCasuistica")
-                        .WithMany()
-                        .HasForeignKey("CasuisticaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RentiSI.Modelos.Gestion", "Gestion")
-                        .WithMany()
-                        .HasForeignKey("GestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Gestion");
-
-                    b.Navigation("TipoCasuistica");
-                });
-
             modelBuilder.Entity("RentiSI.Modelos.Impronta", b =>
                 {
                     b.HasOne("RentiSI.Modelos.Tramite", "Id_Tramite_Gestion")
@@ -686,25 +640,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Navigation("Id_Tramite_Gestion");
 
                     b.Navigation("UsuarioRevision");
-                });
-
-            modelBuilder.Entity("RentiSI.Modelos.RevisionCasuistica", b =>
-                {
-                    b.HasOne("RentiSI.Modelos.TipoCasuistica", "TipoCasuistica")
-                        .WithMany()
-                        .HasForeignKey("CasuisticaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RentiSI.Modelos.Revision", "Revision")
-                        .WithMany()
-                        .HasForeignKey("RevisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Revision");
-
-                    b.Navigation("TipoCasuistica");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Tramite", b =>

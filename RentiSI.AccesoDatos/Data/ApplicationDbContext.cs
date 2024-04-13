@@ -20,5 +20,7 @@ namespace RentiSI.AccesoDatos
         public DbSet<OrganismosDeTransito> OrganismosDeTransito { get; set; }
         public DbSet<TipoCasuistica> TipoCasuistica { get; set; }
         public DbSet<TramiteCasuistica> TramiteCasuistica { get; set; }
+        public DbSet<RevisionCasuistica> RevisionCasuistica { get; set; }
+        public DbSet<GestionCasuistica> GestionCasuistica { get; set; }
     }
 }

@@ -45,12 +45,12 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on tramite.Id equals Impronta.Id_Tramite into improntaLeftJoin
                          from impronta in improntaLeftJoin.DefaultIfEmpty()
                          join tramiteCasuistica in _db.TramiteCasuistica
-                         on impronta.ImprontaId equals tramiteCasuistica.Id_tramite into tramiteCasuisticaLeftJoin
+                         on impronta.ImprontaId equals tramiteCasuistica.ImprontaId into tramiteCasuisticaLeftJoin
                          from tramiteCasuistica in tramiteCasuisticaLeftJoin.DefaultIfEmpty()
                          join tipoCasuistica in _db.TipoCasuistica
-                         on tramiteCasuistica.Id_Casuistica equals tipoCasuistica.Id into tipoCasuisticaLeftJoin
+                         on tramiteCasuistica.CasuisticaId equals tipoCasuistica.Id into tipoCasuisticaLeftJoin
                          from tipoCasuistica in tipoCasuisticaLeftJoin.DefaultIfEmpty()
-                         where tramite.Impronta == "true"
+                         where recepcion.FechaRecepcion != null
                          select new ImprontaVM
                          {
                              Tramite = tramite,

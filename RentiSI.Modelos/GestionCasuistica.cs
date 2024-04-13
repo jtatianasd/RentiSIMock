@@ -1,21 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RentiSI.Modelos
-{  
-    [PrimaryKey(nameof(ImprontaId), nameof(CasuisticaId))]
-    public class TramiteCasuistica
+{
+    [PrimaryKey(nameof(GestionId), nameof(CasuisticaId))]
+    public class GestionCasuistica
     {
-        public int ImprontaId { get; set; }
+        public int GestionId { get; set; }
         public int CasuisticaId { get; set; }
-        [ForeignKey("ImprontaId")]
-        public virtual Impronta? Impronta { get; set; }
+        [ForeignKey("GestionId")]
+        public virtual Gestion? Gestion { get; set; }
         [ForeignKey("CasuisticaId")]
         public virtual TipoCasuistica? TipoCasuistica { get; set; }
     }
