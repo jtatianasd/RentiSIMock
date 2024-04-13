@@ -31,6 +31,13 @@ namespace RentiSI.Areas.Operativo.Controllers
         public IActionResult Edit(int revisionId)
         {
             var recepciones = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
+            if(recepciones != null)
+            {
+                recepciones.ListaTipoTramite = _contenedorTrabajo.TipoTramite.GetListaTipoTramite();
+                recepciones.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+                recepciones.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES");
+                recepciones.SelectedCasuisticasIds = new int[] { };
+            }
             return View(recepciones);
         }
 

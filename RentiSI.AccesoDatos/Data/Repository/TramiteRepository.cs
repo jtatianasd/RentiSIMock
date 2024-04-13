@@ -1,5 +1,6 @@
 ﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
+using RentiSI.Modelos.viewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public TramiteRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
+        }
+
+        public IEnumerable<ResponseViewModel> ObtenerGestionTramite()
+        {
+            return null;
         }
 
     }

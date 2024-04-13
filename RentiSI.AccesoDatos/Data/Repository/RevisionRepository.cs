@@ -24,20 +24,21 @@ namespace RentiSI.AccesoDatos.Data.Repository
         {
             var result = from tramite in _db.Tramite
                          join revision in _db.Revision
-                         on tramite.Id equals revision.Id_Tramite
+                         on tramite.Id equals revision.Id_Tramite into recepcionLeftJoin
+                         from recepcionTramite in recepcionLeftJoin.DefaultIfEmpty()
                          join recepcion in _db.Recepcion
                          on tramite.Id equals recepcion.Id_Tramite
+                         join impronta in _db.Impronta
+                         on tramite.Id equals impronta.Id_Tramite
                          join transito in _db.OrganismosDeTransito
-                        on tramite.OrganismoDeTransitoId equals transito.Id
+                         on tramite.OrganismoDeTransitoId equals transito.Id
+                         where impronta.EsResuelto == "true"
                          select new ResponseViewModel
                          {
-                             NumeroPlaca = tramite.NumeroPlaca,
-                             FechaRevision = revision.FechaRevision,
-                             TipificacionTramiteRevision = revision.TipificacionTramiteRevision,
-                             //OrganismosTransito = tramite.OrganismoDeTransitoId,
-                             RevisionId = revision.RevisionId,
-                             FechaRecepcion =recepcion.FechaRecepcion,
-
+                             OrganismosDeTransito = transito,
+                             Tramite = tramite,
+                             Revision = recepcionTramite ?? new Revision(),
+                             Recepcion = recepcion
                          };
 
             return result.ToList();
@@ -52,14 +53,18 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           on tramite.Id equals revision.Id_Tramite
                           join recepcion in _db.Recepcion
                           on tramite.Id equals recepcion.Id_Tramite
-                          where recepcion.RecepcionId == GestionId
+                          join transito in _db.OrganismosDeTransito
+                          on tramite.OrganismoDeTransitoId equals transito.Id
+                          where revision.RevisionId == GestionId
+
                           select new ResponseViewModel
                           {
-                              NumeroPlaca = tramite.NumeroPlaca,
+                              Tramite = tramite,
                               FechaRecepcion = recepcion.FechaRecepcion,
                               FechaAsignacion = tramite.FechaCreacion,
                               Observacion = recepcion.Observacion,
-                              RevisionId = revision.RevisionId,
+                              Revision = revision,
+                              OrganismosDeTransito = transito,
                           }).FirstOrDefault();
 
 

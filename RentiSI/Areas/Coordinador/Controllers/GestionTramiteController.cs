@@ -3,9 +3,9 @@ using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using System.Security.Claims;
 
-namespace RentiSI.Areas.Operativo.Controllers
+namespace RentiSI.Areas.Coordinador.Controllers
 {
-    [Area("Operativo")]
+    [Area("Coordinador")]
     public class GestionTramiteController : Controller
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
@@ -24,7 +24,7 @@ namespace RentiSI.Areas.Operativo.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _contenedorTrabajo.Tramite.GetAll()});
+            return Json(new { data = _contenedorTrabajo.Tramite.GetAll() });
         }
 
         [HttpGet("/Operativo/GestionTramite/Edit/{revisionId}")]

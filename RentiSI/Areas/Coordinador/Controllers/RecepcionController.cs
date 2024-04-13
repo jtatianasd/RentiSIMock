@@ -52,7 +52,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
             var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.RecepcionId).FirstOrDefault();
             if (recepcion != null)
             {
-                recepcion.Observacion = responseViewModel.Observacion;
+                recepcion.Observacion = responseViewModel.Recepcion.Observacion;
                 recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
                 recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
                 recepcion.EsRecepcion = responseViewModel.Recepcion.EsRecepcion;
@@ -60,9 +60,25 @@ namespace RentiSI.Areas.Coordinador.Controllers
                 _contenedorTrabajo.Recepcion.Actualizar(recepcion);
             }
 
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpPost]
+        public IActionResult Create(ResponseViewModel responseViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                responseViewModel.Recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
+                responseViewModel.Recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
+                responseViewModel.Recepcion.Id_Tramite = responseViewModel.Tramite.Id;
+                _contenedorTrabajo.Recepcion.Add(responseViewModel.Recepcion);
+                _contenedorTrabajo.Save();
+            }
 
 
             return RedirectToAction(nameof(Index));
+
         }
 
         [HttpGet("/Coordinador/Recepcion/Create/{tramiteId}")]
@@ -76,9 +92,5 @@ namespace RentiSI.Areas.Coordinador.Controllers
 
             return View(responseViewModel);
         }
-
-
-
-
     }
 }

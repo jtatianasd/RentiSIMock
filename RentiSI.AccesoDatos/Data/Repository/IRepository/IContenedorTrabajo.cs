@@ -17,6 +17,9 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IGestionImprontaRepository GestionImpronta { get; }
         ITipoCasuisticaRepository TipoCasuistica { get; }
         ITramiteCasuisticaRepository TramiteCasuistica { get; }
+
+        ITipoTramiteRepository TipoTramite { get; }
+
         void Save();
     }
 }

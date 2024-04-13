@@ -13,7 +13,9 @@ namespace RentiSI.Modelos.viewModels
         public Tramite? Tramite { get; set; }
 
         public Recepcion? Recepcion { get; set; }
-        
+
+        public Revision? Revision { get; set; }
+
         public string NumeroPlaca { get; set; }
         public int RevisionId { get; set; }
 
@@ -45,6 +47,13 @@ namespace RentiSI.Modelos.viewModels
         public bool EsResuelto { get; set; }
 
         public IEnumerable<SelectListItem>? ListaOrganismosTransito { get; set; }
+
+        public IEnumerable<SelectListItem>? ListaTipoTramite { get; set; }
+
+        public int[]? SelectedCasuisticasIds { get; set; }
+
+
+        public IEnumerable<SelectListItem>? ListaCasuisticas { get; set; }
 
 
 

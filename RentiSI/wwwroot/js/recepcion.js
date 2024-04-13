@@ -13,23 +13,34 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "recepcionId", "width": "5%" },
             { "data": "fechaRecepcion", "width": "15%" },
             { "data": "numeroPlaca", "width": "15%" },
             { "data": "usuarioRecibe", "width": "15%" },
-            { "data": "organismoTransito", "width": "20%" },
+            { "data": "organismosDeTransito.municipio", "width": "20%" },
             { "data": "fechaAsignacion", "width": "20%" },
             { "data": "impronta", "width": "5%" },
             {
-                "data": "recepcionId",
-                "render": function (data) {
-                    return `<div class="text-center">
+                "data": "recepcion.recepcionId",
+                "tramiteId": "tramiteId",
+                "render": function (data, type, row) {
+                    if (data > 0) {
+                        return `<div class="text-center">
                                 <a href="/Coordinador/Recepcion/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
                           </div>
                          `;
+                    }
+                    else {
+                        return `<div class="text-center">
+                                <a href="/Coordinador/Recepcion/Create/${row.tramiteId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <i class="far fa-edit"></i> Gestionar
+                                </a>
+                                &nbsp;
+                          </div>
+                         `;
+                    }
                 }, "width": "30%"
             }
         ],

@@ -23,6 +23,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
             GestionImpronta = new GestionImprontaRepository(_db);
             TipoCasuistica = new TipoCasuisticaRepository(_db);
             TramiteCasuistica = new TramiteCasuisticaRepository(_db);
+            TipoTramite = new TipoTramiteRepository(_db);
         }
         public IUsuarioRepository Usuario { get; private set; }
         public ITramiteRepository Tramite { get; private set; }
@@ -33,6 +34,8 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public IGestionImprontaRepository GestionImpronta { get; private set; }
         public ITipoCasuisticaRepository TipoCasuistica { get; private set; }
         public ITramiteCasuisticaRepository TramiteCasuistica { get; private set; }
+
+        public ITipoTramiteRepository TipoTramite { get; private set; }
         public void Dispose()
         {
             _db.Dispose();
