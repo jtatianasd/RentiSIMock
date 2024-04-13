@@ -31,15 +31,16 @@ namespace RentiSI.Areas.Coordinador.Controllers
         public IActionResult GetAll()
         {
             return Json(new { data = _contenedorTrabajo.Recepcion.ObtenerRecepciones() });
+
         }
 
         [HttpGet("/Coordinador/Recepcion/Edit/{recepcionId}")]
         public IActionResult Edit(int recepcionId)
         {
             var recepciones = _contenedorTrabajo.Recepcion.ObtenerRecepcionesPorId(recepcionId);
-            if (!string.IsNullOrEmpty(recepciones.FechaRecepcion))
+            if (recepciones != null)
             {
-                recepciones.EsFechaRecepcion = true;
+                recepciones.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             }
             return View(recepciones);
         }
@@ -48,21 +49,32 @@ namespace RentiSI.Areas.Coordinador.Controllers
         public IActionResult Update(ResponseViewModel responseViewModel)
         {
 
-            if(responseViewModel.EsFechaRecepcion)
+            var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.RecepcionId).FirstOrDefault();
+            if (recepcion != null)
             {
-                var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.RecepcionId).FirstOrDefault();
-                if(recepcion != null)
-                {
-                    recepcion.Observacion = responseViewModel.Observacion;
-                    recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
-                    recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
+                recepcion.Observacion = responseViewModel.Observacion;
+                recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
+                recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
+                recepcion.EsRecepcion = responseViewModel.Recepcion.EsRecepcion;
 
-                    _contenedorTrabajo.Recepcion.Actualizar(recepcion);
-                }
-
+                _contenedorTrabajo.Recepcion.Actualizar(recepcion);
             }
 
+
+
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("/Coordinador/Recepcion/Create/{tramiteId}")]
+        public IActionResult Create(int tramiteId)
+        {
+            ResponseViewModel responseViewModel = new ResponseViewModel()
+            {
+                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                Tramite = _contenedorTrabajo.Tramite.Get(tramiteId)
+            };
+
+            return View(responseViewModel);
         }
 
 

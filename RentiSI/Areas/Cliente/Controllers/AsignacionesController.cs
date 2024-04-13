@@ -41,9 +41,6 @@ namespace RentiSI.Areas.Cliente.Controllers
                     _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
                     _contenedorTrabajo.Save();
 
-                    //Se crea el trámite en la recepción
-                    saveRecepcion(tramiteVM.Tramite.Id);
-
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -87,17 +84,6 @@ namespace RentiSI.Areas.Cliente.Controllers
             }
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(tramiteVM);
-        }
-
-        private void saveRecepcion(int tramiteId)
-        {
-            _contenedorTrabajo.Recepcion.Add(
-                       new Recepcion()
-                       {
-                           Id_Tramite = tramiteId
-                       });
-
-            _contenedorTrabajo.Save();
         }
     }
 }

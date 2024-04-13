@@ -24,5 +24,7 @@ namespace RentiSI.Modelos
 
         [ForeignKey("IdUsuarioRecepcion")]
         public ApplicationUser? UsuarioRecepcion { get; set; }
+
+        public bool EsRecepcion { get; set; }
     }
 }

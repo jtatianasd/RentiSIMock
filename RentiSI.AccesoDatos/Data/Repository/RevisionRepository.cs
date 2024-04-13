@@ -34,7 +34,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NumeroPlaca = tramite.NumeroPlaca,
                              FechaRevision = revision.FechaRevision,
                              TipificacionTramiteRevision = revision.TipificacionTramiteRevision,
-                             OrganismoTransito = transito.Municipio,
+                             //OrganismosTransito = tramite.OrganismoDeTransitoId,
                              RevisionId = revision.RevisionId,
                              FechaRecepcion =recepcion.FechaRecepcion,
 

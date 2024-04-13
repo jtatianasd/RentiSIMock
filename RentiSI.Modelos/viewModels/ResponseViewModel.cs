@@ -9,6 +9,11 @@ namespace RentiSI.Modelos.viewModels
 {
     public class ResponseViewModel
     {
+
+        public Tramite? Tramite { get; set; }
+
+        public Recepcion? Recepcion { get; set; }
+        
         public string NumeroPlaca { get; set; }
         public int RevisionId { get; set; }
 
@@ -21,7 +26,7 @@ namespace RentiSI.Modelos.viewModels
 
         public string TipificacionTramiteRevision { get; set; }
 
-        public string OrganismoTransito { get; set; }
+        public OrganismosDeTransito? OrganismosDeTransito { get; set; }
 
         public string? FechaRecepcion { get; set; }
 

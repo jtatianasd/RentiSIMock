@@ -8,19 +8,18 @@
     <div class="row">
         <div class="col-6 offset-2 mt-4 text-center">
             <h3>
-                <small class="text-body-secondary">Editar Recepción</small>
+                <small class="text-body-secondary">Crear Recepción</small>
             </h3>
         </div>
     </div>
-    <form method="POST" asp-action="Update">
-        <input type="hidden" asp-for="RecepcionId" value="@Model.Recepcion.RecepcionId" />
+    <form method="POST" asp-action="Create">
         <div class="col-10 offset-1 mt-4">
             <div class="row mt-2 mb-2">
                 <div class="col-3">
-                    <label class="fw-bold">Número de placa</label>
+                    <label class="fw-bold">Numero de placa</label>
                 </div>
                 <div class="col-6">
-                    <label asp-for="FechaAsignacion">@Model.Tramite.NumeroPlaca</label>
+                    <label asp-for="Tramite.NumeroPlaca">@Model.Tramite.NumeroPlaca</label>
                 </div>
             </div>
 
@@ -30,7 +29,7 @@
                 </div>
                 <div class="col-6">
                     <div class="">
-                        <label asp-for="FechaAsignacion">@Model.Tramite.FechaCreacion</label>
+                        <label asp-for="Tramite.FechaCreacion">@Model.Tramite.FechaCreacion</label>
                     </div>
                 </div>
             </div>
@@ -40,7 +39,7 @@
                     <label class="fw-bold">Observación</label>
                 </div>
                 <div class="col-6">
-                    <textarea class="form-control" id="Observacion" rows="3" asp-for="@Model.Recepcion.Observacion">@Model.Recepcion.Observacion"</textarea>
+                    <textarea class="form-control" id="Observacion" rows="3" asp-for="@Model.Tramite.Observaciones"></textarea>
                 </div>
             </div>
 
@@ -49,7 +48,7 @@
                     <label class="fw-bold">Organismo de Tránsito</label>
                 </div>
                 <div class="col-6">
-                    @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
+                    @Html.DropDownListFor(m => m.ListaOrganismosTransito, Model.ListaOrganismosTransito,
                              "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
                 </div>
             </div>
@@ -60,15 +59,15 @@
                 </div>
                 <div class="col-6">
                     <div class="form-check form-switch">
-                        <input asp-for="@Model.Recepcion.EsRecepcion" class="form-check-input" type="checkbox" id="fechaRecepcionSwitch">
-                        <span asp-validation-for="EsFechaRecepcion" class="text-danger"></span>
+                        <input asp-for="Recepcion.EsRecepcion" class="form-check-input" type="checkbox" id="fechaRecepcionSwitch">
+                        <span asp-validation-for="Recepcion.EsRecepcion" class="text-danger"></span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group-row mt-4">
                 <div class="col-8">
-                    
+
                     <partial name="_VistaCrearVolver" model="ParametrosBotones" />
                 </div>
             </div>

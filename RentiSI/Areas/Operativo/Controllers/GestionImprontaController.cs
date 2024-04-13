@@ -53,8 +53,8 @@ namespace RentiSI.Areas.Operativo.Controllers
                         {
                             _contenedorTrabajo.TramiteCasuistica.Add(new TramiteCasuistica()
                             {
-                                Id_tramite = improntaVM.Impronta.ImprontaId,
-                                Id_Casuistica = casuisticaId
+                                ImprontaId   = improntaVM.Impronta.ImprontaId,
+                                CasuisticaId = casuisticaId
                             });
                          _contenedorTrabajo.Save();
                         }
