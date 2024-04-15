@@ -12,8 +12,8 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240413153243_AgregarEsRevision")]
-    partial class AgregarEsRevision
+    [Migration("20240414235249_AgregarObservacionRevision")]
+    partial class AgregarObservacionRevision
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -413,6 +413,9 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("NumeroGuia")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Observacion")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("OrganismoTransito")
                         .HasColumnType("nvarchar(max)");
 
@@ -463,6 +466,23 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoCasuistica");
+                });
+
+            modelBuilder.Entity("RentiSI.Modelos.TipoTramite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoTramite");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Tramite", b =>

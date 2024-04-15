@@ -32,13 +32,16 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on tramite.Id equals impronta.Id_Tramite
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
+                         join revisionCasuistica in _db.RevisionCasuistica
+                         on recepcionTramite.RevisionId equals revisionCasuistica.RevisionId into casuisticaJoin
                          where impronta.EsResuelto == "true"
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,
                              Tramite = tramite,
                              Revision = recepcionTramite ?? new Revision(),
-                             Recepcion = recepcion
+                             Recepcion = recepcion,
+                             NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion))
                          };
 
             return result.ToList();
@@ -71,8 +74,11 @@ namespace RentiSI.AccesoDatos.Data.Repository
             return result;
         }
 
-
-
+        public void Actualizar(Revision revision)
+        {
+            _db.Update(revision);
+            _db.SaveChangesAsync();
+        }
 
     }
 }

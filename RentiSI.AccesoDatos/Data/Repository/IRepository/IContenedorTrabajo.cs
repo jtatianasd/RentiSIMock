@@ -20,6 +20,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
 
         ITipoTramiteRepository TipoTramite { get; }
 
+        IRevisionCasuisticaRepository RevisionCasuistica { get; }
+
         void Save();
     }
 }

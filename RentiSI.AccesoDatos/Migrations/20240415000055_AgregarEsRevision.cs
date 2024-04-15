@@ -11,8 +11,8 @@ namespace RentiSI.AccesoDatos.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "EsRecepcion",
-                table: "Recepcion",
+                name: "EsRevision",
+                table: "Revision",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
@@ -22,8 +22,8 @@ namespace RentiSI.AccesoDatos.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "EsRecepcion",
-                table: "Recepcion");
+                name: "EsRevision",
+                table: "Revision");
         }
     }
 }

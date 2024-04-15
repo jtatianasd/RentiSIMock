@@ -97,5 +97,10 @@ namespace RentiSI.AccesoDatos.Data.Repository
         {
             dbSet.Remove(entity);
         }
+
+        public void RemoveRange(params T[] entities)
+        {
+            dbSet.RemoveRange(entities);
+        }
     }
 }

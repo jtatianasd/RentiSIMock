@@ -16,6 +16,9 @@ namespace RentiSI.Modelos.viewModels
 
         public Revision? Revision { get; set; }
 
+        public RevisionCasuistica? RevisionCasuistica { get; set; }
+
+        public string NombreCasuisticas { get; set; }
         public string NumeroPlaca { get; set; }
         public int RevisionId { get; set; }
 

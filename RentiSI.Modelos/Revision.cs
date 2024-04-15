@@ -34,5 +34,9 @@ namespace RentiSI.Modelos
         [Display(Name = "Fecha Revision")]
         public string? FechaRevision { get; set; }
 
+        public string? Observacion { get; set; }
+
+        public bool EsRevision { get; set; }
+
     }
 }

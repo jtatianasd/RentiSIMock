@@ -24,5 +24,6 @@ namespace RentiSI.AccesoDatos
         public DbSet<GestionCasuistica> GestionCasuistica { get; set; }
 
         public DbSet<TipoTramite> TipoTramite { get; set; }
+
     }
 }

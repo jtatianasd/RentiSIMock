@@ -15,7 +15,7 @@ function cargarDatatable() {
         "columns": [
             { "data": "tramite.numeroPlaca", "width": "14%" },
             { "data": "tramite.numeroPlaca", "width": "14%" },
-            { "data": "tramite.numeroPlaca", "width": "20%" },
+            { "data": "nombreCasuisticas", "width": "20%" },
             { "data": "organismosDeTransito.municipio", "width": "17%" },
             { "data": "recepcion.fechaRecepcion", "width": "15%" },
             { "data": "fechaRecepcion", "width": "30%" },

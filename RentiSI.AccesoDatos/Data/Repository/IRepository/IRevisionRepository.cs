@@ -8,6 +8,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IEnumerable<ResponseViewModel> ObtenerRevisiones();
 
         ResponseViewModel ObtenerRevisionesPorId(int RevisionId);
+
+        void Actualizar(Revision revision);
     }
 
 }
