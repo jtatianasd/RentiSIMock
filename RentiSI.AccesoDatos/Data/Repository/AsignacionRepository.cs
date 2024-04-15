@@ -31,7 +31,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
             objDesdeDb.FechaNegocio = tramite.FechaNegocio;
             objDesdeDb.Observaciones = tramite.Observaciones;
             objDesdeDb.OrganismoDeTransitoId = tramite.OrganismoDeTransitoId;
-
+            objDesdeDb.IdUsuarioAsignacion=tramite.IdUsuarioAsignacion;
             _db.SaveChanges();
         }
     }

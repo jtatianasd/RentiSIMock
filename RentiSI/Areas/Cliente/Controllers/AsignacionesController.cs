@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
+using System.Globalization;
+using System.Security.Policy;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RentiSI.Areas.Cliente.Controllers
@@ -12,9 +15,11 @@ namespace RentiSI.Areas.Cliente.Controllers
     public class AsignacionesController : Controller
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
-        public AsignacionesController(IContenedorTrabajo contenedorTrabajo)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AsignacionesController(IContenedorTrabajo contenedorTrabajo, UserManager<ApplicationUser> userManager)
         {
             _contenedorTrabajo = contenedorTrabajo;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -35,7 +40,8 @@ namespace RentiSI.Areas.Cliente.Controllers
         {
             if (ModelState.IsValid)
             {
-                tramiteVM.Tramite.FechaCreacion = DateTime.Now.ToShortDateString();
+                tramiteVM.Tramite.FechaCreacion = DateTime.Now;
+                tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
                 if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
                 {
                     _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
@@ -77,6 +83,8 @@ namespace RentiSI.Areas.Cliente.Controllers
         {
             if (ModelState.IsValid)
             {
+                tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
+
                 //Logica para actualizar en BD
                 _contenedorTrabajo.Asignacion.Actualizar(tramiteVM.Tramite);
                 _contenedorTrabajo.Save();

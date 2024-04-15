@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415044726_CambiarTipoDeFechaEnAsignacion")]
+    partial class CambiarTipoDeFechaEnAsignacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -511,9 +514,6 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("Financiacion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdUsuarioAsignacion")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Impronta")
                         .HasColumnType("nvarchar(max)");
 
@@ -528,8 +528,6 @@ namespace RentiSI.AccesoDatos.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdUsuarioAsignacion");
 
                     b.HasIndex("OrganismoDeTransitoId");
 
@@ -754,10 +752,6 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.Tramite", b =>
                 {
-                    b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioAsignacion")
-                        .WithMany()
-                        .HasForeignKey("IdUsuarioAsignacion");
-
                     b.HasOne("RentiSI.Modelos.OrganismosDeTransito", "OrganismosDeTransito")
                         .WithMany()
                         .HasForeignKey("OrganismoDeTransitoId")
@@ -765,8 +759,6 @@ namespace RentiSI.AccesoDatos.Migrations
                         .IsRequired();
 
                     b.Navigation("OrganismosDeTransito");
-
-                    b.Navigation("UsuarioAsignacion");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.TramiteCasuistica", b =>

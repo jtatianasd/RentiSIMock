@@ -13,7 +13,7 @@ namespace RentiSI.Modelos
         [Key]
         public int Id { get; set; }
         [Display(Name = "Fecha de Creación")]
-        public string? FechaCreacion { get; set; }
+        public DateTime? FechaCreacion { get; set; }
         [Required(ErrorMessage = "El numero de placa es requerido")]
         [Display(Name = "Numero de placa")]
         public string NumeroPlaca { get; set; }
@@ -25,7 +25,7 @@ namespace RentiSI.Modelos
         public string? Impronta { get; set; }
         [Display(Name = "Fecha de negocio")]
         [Required(ErrorMessage = "La fecha de negocio es requerida")]
-        public string? FechaNegocio { get; set; }
+        public DateTime? FechaNegocio { get; set; }
         [Display(Name = "Observaciones")]
         public string? Observaciones { get; set; }
         [Required(ErrorMessage = "El organismo de transito es requerido")]
@@ -33,6 +33,10 @@ namespace RentiSI.Modelos
 
         [ForeignKey("OrganismoDeTransitoId")]
         public OrganismosDeTransito? OrganismosDeTransito { get; set; }
+        public string? IdUsuarioAsignacion { get; set; }
+
+        [ForeignKey("IdUsuarioAsignacion")]
+        public ApplicationUser? UsuarioAsignacion { get; set; }
 
     }
 }

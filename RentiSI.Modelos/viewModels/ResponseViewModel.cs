@@ -39,7 +39,7 @@ namespace RentiSI.Modelos.viewModels
 
         public string Impronta { get; set; }
 
-        public string FechaAsignacion { get; set; }
+        public DateTime? FechaAsignacion { get; set; }
 
         public string? UsuarioRecibe { get; set; }
 
