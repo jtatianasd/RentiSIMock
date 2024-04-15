@@ -18,7 +18,7 @@ function cargarDatatable() {
             { "data": "tramite.numeroPlaca", "width": "10%" },
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "impronta.tipificacionImpronta", "width": "20%" },
-            { "data": "tipoCasuistica.descripcion", "width": "20%" },
+            { "data": "nombreCasuisticas", "width": "20%" },
             { "data": "recepcion.fechaRecepcion", "width": "5%" },
             {
                 "data": { improntaId: "impronta.improntaId", tramiteId: "tramite.id" },

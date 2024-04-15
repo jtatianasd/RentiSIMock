@@ -45,11 +45,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on tramite.Id equals Impronta.Id_Tramite into improntaLeftJoin
                          from impronta in improntaLeftJoin.DefaultIfEmpty()
                          join tramiteCasuistica in _db.TramiteCasuistica
-                         on impronta.ImprontaId equals tramiteCasuistica.ImprontaId into tramiteCasuisticaLeftJoin
-                         from tramiteCasuistica in tramiteCasuisticaLeftJoin.DefaultIfEmpty()
-                         join tipoCasuistica in _db.TipoCasuistica
-                         on tramiteCasuistica.CasuisticaId equals tipoCasuistica.Id into tipoCasuisticaLeftJoin
-                         from tipoCasuistica in tipoCasuisticaLeftJoin.DefaultIfEmpty()
+                         on impronta.ImprontaId equals tramiteCasuistica.ImprontaId into casuisticaJoin
                          where recepcion.FechaRecepcion != null
                          select new ImprontaVM
                          {
@@ -57,8 +53,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              Recepcion = recepcion,
                              Impronta = impronta ?? new Impronta(),
                              OrganismosDeTransito = transito,
-                             TramiteCasuistica = tramiteCasuistica ?? new TramiteCasuistica(),
-                             TipoCasuistica = tipoCasuistica ?? new TipoCasuistica(),
+                             NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion))
                          };
 
             return result.ToList();
