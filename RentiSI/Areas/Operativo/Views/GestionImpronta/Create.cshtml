@@ -14,6 +14,7 @@
         </div>
     </div>
     <form method="POST" asp-action="Create" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Tramite.Id" />
         <div class="col-10 offset-1 mt-4">
             <div class="form-group row">
                 <div class="col-4">
@@ -30,7 +31,7 @@
                     <label>Tipo gestion impronta</label>
                 </div>
                 <div class="col-8">
-                    <select class="form-select" id="tipificacionImpronta" name="tipificacionImpronta" asp-for="Impronta.TipificacionImpronta">
+                    <select class="form-select" id="tipificacionImpronta" asp-for="Impronta.TipificacionImpronta">
                         <option value="">Por favor seleccione un tipo de gestion de impronta</option>
                         <option value="Foranea ">Foranea</option>
                         <option value="Local">Local</option>

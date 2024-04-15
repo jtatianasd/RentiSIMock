@@ -13,18 +13,19 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
+            { "data": "impronta.improntaId", "width": "5%" },
+            { "data": "tramite.id", "width": "5%" },
             { "data": "tramite.numeroPlaca", "width": "10%" },
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "impronta.tipificacionImpronta", "width": "20%" },
             { "data": "tipoCasuistica.descripcion", "width": "20%" },
             { "data": "recepcion.fechaRecepcion", "width": "5%" },
             {
-                "data": "impronta.improntaId",
-                "data": "tramite.numeroPlaca",
+                "data": { improntaId: "impronta.improntaId", tramiteId: "tramite.id" },
                 "render": function (data) {
-                    if (data > 0) {
+                    if (data.impronta.improntaId > 0) {
                         return `<div class="text-center">
-                                <a href="/Operativo/GestionImpronta/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Operativo/GestionImpronta/Edit/${data.impronta.improntaId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
@@ -34,14 +35,14 @@ function cargarDatatable() {
                     else
                     {
                         return `<div class="text-center">
-                                <a href="/Operativo/GestionImpronta/Create/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Operativo/GestionImpronta/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Gestionar
                                 </a>
                                 &nbsp;
                           </div>
                          `;
                     }
-                }, "width": "30%"
+                }, "width": "20%"
             }
         ],
         "language": {

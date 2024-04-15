@@ -20,11 +20,9 @@ namespace RentiSI.Areas.Operativo.Controllers
         {
             return View();
         }
-        [HttpGet("/Operativo/GestionImpronta/Create/{data}")]
-        public IActionResult Create(string data)
+        [HttpGet()]
+        public IActionResult Create(int? id)
         {
-
-
             ImprontaVM improntaVM = new ImprontaVM()
             {
 
@@ -36,12 +34,17 @@ namespace RentiSI.Areas.Operativo.Controllers
                 ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
                 SelectedCasuisticasIds = new int[]{}
             };
-           improntaVM.Tramite.NumeroPlaca = data;
+            if (id != null)
+            {
+                improntaVM.Tramite= _contenedorTrabajo.Tramite.Get(id.GetValueOrDefault());
+            }
+
             return View(improntaVM);
         }
         [HttpPost]
         public IActionResult Create(ImprontaVM improntaVM)
         {
+            improntaVM.Impronta.Id_Tramite= improntaVM.Tramite.Id;
             if (!ModelState.IsValid)
             {
               
