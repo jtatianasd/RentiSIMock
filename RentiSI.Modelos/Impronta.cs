@@ -27,5 +27,10 @@ namespace RentiSI.Modelos
         [ForeignKey("OrganismoDeTransitoId")]
         public OrganismosDeTransito? OrganismosDeTransito { get; set; }
         public string? EsResuelto { get; set; }
+        public DateTime FechaResultadoImpronta { get; set; }
+        public string? IdUsuarioResuelveImpronta { get; set; }
+
+        [ForeignKey("IdUsuarioResuelveImpronta")]
+        public ApplicationUser? UsuarioImpronta { get; set; }
     }
 }

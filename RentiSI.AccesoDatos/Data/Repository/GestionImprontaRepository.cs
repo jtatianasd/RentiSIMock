@@ -28,6 +28,8 @@ namespace RentiSI.AccesoDatos.Data.Repository
             objDesdeDb.Observaciones = improntaVM.Impronta.Observaciones;
             objDesdeDb.OrganismoDeTransitoId = improntaVM.Impronta.OrganismoDeTransitoId;
             objDesdeDb.EsResuelto = improntaVM.Impronta.EsResuelto;
+            objDesdeDb.IdUsuarioResuelveImpronta = improntaVM.Impronta.IdUsuarioResuelveImpronta;
+            objDesdeDb.FechaResultadoImpronta = improntaVM.Impronta.FechaResultadoImpronta;
             _db.SaveChanges();
 
             var tramiteCasuistica = _db.TramiteCasuistica.Where(tc => tc.ImprontaId == improntaVM.Impronta.ImprontaId);
@@ -48,10 +50,6 @@ namespace RentiSI.AccesoDatos.Data.Repository
             }
         }
 
-        /// <summary>
-        /// To Do
-        /// </summary>
-        /// <returns></returns>
         public IEnumerable<ImprontaVM> ObtenerImprontas()
         {
             var result = from tramite in _db.Tramite

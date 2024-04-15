@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415042739_AgregarCamposATablaImpronta")]
+    partial class AgregarCamposATablaImpronta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -263,7 +266,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("Id_Tramite");
 
-                    b.ToTable("Gestion", (string)null);
+                    b.ToTable("Gestion");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.GestionCasuistica", b =>
@@ -278,7 +281,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("CasuisticaId");
 
-                    b.ToTable("GestionCasuistica", (string)null);
+                    b.ToTable("GestionCasuistica");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Impronta", b =>
@@ -318,7 +321,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("OrganismoDeTransitoId");
 
-                    b.ToTable("Impronta", (string)null);
+                    b.ToTable("Impronta");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.OrganismosDeTransito", b =>
@@ -334,7 +337,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrganismosDeTransito", (string)null);
+                    b.ToTable("OrganismosDeTransito");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Reasignacion", b =>
@@ -360,7 +363,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("Id_Tramite");
 
-                    b.ToTable("Reasignacion", (string)null);
+                    b.ToTable("Reasignacion");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Recepcion", b =>
@@ -392,7 +395,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("Id_Tramite");
 
-                    b.ToTable("Recepcion", (string)null);
+                    b.ToTable("Recepcion");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Revision", b =>
@@ -439,7 +442,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("Id_Tramite");
 
-                    b.ToTable("Revision", (string)null);
+                    b.ToTable("Revision");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.RevisionCasuistica", b =>
@@ -454,7 +457,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("CasuisticaId");
 
-                    b.ToTable("RevisionCasuistica", (string)null);
+                    b.ToTable("RevisionCasuistica");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.TipoCasuistica", b =>
@@ -473,7 +476,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoCasuistica", (string)null);
+                    b.ToTable("TipoCasuistica");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.TipoTramite", b =>
@@ -490,7 +493,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoTramite", (string)null);
+                    b.ToTable("TipoTramite");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Tramite", b =>
@@ -528,7 +531,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("OrganismoDeTransitoId");
 
-                    b.ToTable("Tramite", (string)null);
+                    b.ToTable("Tramite");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.TramiteCasuistica", b =>
@@ -543,7 +546,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasIndex("CasuisticaId");
 
-                    b.ToTable("TramiteCasuistica", (string)null);
+                    b.ToTable("TramiteCasuistica");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.ApplicationUser", b =>
