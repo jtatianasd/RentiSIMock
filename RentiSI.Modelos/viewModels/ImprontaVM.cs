@@ -18,6 +18,6 @@ namespace RentiSI.Modelos.viewModels
         public IEnumerable<SelectListItem>? ListaOrganismosTransito { get; set; }
         public IEnumerable<SelectListItem>? ListaCasuisticas { get; set; }
         public int[]? SelectedCasuisticasIds { get; set; }
-        public string NombreCasuisticas { get; set; }
+        public string? NombreCasuisticas { get; set; }
     }
 }

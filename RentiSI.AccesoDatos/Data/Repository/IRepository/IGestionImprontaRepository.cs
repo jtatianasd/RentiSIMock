@@ -6,10 +6,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
     public interface IGestionImprontaRepository : IRepository<Impronta>
     {
         IEnumerable<ImprontaVM> ObtenerImprontas();
-
-        ResponseViewModel ObtenerImprontasPorId(int improntaId);
-
-        void Actualizar(Gestion impronta);
+        IEnumerable<ImprontaVM> ObtenerImprontasPorId(int? id);
+        void Actualizar(ImprontaVM impronta);
     }
 
 }

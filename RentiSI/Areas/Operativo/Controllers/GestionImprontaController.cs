@@ -45,7 +45,7 @@ namespace RentiSI.Areas.Operativo.Controllers
         public IActionResult Create(ImprontaVM improntaVM)
         {
             improntaVM.Impronta.Id_Tramite= improntaVM.Tramite.Id;
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
               
                     _contenedorTrabajo.GestionImpronta.Add(improntaVM.Impronta);
@@ -77,17 +77,42 @@ namespace RentiSI.Areas.Operativo.Controllers
             return Json(new { data = _contenedorTrabajo.GestionImpronta.ObtenerImprontas() });
         }
 
-        [HttpGet("/Operativo/GestionImpronta/Edit/{gestionId}")]
-        public IActionResult Edit(int gestionId)
+        [HttpGet("/Operativo/GestionImpronta/Edit/{id}")]
+        public IActionResult Edit(int? id)
         {
-            var gestionImprontas = _contenedorTrabajo.GestionImpronta.ObtenerImprontasPorId(gestionId);
-            if(gestionImprontas != null)
+            ImprontaVM improntaVM = new ImprontaVM()
             {
-                gestionImprontas.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+                Tramite = new Tramite(),
+                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("GESTION_IMPRONTAS"),
+                SelectedCasuisticasIds = _contenedorTrabajo.TramiteCasuistica.GetAll(impronta => impronta.ImprontaId == id)
+                                                 .Select(impronta => impronta.CasuisticaId)
+                                                 .ToArray()
+            };
+            if (id != null)
+            {
+               var result  = _contenedorTrabajo.GestionImpronta.ObtenerImprontasPorId(id.GetValueOrDefault());
+                foreach (var item in result)
+                {
+                    improntaVM.Tramite = item.Tramite;
+                    improntaVM.Impronta = item.Impronta;
+                }
             }
-          
-            return View(gestionImprontas);
-        }
 
+            return View(improntaVM);
+        }
+        public IActionResult Edit(ImprontaVM improntaVM)
+        {
+            if (ModelState.IsValid)
+            {
+                _contenedorTrabajo.GestionImpronta.Actualizar(improntaVM);
+                _contenedorTrabajo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            
+            improntaVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+            improntaVM.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuistica();
+            return View(improntaVM);
+        }
     }
 }

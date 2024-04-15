@@ -22,7 +22,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
             bool valor = _db.Tramite.Any(c => c.NumeroPlaca.ToLower().Trim() == NumeroPlaca.ToLower().Trim());
             return valor;
         }
-        public void Update(Tramite tramite)
+        public void Actualizar(Tramite tramite)
         {
             var objDesdeDb = _db.Tramite.FirstOrDefault(s => s.Id == tramite.Id);
             objDesdeDb.NumeroPlaca = tramite.NumeroPlaca;

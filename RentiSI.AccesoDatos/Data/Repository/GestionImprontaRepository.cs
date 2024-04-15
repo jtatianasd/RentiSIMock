@@ -21,10 +21,31 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db = db;
         }
 
-        public void Actualizar(Gestion impronta)
+        public void Actualizar(ImprontaVM improntaVM)
         {
-            _db.Update(impronta);
-            _db.SaveChangesAsync();
+            var objDesdeDb = _db.Impronta.FirstOrDefault(s => s.ImprontaId == improntaVM.Impronta.ImprontaId);
+            objDesdeDb.TipificacionImpronta = improntaVM.Impronta.TipificacionImpronta;
+            objDesdeDb.Observaciones = improntaVM.Impronta.Observaciones;
+            objDesdeDb.OrganismoDeTransitoId = improntaVM.Impronta.OrganismoDeTransitoId;
+            objDesdeDb.EsResuelto = improntaVM.Impronta.EsResuelto;
+            _db.SaveChanges();
+
+            var tramiteCasuistica = _db.TramiteCasuistica.Where(tc => tc.ImprontaId == improntaVM.Impronta.ImprontaId);
+            _db.TramiteCasuistica.RemoveRange(tramiteCasuistica);
+            _db.SaveChanges();
+
+            if (improntaVM.SelectedCasuisticasIds != null)
+            {
+                foreach (var casuisticaId in improntaVM.SelectedCasuisticasIds)
+                {
+                    _db.TramiteCasuistica.Add(new TramiteCasuistica
+                    {
+                        ImprontaId = improntaVM.Impronta.ImprontaId,
+                        CasuisticaId = casuisticaId
+                    });
+                }
+                _db.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -58,27 +79,18 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
             return result.ToList();
         }
-
-        public ResponseViewModel ObtenerImprontasPorId(int gestionId)
+        public IEnumerable<ImprontaVM> ObtenerImprontasPorId(int? id)
         {
-            var result = (from tramite in _db.Tramite
-                          join recepcion in _db.Recepcion
-                          on tramite.Id equals recepcion.Id_Tramite
-                          join gestion in _db.Gestion
-                          on tramite.Id equals gestion.Id_Tramite
-                          where recepcion.RecepcionId == gestionId
-                          select new ResponseViewModel
-                          {
-                              NumeroPlaca = tramite.NumeroPlaca,
-                              FechaRecepcion = recepcion.FechaRecepcion,
-                              FechaAsignacion = tramite.FechaCreacion,
-                              Observacion = recepcion.Observacion,
-                              GestionId = gestion.GestionId,
-                          }).FirstOrDefault();
-
-
-            return result;
+            var result = from tramite in _db.Tramite
+                         join impronta in _db.Impronta
+                         on tramite.Id equals impronta.Id_Tramite
+                         where impronta.ImprontaId == id
+                         select new ImprontaVM
+                         {
+                             Tramite = tramite,
+                             Impronta = impronta
+                         };
+            return result.ToList();
         }
-
     }
 }

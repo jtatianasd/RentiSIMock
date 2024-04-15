@@ -10,6 +10,6 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
     public interface IAsignacionRepository: IRepository<Tramite>
     {
         bool ExistePlaca(string NumeroPlaca);
-        void Update(Tramite tramite);
+        void Actualizar(Tramite tramite);
     }
 }

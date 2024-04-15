@@ -78,7 +78,7 @@ namespace RentiSI.Areas.Cliente.Controllers
             if (ModelState.IsValid)
             {
                 //Logica para actualizar en BD
-                _contenedorTrabajo.Asignacion.Update(tramiteVM.Tramite);
+                _contenedorTrabajo.Asignacion.Actualizar(tramiteVM.Tramite);
                 _contenedorTrabajo.Save();
                 return RedirectToAction(nameof(Index));
             }
