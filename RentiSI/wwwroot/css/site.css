@@ -30,3 +30,9 @@ body {
     text-align: center;
     padding: 10px 0; /* Espaciado interno superior e inferior del footer */
 }
+
+.mensajeCasustica{
+    font-size: 12px;
+    font-weight: bold;
+    
+}

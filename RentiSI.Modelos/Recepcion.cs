@@ -17,7 +17,7 @@ namespace RentiSI.Modelos
         [ForeignKey("Id_Tramite")]
         public Tramite? Id_Tramite_Gestion { get; set; }
         [Display(Name = "Fecha de recepción")]
-        public string? FechaRecepcion { get; set; }
+        public DateTime? FechaRecepcion { get; set; }
         public string? IdUsuarioRecepcion { get; set; }
 
         public string? Observacion { get; set; }

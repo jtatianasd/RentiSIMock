@@ -18,6 +18,10 @@ namespace RentiSI.Modelos.viewModels
 
         public RevisionCasuistica? RevisionCasuistica { get; set; }
 
+        public Impronta? Impronta { get; set; }
+
+        public string? FechaImpronta { get; set; }
+
         public string NombreCasuisticas { get; set; }
         public string NumeroPlaca { get; set; }
         public int RevisionId { get; set; }
@@ -33,11 +37,13 @@ namespace RentiSI.Modelos.viewModels
 
         public OrganismosDeTransito? OrganismosDeTransito { get; set; }
 
+        public string MensajeCasuisticas = "Mantenga la tecla CTRL presionada para seleccionar varias casuisticas";
+
         public string? FechaRecepcion { get; set; }
 
         public int RecepcionId { get; set; }
 
-        public string Impronta { get; set; }
+        public string EsImpronta { get; set; }
 
         public DateTime? FechaAsignacion { get; set; }
 
@@ -47,7 +53,6 @@ namespace RentiSI.Modelos.viewModels
 
         public bool EsFechaRecepcion { get; set; }
 
-        public bool EsResuelto { get; set; }
 
         public IEnumerable<SelectListItem>? ListaOrganismosTransito { get; set; }
 

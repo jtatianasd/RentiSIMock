@@ -28,10 +28,10 @@ namespace RentiSI.Areas.Operativo.Controllers
             ImprontaVM improntaVM = new ImprontaVM()
             {
 
-                Tramite = new RentiSI.Modelos.Tramite(),
-                Recepcion = new RentiSI.Modelos.Recepcion(),
-                Impronta = new RentiSI.Modelos.Impronta(),
-                TramiteCasuistica = new RentiSI.Modelos.TramiteCasuistica(),
+                Tramite = new Tramite(),
+                Recepcion = new Recepcion(),
+                Impronta = new Impronta(),
+                TramiteCasuistica = new TramiteCasuistica(),
                 ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("GESTION_IMPRONTAS"),
                 ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
                 SelectedCasuisticasIds = new int[] { }

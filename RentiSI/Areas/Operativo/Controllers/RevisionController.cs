@@ -36,17 +36,18 @@ namespace RentiSI.Areas.Operativo.Controllers
         [HttpGet("/Operativo/Revision/Edit/{revisionId}")]
         public IActionResult Edit(int revisionId)
         {
-            var recepciones = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
-            if (recepciones != null)
+            var revisiones = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
+            if (revisiones != null)
             {
-                recepciones.ListaTipoTramite = _contenedorTrabajo.TipoTramite.GetListaTipoTramite();
-                recepciones.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
-                recepciones.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES");
-                recepciones.SelectedCasuisticasIds = _contenedorTrabajo.RevisionCasuistica.GetAll(revision => revision.RevisionId == revisionId)
+                revisiones.ListaTipoTramite = _contenedorTrabajo.TipoTramite.GetListaTipoTramite();
+                revisiones.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+                revisiones.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES");
+                revisiones.SelectedCasuisticasIds = _contenedorTrabajo.RevisionCasuistica.GetAll(revision => revision.RevisionId == revisionId)
                                                      .Select(revision => revision.CasuisticaId)
                                                      .ToArray();
+                revisiones.Impronta = _contenedorTrabajo.GestionImpronta.GetAll(impronta => impronta.Id_Tramite == revisiones.Tramite.Id).FirstOrDefault();
             }
-            return View(recepciones);
+            return View(revisiones);
         }
 
         [HttpPost]
@@ -56,35 +57,12 @@ namespace RentiSI.Areas.Operativo.Controllers
             var revision = _contenedorTrabajo.Revision.GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).FirstOrDefault();
             if (revision != null)
             {
-                revision.FechaRevision = DateTime.Now.ToString("dd-MM-yyyy");
+                revision.FechaRevision = DateTime.Now;
                 revision.EsRevision = responseViewModel.Revision.EsRevision;
                 revision.Observacion = responseViewModel.Revision.Observacion;
                 revision.IdUsuarioRevision = _userManager.GetUserId(User);
 
-                if (responseViewModel.SelectedCasuisticasIds.Any())
-                {
-
-                    var revisionCasuistica = _contenedorTrabajo.RevisionCasuistica.
-                                               GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).ToArray();
-
-                    if(revisionCasuistica.Any())
-                    {
-                        //Se remueven antes de actualizarlos
-                        _contenedorTrabajo.RevisionCasuistica.RemoveRange(revisionCasuistica);
-                        _contenedorTrabajo.Save();
-                    }
-                   
-
-                    foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
-                    {
-                        _contenedorTrabajo.RevisionCasuistica.Add(new RevisionCasuistica()
-                        {
-                            RevisionId = responseViewModel.Revision.RevisionId,
-                            CasuisticaId = casuisticaId
-                        });
-                        _contenedorTrabajo.Save();
-                    }
-                }
+                InsertarRevisionCasuistica(responseViewModel);
 
                 _contenedorTrabajo.Revision.Actualizar(revision);
 
@@ -93,6 +71,80 @@ namespace RentiSI.Areas.Operativo.Controllers
             return RedirectToAction(nameof(Index));
 
 
+        }
+
+        [HttpPost]
+        public IActionResult Create(ResponseViewModel responseViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+
+                if(responseViewModel.Revision.EsRevision)
+                {
+                    responseViewModel.Revision.FechaRevision = DateTime.Now;
+                    responseViewModel.Revision.IdUsuarioRevision = _userManager.GetUserId(User);
+                    responseViewModel.Revision.Id_Tramite = responseViewModel.Tramite.Id;
+
+                    InsertarRevisionCasuistica(responseViewModel);
+
+                    _contenedorTrabajo.Revision.Add(responseViewModel.Revision);
+                    _contenedorTrabajo.Save();
+                }
+
+                return RedirectToAction(nameof(Index));
+
+            }
+
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpGet("/Operativo/Revision/Create/{tramiteId}")]
+        public IActionResult Create(int tramiteId)
+        {
+            ResponseViewModel responseViewModel = new ResponseViewModel()
+            {
+                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                Tramite = _contenedorTrabajo.Tramite.Get(tramiteId),
+                ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES"),
+                Impronta = _contenedorTrabajo.GestionImpronta.GetAll(impronta => impronta.Id_Tramite == tramiteId).FirstOrDefault()
+
+        };
+
+            return View(responseViewModel);
+        }
+
+        private void InsertarRevisionCasuistica(ResponseViewModel responseViewModel)
+        {
+
+            if (responseViewModel.SelectedCasuisticasIds != null)
+            {
+
+                if (responseViewModel.Revision.RevisionId != 0)
+                {
+                    var revisionCasuistica = _contenedorTrabajo.RevisionCasuistica.
+                                               GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).ToArray();
+
+                    if (revisionCasuistica.Any())
+                    {
+                        //Se remueven antes de actualizarlos
+                        _contenedorTrabajo.RevisionCasuistica.RemoveRange(revisionCasuistica);
+                        _contenedorTrabajo.Save();
+                    }
+                }
+
+
+                foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
+                {
+                    _contenedorTrabajo.RevisionCasuistica.Add(new RevisionCasuistica()
+                    {
+                        RevisionId = responseViewModel.Revision.RevisionId,
+                        CasuisticaId = casuisticaId
+                    });
+                    _contenedorTrabajo.Save();
+                }
+            }
         }
 
     }

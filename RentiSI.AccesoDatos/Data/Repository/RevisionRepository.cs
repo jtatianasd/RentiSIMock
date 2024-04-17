@@ -41,8 +41,11 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              Tramite = tramite,
                              Revision = recepcionTramite ?? new Revision(),
                              Recepcion = recepcion,
-                             NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion))
-                         };
+                             NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
+                             FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,
+                             FechaImpronta = impronta.FechaResultadoImpronta.ToString("dd-MM-yyyy"),
+                             Impronta = impronta
+        };
 
             return result.ToList();
 
@@ -63,7 +66,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           select new ResponseViewModel
                           {
                               Tramite = tramite,
-                              FechaRecepcion = recepcion.FechaRecepcion,
+                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy"): null,
                               FechaAsignacion = tramite.FechaCreacion,
                               Observacion = recepcion.Observacion,
                               Revision = revision,

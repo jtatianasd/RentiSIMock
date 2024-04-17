@@ -53,7 +53,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
             if (recepcion != null)
             {
                 recepcion.Observacion = responseViewModel.Recepcion.Observacion;
-                recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
+                recepcion.FechaRecepcion = DateTime.Now;
                 recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
                 recepcion.EsRecepcion = responseViewModel.Recepcion.EsRecepcion;
 
@@ -69,7 +69,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
         {
             if (!ModelState.IsValid)
             {
-                responseViewModel.Recepcion.FechaRecepcion = DateTime.Now.ToString("dd-MM-yyyy");
+                responseViewModel.Recepcion.FechaRecepcion = DateTime.Now;
                 responseViewModel.Recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
                 responseViewModel.Recepcion.Id_Tramite = responseViewModel.Tramite.Id;
                 _contenedorTrabajo.Recepcion.Add(responseViewModel.Recepcion);
