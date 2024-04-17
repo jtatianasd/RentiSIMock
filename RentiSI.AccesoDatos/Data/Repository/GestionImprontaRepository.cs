@@ -26,7 +26,6 @@ namespace RentiSI.AccesoDatos.Data.Repository
             var objDesdeDb = _db.Impronta.FirstOrDefault(s => s.ImprontaId == improntaVM.Impronta.ImprontaId);
             objDesdeDb.TipificacionImpronta = improntaVM.Impronta.TipificacionImpronta;
             objDesdeDb.Observaciones = improntaVM.Impronta.Observaciones;
-            objDesdeDb.OrganismoDeTransitoId = improntaVM.Impronta.OrganismoDeTransitoId;
             objDesdeDb.EsResuelto = improntaVM.Impronta.EsResuelto;
             objDesdeDb.IdUsuarioResuelveImpronta = improntaVM.Impronta.IdUsuarioResuelveImpronta;
             objDesdeDb.FechaResultadoImpronta = improntaVM.Impronta.FechaResultadoImpronta;
