@@ -14,17 +14,17 @@ function cargarDatatable() {
         },
         "columns": [
             { "data": "tramite.numeroPlaca", "width": "14%" },
-            { "data": "tramite.numeroPlaca", "width": "14%" },
+            { "data": "impronta.tipificacionImpronta", "width": "14%" },
             { "data": "nombreCasuisticas", "width": "20%" },
             { "data": "organismosDeTransito.municipio", "width": "17%" },
-            { "data": "recepcion.fechaRecepcion", "width": "15%" },
-            { "data": "fechaRecepcion", "width": "30%" },
+            { "data": "fechaRecepcion", "width": "15%" },
+            { "data": "fechaImpronta", "width": "30%" },
             {
-                "data": "revision.revisionId",
-                "render": function (data, type, row) {
-                    if (data > 0) {
+                "data": { revisionId: "revision.revisionId", tramiteId: "tramite.id" },
+                "render": function (data) {
+                    if (data.revision.revisionId > 0) {
                         return `<div class="text-center">
-                                <a href="/Operativo/Revision/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Operativo/Revision/Edit/${data.revision.revisionId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
@@ -33,7 +33,7 @@ function cargarDatatable() {
                     }
                     else {
                         return `<div class="text-center">
-                                <a href="/Operativo/Revision/Create/${row.revisionId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Operativo/Revision/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Gestionar
                                 </a>
                                 &nbsp;

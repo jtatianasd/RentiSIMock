@@ -33,9 +33,9 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
-                             FechaRecepcion = recepcionTramite.FechaRecepcion,
+                             FechaRecepcion = recepcionTramite.FechaRecepcion.ToString(),
                              Recepcion = recepcionTramite != null ? recepcionTramite : new Recepcion(),
-                             Impronta = tramite.Impronta != "false" ? "Si" : "No",
+                             EsImpronta = tramite.Impronta != "false" ? "Si" : "No",
                              OrganismosDeTransito = transito,
                              FechaAsignacion = tramite.FechaCreacion,
                              UsuarioRecibe = recepcionRecepcion.Nombre,

@@ -18,7 +18,7 @@ function cargarDatatable() {
             { "data": "usuarioRecibe", "width": "15%" },
             { "data": "organismosDeTransito.municipio", "width": "20%" },
             { "data": "fechaAsignacion", "width": "20%" },
-            { "data": "impronta", "width": "5%" },
+            { "data": "esImpronta", "width": "5%" },
             {
                 "data": "recepcion.recepcionId",
                 "tramiteId": "tramiteId",

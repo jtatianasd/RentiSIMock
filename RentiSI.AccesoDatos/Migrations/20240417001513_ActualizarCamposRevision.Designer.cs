@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417001513_ActualizarCamposRevision")]
+    partial class ActualizarCamposRevision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,6 +307,9 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<string>("Observaciones")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrganismoDeTransitoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TipificacionImpronta")
                         .HasColumnType("nvarchar(max)");
 
@@ -312,6 +318,8 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.HasIndex("IdUsuarioResuelveImpronta");
 
                     b.HasIndex("Id_Tramite");
+
+                    b.HasIndex("OrganismoDeTransitoId");
 
                     b.ToTable("Impronta");
                 });
@@ -369,8 +377,8 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<bool>("EsRecepcion")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("FechaRecepcion")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FechaRecepcion")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdUsuarioRecepcion")
                         .HasColumnType("nvarchar(450)");
@@ -670,7 +678,15 @@ namespace RentiSI.AccesoDatos.Migrations
                         .WithMany()
                         .HasForeignKey("Id_Tramite");
 
+                    b.HasOne("RentiSI.Modelos.OrganismosDeTransito", "OrganismosDeTransito")
+                        .WithMany()
+                        .HasForeignKey("OrganismoDeTransitoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Id_Tramite_Gestion");
+
+                    b.Navigation("OrganismosDeTransito");
 
                     b.Navigation("UsuarioImpronta");
                 });

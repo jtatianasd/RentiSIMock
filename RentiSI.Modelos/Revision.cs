@@ -32,7 +32,7 @@ namespace RentiSI.Modelos
         public string? NumeroGuia { get; set; }
 
         [Display(Name = "Fecha Revision")]
-        public string? FechaRevision { get; set; }
+        public DateTime? FechaRevision { get; set; }
 
         public string? Observacion { get; set; }
 
