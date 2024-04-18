@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418012540_AgregarEsGestionTRamiteGestion")]
+    partial class AgregarEsGestionTramiteGestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,8 +243,14 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<bool>("EsGestionTramite")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("FechaResultado")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("EstadoGestion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FechaGestion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FechaResultado")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdDetalleEstado")
                         .HasColumnType("int");

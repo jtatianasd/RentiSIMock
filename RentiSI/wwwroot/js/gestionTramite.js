@@ -8,28 +8,38 @@ $(document).ready(function () {
 function cargarDatatable() {
     dataTable = $("#tblGestionTramite").DataTable({
         "ajax": {
-            "url": "/Operativo/GestionTramite/GetAll",
+            "url": "/Coordinador/GestionTramite/GetAll",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "tramiteId", "width": "5%" },
-            { "data": "numeroPlaca", "width": "15%" },
-            { "data": "organismoTransito", "width": "15%" },
-            { "data": "organismoTransito", "width": "15%" },
-            { "data": "organismoTransito", "width": "15%" },
-            { "data": "organismoTransito", "width": "5%" },
-            { "data": "organismoTransito", "width": "5%" },
+            { "data": "tramite.numeroPlaca", "width": "15%" },
+            { "data": "usuarioRevision", "width": "15%" },
+            { "data": "organismosDeTransito.municipio", "width": "15%" },
+            { "data": "detalleEstado.descripcionDetalle", "width": "15%" },
+            { "data": "nombreCasuisticas", "width": "15%" },
+            { "data": "revision.fechaRevision", "width": "5%" },
             {
-                "data": "tramiteId",
+                "data": { gestionId: "gestionTramite.gestionId", tramiteId: "tramite.id" },
                 "render": function (data) {
-                    return `<div class="text-center">
-                                <a href="/Operativo/GestionTramite/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                    if (data.gestionTramite.gestionId > 0) {
+
+                        return `<div class="text-center">
+                                <a href="/Coordinador/GestionTramite/Edit/${data.gestionTramite.gestionId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
                           </div>
                          `;
+                    } else {
+                        return `<div class="text-center">
+                                <a href="/Coordinador/GestionTramite/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <i class="far fa-edit"></i> Gestionar
+                                </a>
+                                &nbsp;
+                          </div>
+                         `;
+                    }
                 }, "width": "30%"
             }
         ],

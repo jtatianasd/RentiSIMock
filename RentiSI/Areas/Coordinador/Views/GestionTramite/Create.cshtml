@@ -12,31 +12,20 @@
             </h3>
         </div>
     </div>
-    <form method="POST" asp-action="Update">
-        <input type="hidden" asp-for="@Model.GestionTramite.GestionId" value="@Model.GestionTramite.GestionId" />
+    <form method="POST" asp-action="Create">
+        <input type="hidden" asp-for="@Model.Tramite.Id" value="@Model.Tramite.Id" />
         <div class="col-10 offset-1 mt-4">
             <div class="row mt-2 mb-2">
                 <div class="col-2">
                     <label class="fw-bold">Numero de placa</label>
                 </div>
                 <div class="col-6">
-                    <label asp-for="FechaAsignacion">@Model.NumeroPlaca</label>
+                    <label asp-for="NumeroPlaca">@Model.Tramite.NumeroPlaca</label>
                 </div>
             </div>
 
             <div class="row mt-2 mb-2">
                 <div class="col-2">
-                    <label class="fw-bold">Usuario Gestión Tramite</label>
-                </div>
-                <div class="col-6">
-                    <div class="">
-                        <label asp-for="FechaAsignacion">@Model.UsuarioTramite</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-2 mb-2">
-                <div class="col-3">
                     <label class="fw-bold">Organismo de Tránsito</label>
                 </div>
                 <div class="col-6">
@@ -46,21 +35,24 @@
             </div>
 
             <div class="row mt-2 mb-2">
-                <div class="col-3">
-                    <label class="fw-bold">Tipo de Rechazo</label>
+                <div class="col-2">
+                    <label class="fw-bold">No seguir revisión</label>
                 </div>
                 <div class="col-6">
-                    @Html.DropDownListFor(m => m.GestionTramite.IdDetalleEstado, Model.TipoDetalleEstado,
-                             "-Por favor seleccione un tipo de rechazo-", new { @class = "form-control"})
+
+                    @Html.ListBoxFor(x => x.SelectedCasuisticasIds, Model.ListaCasuisticas, new { @class = "form-control" })
+                    <span class="mt-1 mensajeCasustica">@Model.MensajeCasuisticas</span>
+
                 </div>
             </div>
 
+        
             <div class="row mt-2 mb-2">
                 <div class="col-2">
                     <label class="fw-bold">Observación</label>
                 </div>
                 <div class="col-6">
-                    <textarea class="form-control" id="Observacion" rows="3" asp-for="@Model.Observacion">@Model.Observacion"</textarea>
+                    <textarea class="form-control" id="Observacion" rows="3" asp-for="@Model.GestionTramite.Observacion">@Model.GestionTramite.Observacion"</textarea>
                 </div>
             </div>
 
@@ -88,7 +80,7 @@
 
             <div class="form-group-row mt-4">
                 <div class="col-8">
-                    
+
                     <partial name="_VistaCrearVolver" model="ParametrosBotones" />
                 </div>
             </div>

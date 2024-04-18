@@ -17,17 +17,25 @@ namespace RentiSI.Modelos
         [ForeignKey("Id_Tramite")]
         public Tramite? Id_Tramite_Gestion { get; set; }
         [Display(Name = "Fecha de gestión del tramite")]
-        public string? FechaGestion { get; set; }
-        [Display(Name = "Estado gestion revisión")]
-        public string? EstadoGestion { get; set; }
+
         public string? IdUsuarioGestion { get; set; }
         [ForeignKey("IdUsuarioGestion")]
         public ApplicationUser? UsuarioGestion { get; set; }
         [Display(Name = "Fecha de resultado")]
-        public string? FechaResultado { get; set; }
-        public string? IdUsuarioResuelve { get; set; }
+        public DateTime FechaResultado { get; set; }
+
+        public int? IdDetalleEstado { get; set; }
+
+        [ForeignKey("IdDetalleEstado")]
+        public TipoDetalleEstado? IdTipoDetalleEstado { get; set; }
 
         [ForeignKey("IdUsuarioResuelve")]
         public ApplicationUser? UsuarioResuelve { get; set; }
+
+        public string? Observacion { get; set; }
+
+        public bool EsGestionTramite { get; set; }
+
+
     }
 }

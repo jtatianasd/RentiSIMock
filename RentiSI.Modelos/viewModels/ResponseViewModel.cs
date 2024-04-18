@@ -20,6 +20,10 @@ namespace RentiSI.Modelos.viewModels
 
         public Impronta? Impronta { get; set; }
 
+        public Gestion? GestionTramite { get; set; }
+
+        public TipoDetalleEstado? DetalleEstado { get; set; }
+
         public string? FechaImpronta { get; set; }
 
         public string NombreCasuisticas { get; set; }
@@ -31,7 +35,6 @@ namespace RentiSI.Modelos.viewModels
 
         public int TramiteId { get; set; }
 
-        public string? FechaRevision { get; set; }
 
         public string TipificacionTramiteRevision { get; set; }
 
@@ -62,6 +65,15 @@ namespace RentiSI.Modelos.viewModels
 
 
         public IEnumerable<SelectListItem>? ListaCasuisticas { get; set; }
+
+        public string? UsuarioRevision { get; set; }
+
+        public string? UsuarioTramite { get; set; }
+
+        public IEnumerable<SelectListItem>? TipoDetalleEstado { get; set; }
+
+        //public string? DetalleEstado { get; set; }
+
 
 
 

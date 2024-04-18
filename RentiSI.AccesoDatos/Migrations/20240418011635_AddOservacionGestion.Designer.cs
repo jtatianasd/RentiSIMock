@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418011635_AddOservacionGestion")]
+    partial class AddOservacionGestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,13 +240,16 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GestionId"));
 
-                    b.Property<bool>("EsGestionTramite")
-                        .HasColumnType("bit");
+                    b.Property<string>("EstadoGestion")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaResultado")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FechaGestion")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdDetalleEstado")
+                    b.Property<string>("FechaResultado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdTipoRechazo")
                         .HasColumnType("int");
 
                     b.Property<string>("IdUsuarioGestion")
@@ -260,7 +266,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.HasKey("GestionId");
 
-                    b.HasIndex("IdDetalleEstado");
+                    b.HasIndex("IdTipoRechazo");
 
                     b.HasIndex("IdUsuarioGestion");
 
@@ -646,7 +652,7 @@ namespace RentiSI.AccesoDatos.Migrations
                 {
                     b.HasOne("RentiSI.Modelos.TipoDetalleEstado", "IdTipoDetalleEstado")
                         .WithMany()
-                        .HasForeignKey("IdDetalleEstado");
+                        .HasForeignKey("IdTipoRechazo");
 
                     b.HasOne("RentiSI.Modelos.ApplicationUser", "UsuarioGestion")
                         .WithMany()

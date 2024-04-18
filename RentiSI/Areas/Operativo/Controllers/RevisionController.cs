@@ -83,13 +83,14 @@ namespace RentiSI.Areas.Operativo.Controllers
                 {
                     responseViewModel.Revision.FechaRevision = DateTime.Now;
                     responseViewModel.Revision.IdUsuarioRevision = _userManager.GetUserId(User);
-                    responseViewModel.Revision.Id_Tramite = responseViewModel.Tramite.Id;
-
-                    InsertarRevisionCasuistica(responseViewModel);
-
-                    _contenedorTrabajo.Revision.Add(responseViewModel.Revision);
-                    _contenedorTrabajo.Save();
                 }
+
+                responseViewModel.Revision.Id_Tramite = responseViewModel.Tramite.Id;
+
+                InsertarRevisionCasuistica(responseViewModel);
+
+                _contenedorTrabajo.Revision.Add(responseViewModel.Revision);
+                _contenedorTrabajo.Save();
 
                 return RedirectToAction(nameof(Index));
 

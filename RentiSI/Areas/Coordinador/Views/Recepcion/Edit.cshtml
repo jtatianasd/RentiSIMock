@@ -13,7 +13,7 @@
         </div>
     </div>
     <form method="POST" asp-action="Update">
-        <input type="hidden" asp-for="RecepcionId" value="@Model.Recepcion.RecepcionId" />
+        <input type="hidden" asp-for="GestionId" value="@Model.GestionTramite.GestionId" />
         <div class="col-10 offset-1 mt-4">
             <div class="row mt-2 mb-2">
                 <div class="col-3">
@@ -26,11 +26,11 @@
 
             <div class="row mt-2 mb-2">
                 <div class="col-3">
-                    <label class="fw-bold">Fecha Asignacion</label>
+                    <label class="fw-bold">Úsuario gestoin Trámite</label>
                 </div>
                 <div class="col-6">
                     <div class="">
-                        <label asp-for="FechaAsignacion">@Model.Tramite.FechaCreacion</label>
+                        <label asp-for="FechaAsignacion">@Model.UsuarioRevision</label>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 
             <div class="row mt-2 mb-2">
                 <div class="col-3">
-                    <label class="fw-bold">Recepción</label>
+                    <label class="fw-bold">Aprobado</label>
                 </div>
                 <div class="col-6">
                     <div class="form-check form-switch">
