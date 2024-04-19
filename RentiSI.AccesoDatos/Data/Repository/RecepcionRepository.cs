@@ -33,11 +33,11 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,
-                             FechaRecepcion = recepcionTramite.FechaRecepcion.ToString(),
+                             FechaRecepcion = recepcionTramite.FechaRecepcion.HasValue ? recepcionTramite.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,
                              Recepcion = recepcionTramite != null ? recepcionTramite : new Recepcion(),
                              EsImpronta = tramite.Impronta != "false" ? "Si" : "No",
                              OrganismosDeTransito = transito,
-                             FechaAsignacion = tramite.FechaCreacion,
+                             FechaAsignacion = tramite.FechaCreacion.HasValue ? tramite.FechaCreacion.Value.ToString("dd-MM-yyyy") : null,
                              UsuarioRecibe = recepcionRecepcion.Nombre,
                              TramiteId = tramite.Id
 
@@ -59,7 +59,8 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           {
                               OrganismosDeTransito = transito,
                               Tramite = tramite,
-                              Recepcion = recepcion
+                              Recepcion = recepcion,
+                              FechaAsignacion = tramite.FechaCreacion.HasValue ? tramite.FechaCreacion.Value.ToString("dd-MM-yyyy") : null,
 
                           }).FirstOrDefault();
 

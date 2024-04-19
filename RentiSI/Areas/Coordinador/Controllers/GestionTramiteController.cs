@@ -32,15 +32,18 @@ namespace RentiSI.Areas.Coordinador.Controllers
             return Json(new { data = _contenedorTrabajo.GestionTramite.ObtenerGestionesTramites() });
         }
 
-        [HttpGet("/Coordinador/GestionTramite/Edit/{revisionId}")]
-        public IActionResult Edit(int revisionId)
+        [HttpGet("/Coordinador/GestionTramite/Edit/{gestionId}")]
+        public IActionResult Edit(int gestionId)
         {
-            var gestionTramites = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
-            if(gestionTramites != null)
+            var gestionTramites = _contenedorTrabajo.GestionTramite.ObtenerGestionesTramitesPorId(gestionId);
+            if (gestionTramites != null)
             {
                 gestionTramites.TipoDetalleEstado = _contenedorTrabajo.TipoRechazo.GetListaTipoRechazo();
                 gestionTramites.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
                 gestionTramites.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES");
+                gestionTramites.SelectedCasuisticasIds = _contenedorTrabajo.GestionCasuistica.GetAll(gestionCasuistica => gestionCasuistica.GestionId == gestionId)
+                                                     .Select(gestionCasuistica => gestionCasuistica.CasuisticaId)
+                                                     .ToArray();
             }
 
             return View(gestionTramites);
@@ -84,6 +87,30 @@ namespace RentiSI.Areas.Coordinador.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult Update(ResponseViewModel responseViewModel)
+        {
+
+            var gestionTramite = _contenedorTrabajo.GestionTramite.GetAll(gestion => gestion.GestionId == responseViewModel.GestionTramite.GestionId).FirstOrDefault();
+            if (gestionTramite != null)
+            {
+
+                gestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);
+                gestionTramite.Observacion = responseViewModel.GestionTramite.Observacion;
+                gestionTramite.EsGestionTramite = responseViewModel.GestionTramite.EsGestionTramite;
+                gestionTramite.IdDetalleEstado = responseViewModel.GestionTramite.IdDetalleEstado;
+
+                InsertarCasuistica(responseViewModel);
+
+                _contenedorTrabajo.GestionTramite.Actualizar(gestionTramite);
+
+            }
+
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
 
         private void InsertarCasuistica(ResponseViewModel responseViewModel)
         {
@@ -103,7 +130,6 @@ namespace RentiSI.Areas.Coordinador.Controllers
                         _contenedorTrabajo.Save();
                     }
                 }
-
 
                 foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
                 {

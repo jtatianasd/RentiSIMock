@@ -67,7 +67,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           {
                               Tramite = tramite,
                               FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy"): null,
-                              FechaAsignacion = tramite.FechaCreacion,
+                              FechaAsignacion = tramite.FechaCreacion.HasValue ? tramite.FechaCreacion.Value.ToString("dd-MM-yyyy") : null,
                               Observacion = recepcion.Observacion,
                               Revision = revision,
                               OrganismosDeTransito = transito,

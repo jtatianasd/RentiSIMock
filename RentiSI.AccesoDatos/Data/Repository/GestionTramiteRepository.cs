@@ -38,7 +38,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join detalleEstado in _db.TipoDetalleEstado
                          on gestionTramite.GestionId equals detalleEstado.IdTipoDetalleEstado into gestionCasuisticaLeftJoin
                          from detalleEstadoGestion in gestionCasuisticaLeftJoin.DefaultIfEmpty()
-                         where revision.EsRevision == true 
+                         where revision.EsRevision == true
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,
@@ -46,8 +46,9 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              Revision = revision,
                              GestionTramite = gestionTramite ?? new Gestion(),
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
-                             UsuarioRevision = gestionTramiteUsuarios.Nombre,
-                             DetalleEstado = detalleEstadoGestion
+                             UsuarioTramite = gestionTramiteUsuarios.Nombre,
+                             DetalleEstado = detalleEstadoGestion,
+                             TiempoGestionTramite = CalcularDiasHabiles(revision.FechaRevision, gestionTramite.FechaResultado),
 
                          };
 
@@ -56,29 +57,54 @@ namespace RentiSI.AccesoDatos.Data.Repository
         }
 
 
-        public ResponseViewModel ObtenerGestionesTramitesPorId(int GestionId)
+        public ResponseViewModel ObtenerGestionesTramitesPorId(int gestionId)
         {
             var result = (from tramite in _db.Tramite
+                          join gestion in _db.Gestion
+                          on tramite.Id equals gestion.Id_Tramite
                           join revision in _db.Revision
                           on tramite.Id equals revision.Id_Tramite
-                          join recepcion in _db.Recepcion
-                          on tramite.Id equals recepcion.Id_Tramite
+                          join gestionCasuistica in _db.GestionCasuistica
+                          on gestion.GestionId equals gestionCasuistica.GestionId
                           join transito in _db.OrganismosDeTransito
                           on tramite.OrganismoDeTransitoId equals transito.Id
-                          where revision.RevisionId == GestionId
+                          join usuarios in _db.ApplicationUser
+                          on gestion.IdUsuarioGestion equals usuarios.Id into usuariosLeftJoin
+                          from gestionTramiteUsuarios in usuariosLeftJoin.DefaultIfEmpty()
+                          join detalleEstado in _db.TipoDetalleEstado
+                          on gestion.GestionId equals detalleEstado.IdTipoDetalleEstado into gestionCasuisticaLeftJoin
+                          from detalleEstadoGestion in gestionCasuisticaLeftJoin.DefaultIfEmpty()
+                          where gestion.GestionId == gestionId
 
                           select new ResponseViewModel
                           {
-                              Tramite = tramite,
-                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,
-                              FechaAsignacion = tramite.FechaCreacion,
-                              Observacion = recepcion.Observacion,
-                              Revision = revision,
                               OrganismosDeTransito = transito,
+                              Tramite = tramite,
+                              GestionTramite = gestion,
+                              DetalleEstado = detalleEstadoGestion,
+                              UsuarioTramite = gestionTramiteUsuarios.Nombre,
                           }).FirstOrDefault();
 
 
             return result;
+        }
+
+        private static int CalcularDiasHabiles(DateTime fechaInicio, DateTime fechaFin)
+        {
+            int diasHabiles = 0;
+
+            // Recorremos cada día entre las fechas
+            for (DateTime fecha = fechaInicio; fecha <= fechaFin; fecha = fecha.AddDays(1))
+            {
+                // Verificamos si el día actual es sábado o domingo
+                if (fecha.DayOfWeek != DayOfWeek.Saturday && fecha.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    // Si no es sábado ni domingo, incrementamos el contador de días hábiles
+                    diasHabiles++;
+                }
+            }
+
+            return diasHabiles;
         }
 
         public void Actualizar(Gestion Gestion)

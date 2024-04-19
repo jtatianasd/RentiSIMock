@@ -13,12 +13,12 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "tramite.numeroPlaca", "width": "15%" },
-            { "data": "usuarioRevision", "width": "15%" },
+            { "data": "tramite.numeroPlaca", "width": "13%" },
+            { "data": "usuarioTramite", "width": "13%" },
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "detalleEstado.descripcionDetalle", "width": "15%" },
             { "data": "nombreCasuisticas", "width": "15%" },
-            { "data": "revision.fechaRevision", "width": "5%" },
+            { "data": "tiempoGestionTramite", "width": "10%" },
             {
                 "data": { gestionId: "gestionTramite.gestionId", tramiteId: "tramite.id" },
                 "render": function (data) {

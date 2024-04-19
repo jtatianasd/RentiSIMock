@@ -48,6 +48,17 @@
                 </div>
             </div>
 
+
+            <div class="row mt-2 mb-2">
+                <div class="col-2">
+                    <label class="fw-bold">Organismo de Tránsito</label>
+                </div>
+                <div class="col-6">
+                    @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
+                             "-Por favor seleccione un organismo de transito-", new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+
             <div class="row mt-2 mb-2">
                 <div class="col-2">
                     <label class="fw-bold">No seguir revisión</label>
@@ -57,16 +68,6 @@
                     @Html.ListBoxFor(x => x.SelectedCasuisticasIds, Model.ListaCasuisticas, new { @class = "form-control" })
                     <span class="mt-1 mensajeCasustica">@Model.MensajeCasuisticas</span>
 
-                </div>
-            </div>
-
-            <div class="row mt-2 mb-2">
-                <div class="col-2">
-                    <label class="fw-bold">Organismo de Tránsito</label>
-                </div>
-                <div class="col-6">
-                    @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
-                             "-Por favor seleccione un organismo de transito-", new { @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
 

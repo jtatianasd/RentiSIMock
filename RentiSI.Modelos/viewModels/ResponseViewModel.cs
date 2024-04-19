@@ -48,7 +48,7 @@ namespace RentiSI.Modelos.viewModels
 
         public string EsImpronta { get; set; }
 
-        public DateTime? FechaAsignacion { get; set; }
+        public string? FechaAsignacion { get; set; }
 
         public string? UsuarioRecibe { get; set; }
 
@@ -72,7 +72,7 @@ namespace RentiSI.Modelos.viewModels
 
         public IEnumerable<SelectListItem>? TipoDetalleEstado { get; set; }
 
-        //public string? DetalleEstado { get; set; }
+        public int TiempoGestionTramite { get; set; }
 
 
 

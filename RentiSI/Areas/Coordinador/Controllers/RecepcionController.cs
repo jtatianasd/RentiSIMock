@@ -84,10 +84,12 @@ namespace RentiSI.Areas.Coordinador.Controllers
         [HttpGet("/Coordinador/Recepcion/Create/{tramiteId}")]
         public IActionResult Create(int tramiteId)
         {
+            var tramite = _contenedorTrabajo.Tramite.Get(tramiteId);
             ResponseViewModel responseViewModel = new ResponseViewModel()
             {
                 ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
-                Tramite = _contenedorTrabajo.Tramite.Get(tramiteId)
+                Tramite = tramite,
+                FechaAsignacion  = tramite.FechaCreacion.Value.ToString("dd-MM-yyyy")
             };
 
             return View(responseViewModel);
