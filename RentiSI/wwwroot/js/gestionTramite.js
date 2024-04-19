@@ -18,7 +18,7 @@ function cargarDatatable() {
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "detalleEstado.descripcionDetalle", "width": "15%" },
             { "data": "nombreCasuisticas", "width": "15%" },
-            { "data": "tiempoGestionTramite", "width": "10%" },
+            { "data": "tiempoGestionTramite", "width": "15%" },
             {
                 "data": { gestionId: "gestionTramite.gestionId", tramiteId: "tramite.id" },
                 "render": function (data) {
@@ -40,7 +40,7 @@ function cargarDatatable() {
                           </div>
                          `;
                     }
-                }, "width": "30%"
+                }, "width": "25%"
             }
         ],
         "language": {

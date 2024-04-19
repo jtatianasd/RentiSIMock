@@ -1,6 +1,6 @@
 ﻿@model RentiSI.Modelos.viewModels.TramiteVM
 @{
-    ViewData["Title"] = "Asignacion";
+    ViewData["Title"] = "Asignación";
     var ParametrosBotones = new { LabelBoton = "Asignar", ClaseBoton = "success" };
 }
 
@@ -16,10 +16,10 @@
         <div class="col-10 offset-1 mt-4">
             <div class="form-group row">
                 <div class="col-4">
-                    <label>Numero de placa</label>
+                    <label>Número de placa</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Tramite.NumeroPlaca" class="form-control" placeholder="Ingresa el Numero de placa" />
+                    <input asp-for="Tramite.NumeroPlaca" class="form-control" placeholder="Ingresa el Número de placa" />
                     <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
                 </div>
             </div>
@@ -57,18 +57,18 @@
                     <label>Fecha de Negocio</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Tramite.FechaNegocio" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
+                    <input asp-for="Tramite.FechaNegocio" class="form-control" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
                     <span asp-validation-for="Tramite.FechaNegocio" class="text-danger"></span>
                 </div>
             </div>
             <br />
             <div class="form-group row">
                 <div class="col-4">
-                    <label>Organismo de transito</label>
+                    <label>Organismo de Tránsito</label>
                 </div>
                 <div class="col-8">
                     @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
-                             "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
+                             "-Por favor seleccione un organismo de tránsito-", new { @class = "form-control" })
                     
                 </div>
             </div>

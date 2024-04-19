@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-4 offset-4">
             <h3>
-                <small class="text-body-secondary">Editar Tramite</small>
+                <small class="text-body-secondary">Editar Trámite</small>
             </h3>
         </div>
     </div>
@@ -21,12 +21,8 @@
                     <label>Número de placa</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Numero de placa" />
-                    <span asp-validation-for="Tramite.NumeroPlaca" class="te
-
-}
-
-xt-danger"></span>
+                    <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Número de placa" />
+                    <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
                 </div>
             </div>
 
@@ -63,7 +59,7 @@ xt-danger"></span>
                     <label>Fecha de Negocio</label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Tramite.FechaNegocio" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
+                    <input asp-for="Tramite.FechaNegocio" class="form-control" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
                     <span asp-validation-for="Tramite.FechaNegocio" class="text-danger"></span>
                 </div>
             </div>
