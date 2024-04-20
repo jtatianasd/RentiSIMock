@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240420035156_CambiarTipoDeDatosEnCheckedImpronta")]
+    partial class CambiarTipoDeDatosEnCheckedImpronta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,7 +297,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImprontaId"));
 
-                    b.Property<bool>("EsResuelto")
+                    b.Property<bool?>("EsResuelto")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaResultadoImpronta")
@@ -525,13 +528,13 @@ namespace RentiSI.AccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Financiacion")
+                    b.Property<bool?>("Financiacion")
                         .HasColumnType("bit");
 
                     b.Property<string>("IdUsuarioAsignacion")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Impronta")
+                    b.Property<bool?>("Impronta")
                         .HasColumnType("bit");
 
                     b.Property<string>("NumeroPlaca")
