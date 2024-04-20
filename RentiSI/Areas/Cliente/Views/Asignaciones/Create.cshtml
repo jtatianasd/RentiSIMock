@@ -19,7 +19,7 @@
                         <label class="fw-bold">Número de placa</label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Tramite.NumeroPlaca" class="form-control" placeholder="Ingresa el Número de placa" />
+                        <input asp-for="Tramite.NumeroPlaca" class="form-control" placeholder="Ingresa el Número de placa" oninput="this.value = this.value.toUpperCase()" />
                         <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
                     </div>
                 </div>

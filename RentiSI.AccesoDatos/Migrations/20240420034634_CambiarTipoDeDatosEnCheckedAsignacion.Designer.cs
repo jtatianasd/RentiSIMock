@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240420034634_CambiarTipoDeDatosEnCheckedAsignacion")]
+    partial class CambiarTipoDeDatosEnCheckedAsignacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,8 +297,8 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImprontaId"));
 
-                    b.Property<bool>("EsResuelto")
-                        .HasColumnType("bit");
+                    b.Property<string>("EsResuelto")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaResultadoImpronta")
                         .HasColumnType("datetime2");
@@ -310,7 +313,6 @@ namespace RentiSI.AccesoDatos.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipificacionImpronta")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ImprontaId");
@@ -346,20 +348,14 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReasignacionId"));
 
-                    b.Property<bool>("EsReasignado")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("FechaReasignacion")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FechaReasignacion")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdUsuarioReasignacion")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("Id_Tramite")
                         .HasColumnType("int");
-
-                    b.Property<string>("Observaciones")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ReasignacionId");
 
@@ -532,13 +528,13 @@ namespace RentiSI.AccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Financiacion")
+                    b.Property<bool?>("Financiacion")
                         .HasColumnType("bit");
 
                     b.Property<string>("IdUsuarioAsignacion")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Impronta")
+                    b.Property<bool?>("Impronta")
                         .HasColumnType("bit");
 
                     b.Property<string>("NumeroPlaca")

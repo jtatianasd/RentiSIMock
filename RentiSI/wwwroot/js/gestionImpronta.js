@@ -19,7 +19,12 @@ function cargarDatatable() {
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "impronta.tipificacionImpronta", "width": "20%" },
             { "data": "nombreCasuisticas", "width": "20%" },
-            { "data": "recepcion.fechaRecepcion", "width": "5%" },
+            {
+                "data": "recepcion.fechaRecepcion", "width": "5%", render: function (data) {
+                    var fecha = new Date(data);
+                    return fecha.toLocaleDateString('es-ES');
+                }
+            },
             {
                 "data": { improntaId: "impronta.improntaId", tramiteId: "tramite.id" },
                 "render": function (data) {

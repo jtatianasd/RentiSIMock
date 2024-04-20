@@ -14,11 +14,37 @@ function cargarDatatable() {
         },
         "columns": [
             { "data": "id", "width": "5%" },
-            { "data": "fechaCreacion", "width": "10%" },
+            {
+                "data": "fechaCreacion", "width": "10%", render: function (data) {
+                    var fecha = new Date(data);
+                    return fecha.toLocaleDateString('es-ES');
+                }
+            },
             { "data": "numeroPlaca", "width": "15%" },
-            { "data": "financiacion", "width": "5%" },
-            { "data": "impronta", "width": "5%" },
-            { "data": "fechaNegocio", "width": "10%" },
+            {
+                "data": "financiacion", "width": "5%", "render": function (data) {
+                    if (data) {
+                        return "Sí";
+                    } else {
+                        return "No";
+                    }
+                }
+            },
+            {
+                "data": "impronta", "width": "5%", "render": function (data) {
+                    if (data) {
+                        return "Sí";
+                    } else {
+                        return "No";
+                    }
+                }
+            },
+            {
+                "data": "fechaNegocio", "width": "10%", render: function (data) {
+                    var fecha = new Date(data);
+                    return fecha.toLocaleDateString('es-ES');
+                }
+            },
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "observaciones", "width": "20%" },
             {

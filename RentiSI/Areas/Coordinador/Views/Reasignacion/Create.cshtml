@@ -1,6 +1,6 @@
 ﻿@model RentiSI.Modelos.viewModels.ImprontaVM
 @{
-    ViewData["Title"] = "Gestion Impronta";
+    ViewData["Title"] = "Reasignacion Tramites";
     var ParametrosBotones = new { LabelBoton = "Gestionar", ClaseBoton = "success" };
 }
 
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-4 offset-4">
             <h3>
-                <small class="text-body-secondary">Gestión Impronta</small>
+                <small class="text-body-secondary">Reasignacion Tramites</small>
             </h3>
         </div>
 
@@ -28,29 +28,14 @@
                 <br />
                 <div class="form-group row">
                     <div class="col-3">
-                        <label class="fw-bold">Tipo gestion impronta</label>
+                        <label class="fw-bold">Reasignar el tramite</label>
                     </div>
                     <div class="col-6">
-                        <select class="form-select" id="tipificacionImpronta" asp-for="Impronta.TipificacionImpronta">
-                            <option value="">Por favor seleccione un tipo de gestion de impronta</option>
-                            <option value="Foranea ">Foranea</option>
-                            <option value="Local">Local</option>
-                        </select>
-                        <span asp-validation-for="Impronta.TipificacionImpronta" class="text-danger"></span>
+                        @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
+                                 "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
                     </div>
                 </div>
                 <br />
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label class="fw-bold">Tipo casuistica gestion impronta</label>
-                    </div>
-                    <div class="col-6">
-                        @Html.ListBoxFor(x => x.SelectedCasuisticasIds, Model.ListaCasuisticas, new { @class = "form-control" })
-                        <span asp-validation-for="SelectedCasuisticasIds" class="text-danger"></span>
-                        <span><label class="text-warning"><i class="fa-solid fa-circle-info"></i>Para seleccionar multiples casuisticas, presione la tecla ctrl y posteriormente seleccione las casuisticas</label></span>
-                    </div>
-
-                </div>
                 <br />
                 <div class="form-group row">
                     <div class="col-3">
@@ -59,16 +44,6 @@
                     <div class="col-6">
                         @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
                                  "-Por favor seleccione un organismo de transito-", new { @class = "form-control", disabled = "disabled" })
-                    </div>
-                </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label class="fw-bold">Observaciones</label>
-                    </div>
-                    <div class="col-6">
-                        <textarea asp-for="Impronta.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
-                        <span asp-validation-for="Impronta.Observaciones" class="text-danger"></span>
                     </div>
                 </div>
                 <br />
@@ -84,8 +59,17 @@
                     </div>
                 </div>
                 <br />
-                <br />
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label class="fw-bold">Observaciones</label>
+                    </div>
+                    <div class="col-6">
+                        <textarea asp-for="Impronta.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
+                        <span asp-validation-for="Impronta.Observaciones" class="text-danger"></span>
+                    </div>
+                </div>
 
+                <br />
                 <div class="form-group-row">
                     <div class="col-8">
                         <partial name="_VistaCrearVolver" model="ParametrosBotones" />

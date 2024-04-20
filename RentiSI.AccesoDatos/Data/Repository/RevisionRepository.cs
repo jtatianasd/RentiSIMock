@@ -34,7 +34,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on tramite.OrganismoDeTransitoId equals transito.Id
                          join revisionCasuistica in _db.RevisionCasuistica
                          on recepcionTramite.RevisionId equals revisionCasuistica.RevisionId into casuisticaJoin
-                         where impronta.EsResuelto == "true"
+                         where impronta.EsResuelto == true
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,

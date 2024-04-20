@@ -49,7 +49,7 @@ namespace RentiSI.Areas.Operativo.Controllers
             improntaVM.Impronta.Id_Tramite = improntaVM.Tramite.Id;
             if (ModelState.IsValid)
             {
-                if (improntaVM.Impronta.EsResuelto.Equals("true"))
+                if (improntaVM.Impronta.EsResuelto)
                 {
                     improntaVM.Impronta.FechaResultadoImpronta = DateTime.Now;
                     improntaVM.Impronta.IdUsuarioResuelveImpronta = _userManager.GetUserId(User);

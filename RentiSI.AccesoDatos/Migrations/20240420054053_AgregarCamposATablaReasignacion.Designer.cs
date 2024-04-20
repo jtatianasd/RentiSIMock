@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240420054053_AgregarCamposATablaReasignacion")]
+    partial class AgregarCamposATablaReasignacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,8 +352,8 @@ namespace RentiSI.AccesoDatos.Migrations
                     b.Property<bool>("EsReasignado")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("FechaReasignacion")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FechaReasignacion")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdUsuarioReasignacion")
                         .HasColumnType("nvarchar(450)");
