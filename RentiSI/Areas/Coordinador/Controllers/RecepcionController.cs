@@ -49,7 +49,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
         public IActionResult Update(ResponseViewModel responseViewModel)
         {
 
-            var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.RecepcionId).FirstOrDefault();
+            var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.Recepcion.RecepcionId).FirstOrDefault();
             if (recepcion != null)
             {
                 recepcion.Observacion = responseViewModel.Recepcion.Observacion;
