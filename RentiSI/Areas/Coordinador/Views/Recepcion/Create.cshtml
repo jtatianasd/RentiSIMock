@@ -49,7 +49,7 @@
                         <label class="fw-bold">Organismo de Tránsito</label>
                     </div>
                     <div class="col-6">
-                        @Html.DropDownListFor(m => m.ListaOrganismosTransito, Model.ListaOrganismosTransito,
+                        @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
                                  "-Por favor seleccione un organismo de transito-", new { @class = "form-control", disabled = "disabled" })
                     </div>
                 </div>
