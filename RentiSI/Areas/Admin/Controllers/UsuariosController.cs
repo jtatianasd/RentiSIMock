@@ -19,17 +19,7 @@ namespace RentiSI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-            var usuarioActual = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            if(usuarioActual != null)
-            {
-                return View(_contenedorTrabajo.Usuario.GetAll(u => u.Id != usuarioActual.Value));
-            }
-            else
-            {
-                return View(_contenedorTrabajo.Usuario.GetAll());
-            }
-            
+            return View(_contenedorTrabajo.Usuario.GetAll());
         }
 
         [HttpGet]

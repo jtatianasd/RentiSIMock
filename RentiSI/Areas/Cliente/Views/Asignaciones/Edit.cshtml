@@ -1,101 +1,98 @@
 ﻿@model RentiSI.Modelos.viewModels.TramiteVM
 @{
     ViewData["Title"] = "Editar Tramite";
+    var ParametrosBotones = new { LabelBoton = "Asignar", ClaseBoton = "success" };
 }
 
-<br />
-<br />
-<div class="">
+
+<div class="container mt-3 d-flex justify-content-center">
     <div class="row">
         <div class="col-4 offset-4">
             <h3>
-                <small class="text-body-secondary">Editar Trámite</small>
+                <small class="text-body-secondary">Editar Asignación</small>
             </h3>
         </div>
+
+        <form method="POST" asp-action="Edit" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Tramite.Id" />
+            <div class="col-12 offset-1 mt-4">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label class="fw-bold">Número de placa</label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Número de placa" />
+                        <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label class="fw-bold">Financiación</label>
+                    </div>
+                    <div class="col-8">
+                        <div class="form-check form-switch">
+                            <input asp-for="Tramite.Financiacion" class="form-check-input" type="checkbox" id="financiacionSwitch">
+                            <span asp-validation-for="Tramite.Financiacion" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label class="fw-bold">Impronta</label>
+                    </div>
+                    <div class="col-8">
+                        <div class="form-check form-switch">
+                            <input asp-for="Tramite.Impronta" class="form-check-input" type="checkbox" id="improntaSwitch">
+                            <span asp-validation-for="Tramite.Impronta" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label class="fw-bold">Fecha de Negocio</label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Tramite.FechaNegocio" class="form-control" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
+                        <span asp-validation-for="Tramite.FechaNegocio" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label class="fw-bold">Organismo de transito</label>
+                    </div>
+                    <div class="col-8">
+                        @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
+                                 "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
+                        <span asp-validation-for="Tramite.OrganismoDeTransitoId" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label class="fw-bold">Observaciones</label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Tramite.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
+                        <span asp-validation-for="Tramite.Observaciones" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+
+                <div class="form-group-row mt-3">
+                    <div class="col-8 text-center">
+                        <partial name="_VistaCrearVolver" model="ParametrosBotones" />
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
-    <form method="POST" asp-action="Edit" enctype="multipart/form-data">
-        <input type="hidden" asp-for="Tramite.Id" />
-        <div class="col-10 offset-1 mt-4">
-            <div class="form-group row">
-                <div class="col-4">
-                    <label>Número de placa</label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" placeholder="Ingresa el Número de placa" />
-                    <span asp-validation-for="Tramite.NumeroPlaca" class="text-danger"></span>
-                </div>
-            </div>
-
-            <br />
-
-            <div class="form-group row">
-                <div class="col-4">
-                    <label>Financiación</label>
-                </div>
-                <div class="col-8">
-                    <div class="form-check form-switch">
-                        <input asp-for="Tramite.Financiacion" class="form-check-input" type="checkbox" id="financiacionSwitch">
-                        <span asp-validation-for="Tramite.Financiacion" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <br />
-            <div class="form-group row">
-                <div class="col-4">
-                    <label>Impronta</label>
-                </div>
-                <div class="col-8">
-                    <div class="form-check form-switch">
-                        <input asp-for="Tramite.Impronta" class="form-check-input" type="checkbox" id="improntaSwitch">
-                        <span asp-validation-for="Tramite.Impronta" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <br />
-            <div class="form-group row">
-                <div class="col-4">
-                    <label>Fecha de Negocio</label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="Tramite.FechaNegocio" class="form-control" type="date" id="Tramite.fechaNegocio" name="Tramite.fechaNegocio">
-                    <span asp-validation-for="Tramite.FechaNegocio" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-            <div class="form-group row">
-                <div class="col-4">
-                    <label>Organismo de transito</label>
-                </div>
-                <div class="col-8">
-                    @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
-                             "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
-                    <span asp-validation-for="Tramite.OrganismoDeTransitoId" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-            <div class="form-group row">
-                <div class="col-4">
-                    <label>Observaciones</label>
-                </div>
-                <div class="col-8">
-                    <textarea asp-for="Tramite.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
-                    <span asp-validation-for="Tramite.Observaciones" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-
-            <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary form-control">Aceptar</button>
-                </div>
-                &nbsp;
-                <div class="col">
-                    <a asp-action="Index" class="btn btn-success form-control">Cancelar</a>
-                </div>
-            </div>
-        </div>
-
-    </form>
 </div>
