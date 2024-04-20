@@ -47,23 +47,13 @@
 
                 <div class="row mt-2 mb-2">
                     <div class="col-3">
-                        <label class="fw-bold">No seguir revisión</label>
+                        <label class="fw-bold">Tipo de Rechazo</label>
                     </div>
                     <div class="col-6">
 
                         @Html.ListBoxFor(x => x.SelectedCasuisticasIds, Model.ListaCasuisticas, new { @class = "form-control" })
                         <span class="mt-1 mensajeCasustica">@Model.MensajeCasuisticas</span>
 
-                    </div>
-                </div>
-
-                <div class="row mt-2 mb-2">
-                    <div class="col-3">
-                        <label class="fw-bold">Tipo de Rechazo</label>
-                    </div>
-                    <div class="col-6">
-                        @Html.DropDownListFor(m => m.GestionTramite.IdDetalleEstado, Model.TipoDetalleEstado,
-                                 "-Por favor seleccione un tipo de rechazo-", new { @class = "form-control" })
                     </div>
                 </div>
 
