@@ -87,11 +87,10 @@ namespace RentiSI.Areas.Operativo.Controllers
 
                 responseViewModel.Revision.Id_Tramite = responseViewModel.Tramite.Id;
 
-                InsertarRevisionCasuistica(responseViewModel);
-
                 _contenedorTrabajo.Revision.Add(responseViewModel.Revision);
                 _contenedorTrabajo.Save();
 
+                InsertarRevisionCasuistica(responseViewModel);
                 return RedirectToAction(nameof(Index));
 
             }
