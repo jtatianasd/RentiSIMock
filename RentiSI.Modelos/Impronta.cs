@@ -16,7 +16,8 @@ namespace RentiSI.Modelos
         [ForeignKey("Id_Tramite")]
         public Tramite? Id_Tramite_Gestion { get; set; }
         [Display(Name = "Tipificación de impronta")]
-        public string? TipificacionImpronta { get; set; }
+        [Required(ErrorMessage = "Seleccione un tipo de impronta - Tipificación impronta es requerida")]
+        public string TipificacionImpronta { get; set; }
         [Display(Name = "Observaciones")]
         public string? Observaciones { get; set; }
         public bool EsResuelto { get; set; }

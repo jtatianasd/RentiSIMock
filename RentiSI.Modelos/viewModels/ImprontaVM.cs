@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace RentiSI.Modelos.viewModels
         public TramiteCasuistica? TramiteCasuistica { get; set; }
         public IEnumerable<SelectListItem>? ListaOrganismosTransito { get; set; }
         public IEnumerable<SelectListItem>? ListaCasuisticas { get; set; }
-        public int[]? SelectedCasuisticasIds { get; set; }
+        [Required(ErrorMessage = "Seleccione un tipo de casuistica - Tipificación de casuistica es requerida")]
+        public int[] SelectedCasuisticasIds { get; set; }
         public string? NombreCasuisticas { get; set; }
     }
 }
