@@ -17,7 +17,7 @@ namespace RentiSI.Modelos
         [ForeignKey("Id_Tramite")]
         public Tramite? Id_Tramite_Gestion { get; set; }
         [Display(Name = "Fecha de reasignación")]
-        public string? FechaReasignacion { get; set; }
+        public DateTime FechaReasignacion { get; set; }
         public string? IdUsuarioReasignacion { get; set; }
         [ForeignKey("IdUsuarioReasignacion")]
         public ApplicationUser? UsuarioReasignacion { get; set; }
