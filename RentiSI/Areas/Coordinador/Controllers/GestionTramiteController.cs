@@ -115,22 +115,21 @@ namespace RentiSI.Areas.Coordinador.Controllers
         private void InsertarCasuistica(ResponseViewModel responseViewModel)
         {
 
-            if (responseViewModel.SelectedCasuisticasIds != null)
+            if (responseViewModel.GestionTramite.GestionId != 0)
             {
+                var gestionCasuistica = _contenedorTrabajo.GestionCasuistica.
+                                           GetAll(gestion => gestion.GestionId == responseViewModel.GestionTramite.GestionId).ToArray();
 
-                if (responseViewModel.GestionTramite.GestionId != 0)
+                if (gestionCasuistica.Any())
                 {
-                    var gestionCasuistica = _contenedorTrabajo.GestionCasuistica.
-                                               GetAll(gestion => gestion.GestionId == responseViewModel.GestionTramite.GestionId).ToArray();
-
-                    if (gestionCasuistica.Any())
-                    {
-                        //Se remueven antes de actualizarlos
-                        _contenedorTrabajo.GestionCasuistica.RemoveRange(gestionCasuistica);
-                        _contenedorTrabajo.Save();
-                    }
+                    //Se remueven antes de actualizarlos
+                    _contenedorTrabajo.GestionCasuistica.RemoveRange(gestionCasuistica);
+                    _contenedorTrabajo.Save();
                 }
+            }
 
+            if (responseViewModel.SelectedCasuisticasIds.Length > 0)
+            {
                 foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
                 {
                     _contenedorTrabajo.GestionCasuistica.Add(new GestionCasuistica()
@@ -141,6 +140,8 @@ namespace RentiSI.Areas.Coordinador.Controllers
                     _contenedorTrabajo.Save();
                 }
             }
+
+
         }
 
     }

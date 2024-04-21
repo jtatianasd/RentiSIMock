@@ -64,8 +64,6 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           on tramite.Id equals gestion.Id_Tramite
                           join revision in _db.Revision
                           on tramite.Id equals revision.Id_Tramite
-                          join gestionCasuistica in _db.GestionCasuistica
-                          on gestion.GestionId equals gestionCasuistica.GestionId
                           join transito in _db.OrganismosDeTransito
                           on tramite.OrganismoDeTransitoId equals transito.Id
                           join usuarios in _db.ApplicationUser
@@ -89,7 +87,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
             return result;
         }
 
-        private static int CalcularDiasHabiles(DateTime fechaInicio, DateTime fechaFin)
+        private static int CalcularDiasHabiles(DateTime fechaInicio, DateTime? fechaFin)
         {
             int diasHabiles = 0;
 
