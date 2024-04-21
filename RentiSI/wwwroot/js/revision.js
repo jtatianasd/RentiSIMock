@@ -2,6 +2,16 @@
 
 $(document).ready(function () {
     cargarDatatable();
+
+    $('#SelectedCasuisticasIds').change(function () {
+      
+        if ($('#SelectedCasuisticasIds').val() != null && $('#SelectedCasuisticasIds').val().length > 0) {
+            $('#revisionSwitch').prop('checked', false); 
+            $('#revisionSwitch').prop('disabled', true); 
+        } else {
+            $('#revisionSwitch').prop('disabled', false);
+        }
+    });
 });
 
 
@@ -26,15 +36,6 @@ function cargarDatatable() {
                         return `<div class="text-center">
                                 <a href="/Operativo/Revision/Edit/${data.revision.revisionId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
-                                </a>
-                                &nbsp;
-                          </div>
-                         `;
-                    }
-                    else {
-                        return `<div class="text-center">
-                                <a href="/Operativo/Revision/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
-                                <i class="far fa-edit"></i> Gestionar
                                 </a>
                                 &nbsp;
                           </div>

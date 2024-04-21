@@ -20,12 +20,11 @@ namespace RentiSI.AccesoDatos.Data.Repository
         }
 
 
-        public IEnumerable<ResponseViewModel> ObtenerRevisiones()
+        public IEnumerable<ResponseViewModel> ObtenerRevisiones(string UserId)
         {
             var result = from tramite in _db.Tramite
                          join revision in _db.Revision
-                         on tramite.Id equals revision.Id_Tramite into recepcionLeftJoin
-                         from recepcionTramite in recepcionLeftJoin.DefaultIfEmpty()
+                         on tramite.Id equals revision.Id_Tramite 
                          join recepcion in _db.Recepcion
                          on tramite.Id equals recepcion.Id_Tramite
                          join impronta in _db.Impronta
@@ -33,13 +32,13 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
                          join revisionCasuistica in _db.RevisionCasuistica
-                         on recepcionTramite.RevisionId equals revisionCasuistica.RevisionId into casuisticaJoin
-                         where impronta.EsResuelto == true
+                         on revision.RevisionId equals revisionCasuistica.RevisionId into casuisticaJoin
+                         where revision.EsRevision == false && revision.IdUsuarioRevision == UserId
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,
                              Tramite = tramite,
-                             Revision = recepcionTramite ?? new Revision(),
+                             Revision = revision,
                              Recepcion = recepcion,
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,

@@ -5,7 +5,7 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
 {
     public interface IRevisionRepository : IRepository<Revision>
     {
-        IEnumerable<ResponseViewModel> ObtenerRevisiones();
+        IEnumerable<ResponseViewModel> ObtenerRevisiones(string UserId);
 
         ResponseViewModel ObtenerRevisionesPorId(int RevisionId);
 

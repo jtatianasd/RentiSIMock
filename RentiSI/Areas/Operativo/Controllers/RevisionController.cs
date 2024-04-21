@@ -30,7 +30,7 @@ namespace RentiSI.Areas.Operativo.Controllers
         public IActionResult GetAll()
         {
        
-            return Json(new { data = _contenedorTrabajo.Revision.ObtenerRevisiones() });
+            return Json(new { data = _contenedorTrabajo.Revision.ObtenerRevisiones(_userManager.GetUserId(User))});
         }
 
         [HttpGet("/Operativo/Revision/Edit/{revisionId}")]

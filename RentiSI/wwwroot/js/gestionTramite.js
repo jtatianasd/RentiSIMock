@@ -2,6 +2,16 @@
 
 $(document).ready(function () {
     cargarDatatable();
+
+    $('#SelectedCasuisticasIds').change(function () {
+
+        if ($('#SelectedCasuisticasIds').val() != null && $('#SelectedCasuisticasIds').val().length > 0) {
+            $('#esGestionTramiteSwitch').prop('checked', false);
+            $('#esGestionTramiteSwitch').prop('disabled', true);
+        } else {
+            $('#esGestionTramiteSwitch').prop('disabled', false);
+        }
+    });
 });
 
 
