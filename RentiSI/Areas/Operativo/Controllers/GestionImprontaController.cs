@@ -72,6 +72,7 @@ namespace RentiSI.Areas.Operativo.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            improntaVM.Tramite = _contenedorTrabajo.Tramite.Get(improntaVM.Tramite.Id);
             improntaVM.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuistica();
             improntaVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(improntaVM);
@@ -108,8 +109,10 @@ namespace RentiSI.Areas.Operativo.Controllers
 
             return View(improntaVM);
         }
+
         public IActionResult Edit(ImprontaVM improntaVM)
         {
+           
             if (ModelState.IsValid)
             {
                 if (improntaVM.Impronta.EsResuelto.Equals("true"))
@@ -126,7 +129,7 @@ namespace RentiSI.Areas.Operativo.Controllers
                 _contenedorTrabajo.Save();
                 return RedirectToAction(nameof(Index));
             }
-
+            improntaVM.Tramite = _contenedorTrabajo.Tramite.Get(improntaVM.Impronta.Id_Tramite.GetValueOrDefault());
             improntaVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             improntaVM.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuistica();
             return View(improntaVM);

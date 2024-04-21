@@ -78,7 +78,6 @@ namespace RentiSI.Areas.Cliente.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(TramiteVM tramiteVM)
         {
             if (ModelState.IsValid)

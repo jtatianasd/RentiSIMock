@@ -14,15 +14,14 @@
 
         <form method="POST" asp-action="Create" enctype="multipart/form-data">
             <input type="hidden" asp-for="Tramite.Id" />
-            <input type="hidden" asp-for="Tramite.FechaNegocio" />
-            <input type="hidden" asp-for="Tramite.NumeroPlaca" />
+            <input type="hidden" asp-for="Tramite.FechaNegocio" />    
             <div class="col-12 offset-1 mt-4">
                 <div class="form-group row">
                     <div class="col-3">
                         <label class="fw-bold">Número de placa</label>
                     </div>
                     <div class="col-6">
-                        <label asp-for="@Model.Tramite.NumeroPlaca" class="form-control">@Model.Tramite.NumeroPlaca </label>
+                        <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" />
                     </div>
                 </div>
                 <br />
