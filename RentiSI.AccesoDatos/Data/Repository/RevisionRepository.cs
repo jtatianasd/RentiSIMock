@@ -1,12 +1,6 @@
 ﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
@@ -20,7 +14,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         }
 
 
-        public IEnumerable<ResponseViewModel> ObtenerRevisiones(string UserId)
+        public IEnumerable<ResponseViewModel> ObtenerRevisiones(string UserId, string Rol)
         {
             var result = from tramite in _db.Tramite
                          join revision in _db.Revision
@@ -33,7 +27,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on tramite.OrganismoDeTransitoId equals transito.Id
                          join revisionCasuistica in _db.RevisionCasuistica
                          on revision.RevisionId equals revisionCasuistica.RevisionId into casuisticaJoin
-                         where revision.EsRevision == false && revision.IdUsuarioRevision == UserId
+                         where revision.EsRevision == false && (revision.IdUsuarioRevision == UserId || Rol == "Administrador")
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,

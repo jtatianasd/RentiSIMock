@@ -28,6 +28,8 @@ namespace RentiSI.Modelos.viewModels
         public string MensajeCasuisticas = "Mantenga la tecla CTRL presionada para seleccionar varias casuisticas";
         public string? FechaRecepcion { get; set; }
         public int RecepcionId { get; set; }
+
+        public string EsRecepcion { get; set; }
         public string EsImpronta { get; set; }
         public string? FechaAsignacion { get; set; }
         public string? UsuarioRecibe { get; set; }

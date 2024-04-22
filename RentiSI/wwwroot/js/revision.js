@@ -2,6 +2,8 @@
 
 $(document).ready(function () {
     cargarDatatable();
+    EsForaneo();
+
 
     $('#SelectedCasuisticasIds').change(function () {
       
@@ -12,8 +14,22 @@ $(document).ready(function () {
             $('#revisionSwitch').prop('disabled', false);
         }
     });
+
+    $('#tramiteRevision').change(function () {
+        EsForaneo();
+    });
+
+
 });
 
+function EsForaneo() {
+    if ($('#tramiteRevision').val() === "Foranea") {
+        $('#numeroGuia').prop('disabled', false);
+    }
+    else {
+        $('#numeroGuia').prop('disabled', true);
+    }
+}
 
 function cargarDatatable() {
     dataTable = $("#tblRevision").DataTable({

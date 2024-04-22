@@ -69,12 +69,12 @@ namespace RentiSI.Areas.Coordinador.Controllers
         [HttpPost]
         public IActionResult Create(ResponseViewModel responseViewModel)
         {
-            if (!ModelState.IsValid)
+            if (responseViewModel.GestionTramite.EsGestionTramite)
             {
                 responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
-                responseViewModel.GestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);
             }
 
+            responseViewModel.GestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);
             responseViewModel.GestionTramite.Id_Tramite = responseViewModel.Tramite.Id;
             _contenedorTrabajo.GestionTramite.Add(responseViewModel.GestionTramite);
 
@@ -94,6 +94,11 @@ namespace RentiSI.Areas.Coordinador.Controllers
             var gestionTramite = _contenedorTrabajo.GestionTramite.GetAll(gestion => gestion.GestionId == responseViewModel.GestionTramite.GestionId).FirstOrDefault();
             if (gestionTramite != null)
             {
+                if(responseViewModel.GestionTramite.EsGestionTramite)
+                {
+
+                    gestionTramite.FechaResultado = responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
+                }
 
                 gestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);
                 gestionTramite.Observacion = responseViewModel.GestionTramite.Observacion;
@@ -107,7 +112,6 @@ namespace RentiSI.Areas.Coordinador.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-
 
         }
 
@@ -128,7 +132,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
                 }
             }
 
-            if (responseViewModel.SelectedCasuisticasIds.Length > 0)
+            if (responseViewModel.SelectedCasuisticasIds != null)
             {
                 foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
                 {

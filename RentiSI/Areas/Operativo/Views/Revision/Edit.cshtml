@@ -29,7 +29,7 @@
                         <label class="fw-bold">Tipo de Tramite</label>
                     </div>
                     <div class="col-6">
-                        <select class="form-select" id="tipificacionImpronta" asp-for="Revision.TipificacionTramiteRevision">
+                        <select class="form-select" id="tramiteRevision" asp-for="Revision.TipificacionTramiteRevision">
                             <option value="">Por favor seleccione un tipo de gestion de impronta</option>
                             <option value="Foranea">Foranea</option>
                             <option value="Local">Local</option>
@@ -43,7 +43,7 @@
                         <label class="fw-bold">Número de guía</label>
                     </div>
                     <div class="col-6">
-                        <input asp-for="Revision.NumeroGuia" class="form-control" />
+                        <input asp-for="Revision.NumeroGuia" id="numeroGuia" class="form-control" />
                         <span asp-validation-for="Revision.NumeroGuia" class="text-danger"></span>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
@@ -29,8 +30,7 @@ namespace RentiSI.Areas.Operativo.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-       
-            return Json(new { data = _contenedorTrabajo.Revision.ObtenerRevisiones(_userManager.GetUserId(User))});
+            return Json(new { data = _contenedorTrabajo.Revision.ObtenerRevisiones(_userManager.GetUserId(User), ObtenerRol()) });
         }
 
         [HttpGet("/Operativo/Revision/Edit/{revisionId}")]
@@ -78,23 +78,21 @@ namespace RentiSI.Areas.Operativo.Controllers
         private void InsertarRevisionCasuistica(ResponseViewModel responseViewModel)
         {
 
+            if (responseViewModel.Revision.RevisionId != 0)
+            {
+                var revisionCasuistica = _contenedorTrabajo.RevisionCasuistica.
+                                           GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).ToArray();
+
+                if (revisionCasuistica.Any())
+                {
+                    //Se remueven antes de actualizarlos
+                    _contenedorTrabajo.RevisionCasuistica.RemoveRange(revisionCasuistica);
+                    _contenedorTrabajo.Save();
+                }
+            }
+
             if (responseViewModel.SelectedCasuisticasIds != null)
             {
-
-                if (responseViewModel.Revision.RevisionId != 0)
-                {
-                    var revisionCasuistica = _contenedorTrabajo.RevisionCasuistica.
-                                               GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).ToArray();
-
-                    if (revisionCasuistica.Any())
-                    {
-                        //Se remueven antes de actualizarlos
-                        _contenedorTrabajo.RevisionCasuistica.RemoveRange(revisionCasuistica);
-                        _contenedorTrabajo.Save();
-                    }
-                }
-
-
                 foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
                 {
                     _contenedorTrabajo.RevisionCasuistica.Add(new RevisionCasuistica()
@@ -107,5 +105,16 @@ namespace RentiSI.Areas.Operativo.Controllers
             }
         }
 
+        private string ObtenerRol()
+        {
+            var userIdentity = (ClaimsIdentity)User.Identity;
+            var claims = userIdentity.Claims;
+            var roleClaimType = userIdentity.RoleClaimType;
+            var roles = claims.Where(c => c.Type == ClaimTypes.Role).First();
+            return roles.Value;
+        }
+
     }
+
+  
 }
