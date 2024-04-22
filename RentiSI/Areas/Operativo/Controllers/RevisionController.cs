@@ -61,6 +61,8 @@ namespace RentiSI.Areas.Operativo.Controllers
                 revision.EsRevision = responseViewModel.Revision.EsRevision;
                 revision.Observacion = responseViewModel.Revision.Observacion;
                 revision.IdUsuarioRevision = _userManager.GetUserId(User);
+                revision.TipificacionTramiteRevision = responseViewModel.Revision.TipificacionTramiteRevision;
+                revision.NumeroGuia = responseViewModel.Revision.NumeroGuia;
 
                 InsertarRevisionCasuistica(responseViewModel);
 
@@ -71,48 +73,6 @@ namespace RentiSI.Areas.Operativo.Controllers
             return RedirectToAction(nameof(Index));
 
 
-        }
-
-        [HttpPost]
-        public IActionResult Create(ResponseViewModel responseViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-
-                if(responseViewModel.Revision.EsRevision)
-                {
-                    responseViewModel.Revision.FechaRevision = DateTime.Now;
-                    responseViewModel.Revision.IdUsuarioRevision = _userManager.GetUserId(User);
-                }
-
-                responseViewModel.Revision.Id_Tramite = responseViewModel.Tramite.Id;
-
-                _contenedorTrabajo.Revision.Add(responseViewModel.Revision);
-                _contenedorTrabajo.Save();
-
-                InsertarRevisionCasuistica(responseViewModel);
-                return RedirectToAction(nameof(Index));
-
-            }
-
-
-            return RedirectToAction(nameof(Index));
-
-        }
-
-        [HttpGet("/Operativo/Revision/Create/{tramiteId}")]
-        public IActionResult Create(int tramiteId)
-        {
-            ResponseViewModel responseViewModel = new ResponseViewModel()
-            {
-                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
-                Tramite = _contenedorTrabajo.Tramite.Get(tramiteId),
-                ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES"),
-                Impronta = _contenedorTrabajo.GestionImpronta.GetAll(impronta => impronta.Id_Tramite == tramiteId).FirstOrDefault()
-
-        };
-
-            return View(responseViewModel);
         }
 
         private void InsertarRevisionCasuistica(ResponseViewModel responseViewModel)

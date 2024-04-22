@@ -29,12 +29,12 @@
                         <label class="fw-bold">Tipo de Tramite</label>
                     </div>
                     <div class="col-6">
-                        <select class="form-select" id="tipificacionImpronta" asp-for="Impronta.TipificacionImpronta" disabled>
+                        <select class="form-select" id="tipificacionImpronta" asp-for="Revision.TipificacionTramiteRevision">
                             <option value="">Por favor seleccione un tipo de gestion de impronta</option>
                             <option value="Foranea">Foranea</option>
                             <option value="Local">Local</option>
                         </select>
-                        <span asp-validation-for="Impronta.TipificacionImpronta" class="text-danger"></span>
+                        <span asp-validation-for="Revision.TipificacionTramiteRevision" class="text-danger"></span>
                     </div>
                 </div>
 

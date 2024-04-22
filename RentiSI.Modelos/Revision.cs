@@ -20,20 +20,17 @@ namespace RentiSI.Modelos
 
         [ForeignKey("IdUsuarioRevision")]
         public ApplicationUser? UsuarioRevision { get; set; }
+
         [Display(Name = "Tipificación trámite en revisión ")]
         public string? TipificacionTramiteRevision { get; set; }
-        [Display(Name = "Estado revisión")]
-        public string? EstadoRevision { get; set; }
-        [Display(Name = "Tipificación casuistica revision")]
-        public string? TipificacionCasuisticaRevision { get; set; }
-        [Display(Name = "Organismo de transito")]
-        public string? OrganismoTransito { get; set; }
-        [Display(Name = "Numero Guia")]
+
+        [Display(Name = "Número Guia")]
         public string? NumeroGuia { get; set; }
 
         [Display(Name = "Fecha Revision")]
         public DateTime FechaRevision { get; set; }
 
+        [Display(Name = "Observación")]
         public string? Observacion { get; set; }
 
         public bool EsRevision { get; set; }

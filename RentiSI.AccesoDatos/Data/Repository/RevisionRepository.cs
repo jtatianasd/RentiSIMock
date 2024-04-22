@@ -43,7 +43,6 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,
                              FechaImpronta = impronta.FechaResultadoImpronta.ToString("dd-MM-yyyy"),
-                             Impronta = impronta
         };
 
             return result.ToList();

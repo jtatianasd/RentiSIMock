@@ -24,7 +24,7 @@ function cargarDatatable() {
         },
         "columns": [
             { "data": "tramite.numeroPlaca", "width": "14%" },
-            { "data": "impronta.tipificacionImpronta", "width": "14%" },
+            { "data": "revision.tipificacionTramiteRevision", "width": "14%" },
             { "data": "nombreCasuisticas", "width": "20%" },
             { "data": "organismosDeTransito.municipio", "width": "17%" },
             { "data": "fechaRecepcion", "width": "15%" },
