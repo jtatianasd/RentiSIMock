@@ -68,8 +68,8 @@
                     </div>
                     <div class="col-8">
                         @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
-                                 "-Por favor seleccione un organismo de tránsito-", new { @class = "form-control" })
-
+                            "-Por favor seleccione un organismo de tránsito-", new { @class = "form-control" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Tramite.OrganismoDeTransitoId)</span>
                     </div>
                 </div>
                 <br />
