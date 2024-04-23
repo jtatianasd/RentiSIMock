@@ -16,7 +16,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public void Actualizar(Recepcion recepcion)
         {
             _db.Update(recepcion);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public IEnumerable<ResponseViewModel> ObtenerRecepciones()

@@ -72,7 +72,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public void Actualizar(Revision revision)
         {
             _db.Update(revision);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
     }

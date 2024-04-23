@@ -108,7 +108,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public void Actualizar(Gestion Gestion)
         {
             _db.Update(Gestion);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
     }
 }
