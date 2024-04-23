@@ -170,8 +170,7 @@ namespace RentiSI.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return LocalRedirect("~/Admin/Usuarios");
                     }
                 }
                 foreach (var error in result.Errors)
