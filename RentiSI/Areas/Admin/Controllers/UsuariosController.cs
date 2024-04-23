@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
+using RentiSI.Modelos;
 using System.Security.Claims;
 
 namespace RentiSI.Areas.Admin.Controllers
@@ -11,9 +13,12 @@ namespace RentiSI.Areas.Admin.Controllers
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
 
-        public UsuariosController(IContenedorTrabajo contenedorTrabajo)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public UsuariosController(IContenedorTrabajo contenedorTrabajo, UserManager<ApplicationUser> userManager)
         {
             _contenedorTrabajo = contenedorTrabajo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -42,6 +47,23 @@ namespace RentiSI.Areas.Admin.Controllers
             }
             _contenedorTrabajo.Usuario.DesbloquearUsuario(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await  _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
         }
     }
 }

@@ -49,7 +49,11 @@
                                 <a class="btn btn-danger text-white" asp-action="Desbloquear" style="width:50px" asp-route-id="@item.Id">
                                     <i class="fas fa-lock-open"></i>
                                 </a>
+
                             }
+                            <a class="btn btn-danger text-white" asp-action="Edit" style="width:50px" asp-route-id="@item.Id">
+                                <i class="fas fa-pen-to-square"></i>
+                            </a>
 
                         </td>
                     </tr>
