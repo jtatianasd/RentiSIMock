@@ -47,11 +47,14 @@
                                 <a class="nav-link text-dark" asp-area="Coordinador" asp-controller="Recepcion" asp-action="Index">Recepción</a>
                             </li>
                         }
-                        @if (User.IsInRole(CNT.Operativo) || User.IsInRole(CNT.Administrador))
+                        @if (User.IsInRole(CNT.OperativoImpronta) || User.IsInRole(CNT.Administrador))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Operativo" asp-controller="GestionImpronta" asp-action="Index">Gestion de Improntas</a>
+                                <a class="nav-link text-dark" asp-area="OperativoImpronta" asp-controller="GestionImpronta" asp-action="Index">Gestion de Improntas</a>
                             </li>
+                        }
+                        @if (User.IsInRole(CNT.Operativo) || User.IsInRole(CNT.Administrador))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Operativo" asp-controller="Revision" asp-action="Index">Revisión</a>
                             </li>

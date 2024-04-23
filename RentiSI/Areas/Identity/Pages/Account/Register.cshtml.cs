@@ -128,18 +128,29 @@ namespace RentiSI.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    if(!await _roleManager.RoleExistsAsync(CNT.Administrador))
+                    if (!await _roleManager.RoleExistsAsync(CNT.Administrador))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(CNT.Administrador));
-                        await _roleManager.CreateAsync(new IdentityRole(CNT.Usuario));
-
                     }
-                     if(!await _roleManager.RoleExistsAsync(CNT.Coordinador))
+                    if (!await _roleManager.RoleExistsAsync(CNT.Usuario))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(CNT.Usuario));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(CNT.Coordinador))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(CNT.Coordinador));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(CNT.Cliente))
+                    {
                         await _roleManager.CreateAsync(new IdentityRole(CNT.Cliente));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(CNT.Operativo))
+                    {
                         await _roleManager.CreateAsync(new IdentityRole(CNT.Operativo));
-
+                    }
+                    if (!await _roleManager.RoleExistsAsync(CNT.OperativoImpronta))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(CNT.OperativoImpronta));
                     }
                     string rol = Request.Form["selectRol"].ToString();
                     switch (rol)
@@ -158,6 +169,9 @@ namespace RentiSI.Areas.Identity.Pages.Account
                             break;
                         case CNT.Operativo:
                             await _userManager.AddToRoleAsync(user, CNT.Operativo);
+                            break;
+                        case CNT.OperativoImpronta:
+                            await _userManager.AddToRoleAsync(user, CNT.OperativoImpronta);
                             break;
                         default:
                             break;
