@@ -18,7 +18,6 @@ namespace RentiSI.Modelos.viewModels
         public TramiteCasuistica? TramiteCasuistica { get; set; }
         public IEnumerable<SelectListItem>? ListaOrganismosTransito { get; set; }
         public IEnumerable<SelectListItem>? ListaCasuisticas { get; set; }
-        [Required(ErrorMessage = "Seleccione un tipo de casuistica - Tipificación de casuistica es requerida")]
         public int[]? SelectedCasuisticasIds { get; set; }
         public string? NombreCasuisticas { get; set; }
     }

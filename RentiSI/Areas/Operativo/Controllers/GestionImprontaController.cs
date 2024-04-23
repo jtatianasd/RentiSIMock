@@ -109,10 +109,9 @@ namespace RentiSI.Areas.Operativo.Controllers
 
             return View(improntaVM);
         }
-
+        [HttpPost]
         public IActionResult Edit(ImprontaVM improntaVM)
-        {
-           
+        {     
             if (ModelState.IsValid)
             {
                 if (improntaVM.Impronta.EsResuelto.Equals("true"))

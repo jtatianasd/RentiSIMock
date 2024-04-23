@@ -2,6 +2,21 @@
 
 $(document).ready(function () {
     cargarDatatable();
+    if ($('#SelectedCasuisticasIds').val() != null && $('#SelectedCasuisticasIds').val().length > 0) {
+        $('#resueltoSwitch').prop('checked', false);
+        $('#resueltoSwitch').prop('disabled', true);
+    } else {
+        $('#resueltoSwitch').prop('disabled', false);
+    }
+    $('#SelectedCasuisticasIds').change(function () {
+
+        if ($('#SelectedCasuisticasIds').val() != null && $('#SelectedCasuisticasIds').val().length > 0) {
+            $('#resueltoSwitch').prop('checked', false);
+            $('#resueltoSwitch').prop('disabled', true);
+        } else {
+            $('#resueltoSwitch').prop('disabled', false);
+        }
+    });
 });
 
 
