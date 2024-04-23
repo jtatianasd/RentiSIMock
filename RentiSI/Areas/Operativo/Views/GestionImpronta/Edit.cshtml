@@ -1,7 +1,7 @@
 ﻿@model RentiSI.Modelos.viewModels.ImprontaVM
 @{
     ViewData["Title"] = "Gestion Impronta";
-    var ParametrosBotones = new { LabelBoton = "Gestionar", ClaseBoton = "success" };
+    var ParametrosBotones = new { LabelBoton = "Editar", ClaseBoton = "success" };
 }
 
 <div class="container mt-3 d-flex justify-content-center">
@@ -16,6 +16,7 @@
             <input type="hidden" asp-for="Impronta.ImprontaId" />
             <input type="hidden" asp-for="Tramite.FechaNegocio" />
             <input type="hidden" asp-for="Impronta.Id_Tramite" />
+            <input type="hidden" asp-for="Tramite.OrganismoDeTransitoId" />
             <div class="col-12 offset-1 mt-4">
                 <div class="form-group row">
                     <div class="col-3">
@@ -47,7 +48,10 @@
                     </div>
                     <div class="col-6">
                         @Html.ListBoxFor(x => x.SelectedCasuisticasIds, Model.ListaCasuisticas, new { @class = "form-control" })
+                        <span><label class="text-warning"><i class="fa-solid fa-circle-info"></i>Para seleccionar multiples casuisticas, presione la tecla ctrl y posteriormente seleccione las casuisticas</label></span>
+                        <span><label class="text-warning"><i class="fa-regular fa-trash-can"></i>Para eliminar la casuistica seleccionada, presione la tecla ctrl y posteriormente presione la casuistica</label></span>
                     </div>
+
                 </div>
                 <br />
                 <div class="form-group row">
@@ -94,3 +98,6 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    <script src="~/js/gestionImpronta.js"></script>
+}

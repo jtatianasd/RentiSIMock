@@ -64,7 +64,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          from impronta in improntaLeftJoin.DefaultIfEmpty()
                          join tramiteCasuistica in _db.TramiteCasuistica
                          on impronta.ImprontaId equals tramiteCasuistica.ImprontaId into casuisticaJoin
-                         where recepcion.EsRecepcion == true
+                         where recepcion.EsRecepcion == true && (impronta.EsResuelto == false || impronta.EsResuelto == null)
                          select new ImprontaVM
                          {
                              Tramite = tramite,

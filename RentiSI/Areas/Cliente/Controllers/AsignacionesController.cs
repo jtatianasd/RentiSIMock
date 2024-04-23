@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
@@ -42,13 +43,26 @@ namespace RentiSI.Areas.Cliente.Controllers
             {
                 tramiteVM.Tramite.FechaCreacion = DateTime.Now;
                 tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
-                if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
+                string placaValida= _contenedorTrabajo.Asignacion.validarPlacas(tramiteVM.Tramite.NumeroPlaca);
+                if(string.IsNullOrEmpty(placaValida))
                 {
-                    _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
-                    _contenedorTrabajo.Save();
+                    if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
+                    {
+                        _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
+                        _contenedorTrabajo.Save();
 
-                    return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Tramite.NumeroPlaca", "La placa ya existe");
+                    }
                 }
+                else
+                {
+                    ModelState.AddModelError("Tramite.NumeroPlaca", placaValida);
+                }
+
             }
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(tramiteVM);

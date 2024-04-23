@@ -2,6 +2,21 @@
 
 $(document).ready(function () {
     cargarDatatable();
+    if ($('#SelectedCasuisticasIds').val() != null && $('#SelectedCasuisticasIds').val().length > 0) {
+        $('#resueltoSwitch').prop('checked', false);
+        $('#resueltoSwitch').prop('disabled', true);
+    } else {
+        $('#resueltoSwitch').prop('disabled', false);
+    }
+    $('#SelectedCasuisticasIds').change(function () {
+
+        if ($('#SelectedCasuisticasIds').val() != null && $('#SelectedCasuisticasIds').val().length > 0) {
+            $('#resueltoSwitch').prop('checked', false);
+            $('#resueltoSwitch').prop('disabled', true);
+        } else {
+            $('#resueltoSwitch').prop('disabled', false);
+        }
+    });
 });
 
 
@@ -13,8 +28,6 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "impronta.improntaId", "width": "5%" },
-            { "data": "tramite.id", "width": "5%" },
             { "data": "tramite.numeroPlaca", "width": "10%" },
             { "data": "organismosDeTransito.municipio", "width": "15%" },
             { "data": "impronta.tipificacionImpronta", "width": "20%" },
@@ -23,6 +36,15 @@ function cargarDatatable() {
                 "data": "recepcion.fechaRecepcion", "width": "5%", render: function (data) {
                     var fecha = new Date(data);
                     return fecha.toLocaleDateString('es-ES');
+                }
+            },
+            {
+                "data": "impronta.esResuelto", "width": "5%", render: function (data) {
+                    if (data) {
+                        return "Sí";
+                    } else {
+                        return "No";
+                    }
                 }
             },
             {
