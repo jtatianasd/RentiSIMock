@@ -5,9 +5,9 @@ using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
 using System.Security.Claims;
 
-namespace RentiSI.Areas.Operativo.Controllers
+namespace RentiSI.Areas.OperativoImpronta.Controllers
 {
-    [Area("Operativo")]
+    [Area("OperativoImpronta")]
     public class GestionImprontaController : Controller
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
@@ -85,7 +85,7 @@ namespace RentiSI.Areas.Operativo.Controllers
             return Json(new { data = _contenedorTrabajo.GestionImpronta.ObtenerImprontas() });
         }
 
-        [HttpGet("/Operativo/GestionImpronta/Edit/{id}")]
+        [HttpGet("/OperativoImpronta/GestionImpronta/Edit/{id}")]
         public IActionResult Edit(int? id)
         {
             ImprontaVM improntaVM = new ImprontaVM()
@@ -111,7 +111,7 @@ namespace RentiSI.Areas.Operativo.Controllers
         }
         [HttpPost]
         public IActionResult Edit(ImprontaVM improntaVM)
-        {     
+        {
             if (ModelState.IsValid)
             {
                 if (improntaVM.Impronta.EsResuelto.Equals("true"))
