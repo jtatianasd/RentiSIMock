@@ -24,14 +24,13 @@ namespace RentiSI.Modelos
         [Display(Name = "Fecha de resultado")]
         public DateTime FechaResultado { get; set; }
 
-        public int? IdDetalleEstado { get; set; }
+        [Display(Name = "Tipo estado tramite")]
+        [Required(ErrorMessage = "El tipo estado trámite es requerido")]
+        public int IdDetalleEstado { get; set; }
 
         [ForeignKey("IdDetalleEstado")]
         public TipoDetalleEstado? IdTipoDetalleEstado { get; set; }
-
-        [ForeignKey("IdUsuarioResuelve")]
-        public ApplicationUser? UsuarioResuelve { get; set; }
-
+      
         public string? Observacion { get; set; }
 
         public bool EsGestionTramite { get; set; }

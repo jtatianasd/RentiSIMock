@@ -73,7 +73,7 @@
                     <div class="col-6">
                         <div class="form-check form-switch">
                             <input asp-for="@Model.GestionTramite.EsGestionTramite" class="form-check-input" type="checkbox" id="esGestionTramiteSwitch">
-                            <span asp-validation-for="@Model.GestionTramite.EsGestionTramite" class="text-danger"></span>
+                            <span asp-validation-for="GestionTramite.EsGestionTramite" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -85,6 +85,7 @@
                     <div class="col-6">
                         @Html.DropDownListFor(m => m.GestionTramite.IdDetalleEstado, Model.TipoDetalleEstado,
                                  "-Por favor seleccione un tipo estado trámite-", new { @class = "form-control" })
+                        <span asp-validation-for="GestionTramite.IdDetalleEstado" class="text-danger"></span>
                     </div>
                 </div>
 

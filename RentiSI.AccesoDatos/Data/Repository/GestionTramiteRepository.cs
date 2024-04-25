@@ -38,7 +38,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join detalleEstado in _db.TipoDetalleEstado
                          on gestionTramite.GestionId equals detalleEstado.IdTipoDetalleEstado into gestionCasuisticaLeftJoin
                          from detalleEstadoGestion in gestionCasuisticaLeftJoin.DefaultIfEmpty()
-                         where revision.EsRevision == true
+                         where revision.EsRevision == true && (gestionTramite.EsGestionTramite == false || gestionTramite.EsGestionTramite == null)
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,
@@ -79,7 +79,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                               OrganismosDeTransito = transito,
                               Tramite = tramite,
                               GestionTramite = gestion,
-                              DetalleEstado = detalleEstadoGestion,
+                              DetalleEstado = detalleEstadoGestion ,
                               UsuarioTramite = gestionTramiteUsuarios.Nombre,
                           }).FirstOrDefault();
 

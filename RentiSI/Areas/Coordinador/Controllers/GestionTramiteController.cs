@@ -54,36 +54,35 @@ namespace RentiSI.Areas.Coordinador.Controllers
         [HttpGet("/Coordinador/GestionTramite/Create/{tramiteId}")]
         public IActionResult Create(int tramiteId)
         {
-            ResponseViewModel responseViewModel = new ResponseViewModel()
-            {
-                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
-                Tramite = _contenedorTrabajo.Tramite.Get(tramiteId),
-                ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES"),
-                TipoDetalleEstado = _contenedorTrabajo.TipoRechazo.GetListaTipoRechazo()
-
-            };
-
-            return View(responseViewModel);
+            return View(ObtenerDatosVista(tramiteId));
         }
 
         [HttpPost]
         public IActionResult Create(ResponseViewModel responseViewModel)
         {
-            if (responseViewModel.GestionTramite.EsGestionTramite)
+
+            if (ModelState.IsValid)
             {
-                responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
+                if (responseViewModel.GestionTramite.EsGestionTramite)
+                {
+                    responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
+                }
+
+                responseViewModel.GestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);
+                responseViewModel.GestionTramite.Id_Tramite = responseViewModel.Tramite.Id;
+                _contenedorTrabajo.GestionTramite.Add(responseViewModel.GestionTramite);
+
+                _contenedorTrabajo.Save();
+
+                InsertarCasuistica(responseViewModel);
+                return RedirectToAction(nameof(Index));
+
             }
 
-            responseViewModel.GestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);
-            responseViewModel.GestionTramite.Id_Tramite = responseViewModel.Tramite.Id;
-            _contenedorTrabajo.GestionTramite.Add(responseViewModel.GestionTramite);
+            responseViewModel = ObtenerDatosVista(responseViewModel.Tramite.Id);
 
-            _contenedorTrabajo.Save();
+            return View(responseViewModel);
 
-            InsertarCasuistica(responseViewModel);
-
-
-            return RedirectToAction(nameof(Index));
 
         }
 
@@ -94,7 +93,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
             var gestionTramite = _contenedorTrabajo.GestionTramite.GetAll(gestion => gestion.GestionId == responseViewModel.GestionTramite.GestionId).FirstOrDefault();
             if (gestionTramite != null)
             {
-                if(responseViewModel.GestionTramite.EsGestionTramite)
+                if (responseViewModel.GestionTramite.EsGestionTramite)
                 {
 
                     gestionTramite.FechaResultado = responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
@@ -145,6 +144,21 @@ namespace RentiSI.Areas.Coordinador.Controllers
                 }
             }
 
+
+        }
+
+        private ResponseViewModel ObtenerDatosVista(int TramiteId)
+        {
+            ResponseViewModel responseViewModel = new ResponseViewModel()
+            {
+                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                Tramite = _contenedorTrabajo.Tramite.Get(TramiteId),
+                ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES"),
+                TipoDetalleEstado = _contenedorTrabajo.TipoRechazo.GetListaTipoRechazo()
+
+            };
+
+            return responseViewModel;
 
         }
 

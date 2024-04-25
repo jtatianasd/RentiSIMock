@@ -75,6 +75,7 @@
                     <div class="col-6">
                         @Html.DropDownListFor(m => m.GestionTramite.IdDetalleEstado, Model.TipoDetalleEstado,
                                  "-Por favor seleccione un tipo estado tramite-", new { @class = "form-control" })
+                        <span asp-validation-for="GestionTramite.IdDetalleEstado" class="text-danger"></span>
                     </div>
                 </div>
 
