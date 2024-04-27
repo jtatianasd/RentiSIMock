@@ -16,11 +16,11 @@ namespace RentiSI.Modelos
 
         [ForeignKey("Id_Tramite")]
         public Tramite? Id_Tramite_Gestion { get; set; }
-        [Display(Name = "Fecha de gestión del tramite")]
-
+      
         public string? IdUsuarioGestion { get; set; }
         [ForeignKey("IdUsuarioGestion")]
         public ApplicationUser? UsuarioGestion { get; set; }
+
         [Display(Name = "Fecha de resultado")]
         public DateTime FechaResultado { get; set; }
 
@@ -34,6 +34,8 @@ namespace RentiSI.Modelos
         public string? Observacion { get; set; }
 
         public bool EsGestionTramite { get; set; }
+
+        public bool EsReasignacion { get; set; }
 
 
     }

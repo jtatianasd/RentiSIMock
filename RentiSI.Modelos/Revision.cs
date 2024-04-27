@@ -35,5 +35,7 @@ namespace RentiSI.Modelos
 
         public bool EsRevision { get; set; }
 
+        public bool EsReasignacion { get; set; }
+
     }
 }

@@ -17,20 +17,20 @@ namespace RentiSI.Modelos.viewModels
         public Gestion? GestionTramite { get; set; }
         public TipoDetalleEstado? DetalleEstado { get; set; }
         public string? FechaImpronta { get; set; }
-        public string NombreCasuisticas { get; set; }
-        public string NumeroPlaca { get; set; }
+        public string? NombreCasuisticas { get; set; }
+        public string? NumeroPlaca { get; set; }
         public int RevisionId { get; set; }
         public int GestionId { get; set; }
         public int ImprontaId { get; set; }
         public int TramiteId { get; set; }
-        public string TipificacionTramiteRevision { get; set; }
+        public string? TipificacionTramiteRevision { get; set; }
         public OrganismosDeTransito? OrganismosDeTransito { get; set; }
         public string MensajeCasuisticas = "Mantenga la tecla CTRL presionada para seleccionar varias casuisticas";
         public string? FechaRecepcion { get; set; }
         public int RecepcionId { get; set; }
 
-        public string EsRecepcion { get; set; }
-        public string EsImpronta { get; set; }
+        public string? EsRecepcion { get; set; }
+        public string? EsImpronta { get; set; }
         public string? FechaAsignacion { get; set; }
         public string? UsuarioRecibe { get; set; }
         public string? Observacion { get; set; }

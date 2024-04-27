@@ -30,6 +30,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          from recepcionRecepcion in usuariosLeftJoin.DefaultIfEmpty()
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
+                         where recepcionTramite.EsRecepcion != true
                          select new ResponseViewModel
                          {
                              NumeroPlaca = tramite.NumeroPlaca,

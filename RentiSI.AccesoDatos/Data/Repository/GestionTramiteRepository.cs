@@ -36,9 +36,8 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on gestionTramite.IdUsuarioGestion equals usuarios.Id into usuariosLeftJoin
                          from gestionTramiteUsuarios in usuariosLeftJoin.DefaultIfEmpty()
                          join detalleEstado in _db.TipoDetalleEstado
-                         on gestionTramite.GestionId equals detalleEstado.IdTipoDetalleEstado into gestionCasuisticaLeftJoin
-                         from detalleEstadoGestion in gestionCasuisticaLeftJoin.DefaultIfEmpty()
-                         where revision.EsRevision == true && (gestionTramite.EsGestionTramite == false || gestionTramite.EsGestionTramite == null)
+                         on gestionTramite.IdDetalleEstado equals detalleEstado.IdTipoDetalleEstado
+                         where revision.EsRevision == true && gestionTramite.EsGestionTramite == false && gestionTramite.EsReasignacion == false
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,
@@ -47,7 +46,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              GestionTramite = gestionTramite ?? new Gestion(),
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
                              UsuarioTramite = gestionTramiteUsuarios.Nombre,
-                             DetalleEstado = detalleEstadoGestion,
+                             DetalleEstado = detalleEstado,
                              TiempoGestionTramite = CalcularDiasHabiles(revision.FechaRevision, gestionTramite.FechaResultado),
 
                          };
@@ -107,7 +106,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         public void Actualizar(Gestion Gestion)
         {
-            _db.Update(Gestion);
+            //_db.Update(Gestion);
             _db.SaveChanges();
         }
     }

@@ -12,6 +12,17 @@ $(document).ready(function () {
             $('#esGestionTramiteSwitch').prop('disabled', false);
         }
     });
+
+    $('#GestionTramite_IdDetalleEstado').change(function () {
+
+        if ($('#GestionTramite_IdDetalleEstado').val() != 13) {
+            $('#esGestionTramiteSwitch').prop('checked', false);
+            $('#esGestionTramiteSwitch').prop('disabled', true);
+        } else {
+            $('#esGestionTramiteSwitch').prop('disabled', false);
+        }
+    });
+            
 });
 
 

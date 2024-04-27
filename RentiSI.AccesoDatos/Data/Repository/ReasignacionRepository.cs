@@ -31,7 +31,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join usuarios in _db.ApplicationUser
                          on gestion.IdUsuarioGestion equals usuarios.Id into usuariosLeftJoin
                          from gestionUsuarios in usuariosLeftJoin.DefaultIfEmpty()
-                         where gestion.EsGestionTramite == false
+                         where gestion.EsGestionTramite == false && gestion.EsReasignacion == true
                          select new ReasignacionVM
                          {
                              Tramite = tramite,
