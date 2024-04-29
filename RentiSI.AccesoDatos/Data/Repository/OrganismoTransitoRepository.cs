@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
-    public class OrganismoTransitoRepository: Repository<OrganismosDeTransito>, IOrganismoTransitoRepository
+    public class OrganismoTransitoRepository : Repository<OrganismosDeTransito>, IOrganismoTransitoRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -20,11 +20,13 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         public IEnumerable<SelectListItem> GetListaOrganismosTransito()
         {
-            return _db.OrganismosDeTransito.Select(i => new SelectListItem()
-            {
-                Text = i.Municipio,
-                Value = i.Id.ToString()
-            });
+            return _db.OrganismosDeTransito
+                .OrderBy(i => i.Municipio) // Order by Municipio alphabetically
+                .Select(i => new SelectListItem()
+                {
+                    Text = i.Municipio,
+                    Value = i.Id.ToString()
+                });
         }
     }
 }
