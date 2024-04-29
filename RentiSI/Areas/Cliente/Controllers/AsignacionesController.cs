@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
+using RentiSI.Utilidades;
 using System.Globalization;
 using System.Security.Policy;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -17,6 +18,7 @@ namespace RentiSI.Areas.Cliente.Controllers
     {
         private readonly IContenedorTrabajo _contenedorTrabajo;
         private readonly UserManager<ApplicationUser> _userManager;
+        private ErrorLog errorLog= new ErrorLog();
         public AsignacionesController(IContenedorTrabajo contenedorTrabajo, UserManager<ApplicationUser> userManager)
         {
             _contenedorTrabajo = contenedorTrabajo;
@@ -29,41 +31,60 @@ namespace RentiSI.Areas.Cliente.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            TramiteVM tramiteVM = new TramiteVM()
+            try
             {
-                Tramite = new RentiSI.Modelos.Tramite(),
-                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
-            };
-            return View(tramiteVM);
+                TramiteVM tramiteVM = new TramiteVM()
+                {
+                    Tramite = new RentiSI.Modelos.Tramite(),
+                    ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
+                };
+                return View(tramiteVM);
+            }
+            catch (Exception ex)
+            {
+                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+                return View();
+            } 
         }
         [HttpPost]
         public IActionResult Create(TramiteVM tramiteVM)
         {
-            if (ModelState.IsValid)
+            try
             {
-                tramiteVM.Tramite.FechaCreacion = DateTime.Now;
-                tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
-                string placaValida= _contenedorTrabajo.Asignacion.validarPlacas(tramiteVM.Tramite.NumeroPlaca);
-                if(string.IsNullOrEmpty(placaValida))
+                if (ModelState.IsValid)
                 {
-                    if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
+                    tramiteVM.Tramite.FechaCreacion = DateTime.Now;
+                    tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
+                    string placaValida = _contenedorTrabajo.Asignacion.validarPlacas(tramiteVM.Tramite.NumeroPlaca);
+                    if (string.IsNullOrEmpty(placaValida))
                     {
-                        _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
-                        _contenedorTrabajo.Save();
+                        if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
+                        {
+                            _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
+                            _contenedorTrabajo.Save();
 
-                        return RedirectToAction(nameof(Index));
+                            return RedirectToAction(nameof(Index));
+                        }
+                        else
+                        {
+                            errorLog.RegistrarError("La placa ya existe", nameof(AsignacionesController));
+                            ModelState.AddModelError("Tramite.NumeroPlaca", "La placa ya existe");
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("Tramite.NumeroPlaca", "La placa ya existe");
+                        errorLog.RegistrarError(placaValida, nameof(AsignacionesController));
+                        ModelState.AddModelError("Tramite.NumeroPlaca", placaValida);
                     }
-                }
-                else
-                {
-                    ModelState.AddModelError("Tramite.NumeroPlaca", placaValida);
-                }
 
+                }
             }
+            catch (Exception ex)
+            {
+
+                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+            }
+           
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(tramiteVM);
         }
@@ -77,32 +98,50 @@ namespace RentiSI.Areas.Cliente.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            TramiteVM tramiteVM = new TramiteVM()
+            try
             {
-                Tramite = new Tramite(),
-                ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
-            };
+                TramiteVM tramiteVM = new TramiteVM()
+                {
+                    Tramite = new Tramite(),
+                    ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
+                };
 
-            if (id != null)
+                if (id != null)
+                {
+                    tramiteVM.Tramite = _contenedorTrabajo.Tramite.Get(id.GetValueOrDefault());
+                }
+
+                return View(tramiteVM);
+            }
+            catch (Exception ex)
             {
-                tramiteVM.Tramite = _contenedorTrabajo.Tramite.Get(id.GetValueOrDefault());
+                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+                return View();
             }
 
-            return View(tramiteVM);
         }
 
         [HttpPost]
         public IActionResult Edit(TramiteVM tramiteVM)
         {
-            if (ModelState.IsValid)
+            try
             {
-                tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
+                if (ModelState.IsValid)
+                {
+                    tramiteVM.Tramite.IdUsuarioAsignacion = _userManager.GetUserId(User);
 
-                //Logica para actualizar en BD
-                _contenedorTrabajo.Asignacion.Actualizar(tramiteVM.Tramite);
-                _contenedorTrabajo.Save();
-                return RedirectToAction(nameof(Index));
+                    //Logica para actualizar en BD
+                    _contenedorTrabajo.Asignacion.Actualizar(tramiteVM.Tramite);
+                    _contenedorTrabajo.Save();
+                    return RedirectToAction(nameof(Index));
+                }
+
             }
+            catch (Exception ex)
+            {
+                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+            }
+
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(tramiteVM);
         }
