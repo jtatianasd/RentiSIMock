@@ -1,52 +1,53 @@
 ﻿@using RentiSI.Utilidades
-@model ApplicationUser
+@model RentiSI.Modelos.viewModels.UsuarioVM
 @{
-    ViewData["Title"] = "Registro";
-    var ParametrosBotones = new { LabelBoton = "Crear", ClaseBoton = "success" };
+    ViewData["Title"] = "Actualizar Usuario";
+    var ParametrosBotones = new { LabelBoton = "Actualizar Usuario", ClaseBoton = "success" };
 }
 
 <h1 class="text-center">Editar Usuario</h1>
 
 <div class="row">
     <div class="col-md-8 offset-2">
-        <form asp-action="Edit">
+        <form method="POST"  asp-action="Edit">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.Usuario.Id" asp-for="Usuario.Id" />
 
             <div class="form-floating mb-3">
-                <input asp-for="Nombre" class="form-control" aria-required="true" autocomplete="Nombre" />
-                <label asp-for="Nombre" class="control-label">Nombre</label>
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <input asp-for="@Model.Usuario.Nombre" class="form-control" aria-required="true" autocomplete="Nombre" />
+                <label asp-for="@Model.Usuario.Nombre" class="control-label">Nombre</label>
+                <span asp-validation-for="@Model.Usuario.Nombre" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="UserName" class="form-control" aria-required="true" />
-                <label asp-for="UserName" class="control-label">Usuario</label>
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <input asp-for="@Model.Usuario.UserName" class="form-control" aria-required="true" />
+                <label asp-for="@Model.Usuario.UserName" class="control-label">Usuario</label>
+                <span asp-validation-for="@Model.Usuario.UserName" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Email" class="form-control" />
-                <label asp-for="Email" class="control-label" aria-required="true">Correo</label>
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <input asp-for="@Model.Usuario.Email" class="form-control" />
+                <label asp-for="@Model.Usuario.Email" class="control-label" aria-required="true">Correo</label>
+                <span asp-validation-for="@Model.Usuario.Email" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="PasswordHash" class="form-control" type="password" autocomplete="new-password" />
-                <label asp-for="PasswordHash" class="control-label">Contraseña</label>
-                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                <input asp-for="@Model.Usuario.PasswordHash" class="form-control" type="password" autocomplete="new-password" />
+                <label asp-for="@Model.Usuario.PasswordHash" class="control-label">Contraseña</label>
+                <span asp-validation-for="@Model.Usuario.PasswordHash" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
                 <div class="col-4"><h4><small>Rol de Usuario:</small></h4></div>
                 <div class="col-6">
-                    <select class="form-select" id="selectRol" name="selectRol">
+                    <select class="form-select" id="selectRol" name="Rol" asp-for="@Model.Rol">
                         <option value="@CNT.Administrador">@CNT.Administrador</option>
                         <option value="@CNT.Usuario">@CNT.Usuario</option>
                         <option value="@CNT.Cliente">@CNT.Cliente</option>
                         <option value="@CNT.Coordinador">@CNT.Coordinador</option>
                         <option value="@CNT.Operativo">@CNT.Operativo</option>
+                        <option value="@CNT.OperativoImpronta">@CNT.OperativoImpronta</option>
                     </select>
                 </div>
             </div>
