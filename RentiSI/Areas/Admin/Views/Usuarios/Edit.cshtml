@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-md-8 offset-2">
-        <form method="POST"  asp-action="Edit">
+        <form method="POST" asp-action="Edit">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.Usuario.Id" asp-for="Usuario.Id" />
@@ -23,13 +23,13 @@
             <div class="form-floating mb-3">
                 <input asp-for="@Model.Usuario.UserName" class="form-control" aria-required="true" />
                 <label asp-for="@Model.Usuario.UserName" class="control-label">Usuario</label>
-                <span asp-validation-for="@Model.Usuario.UserName" class="text-danger"></span>
+                <span asp-validation-for="Usuario.UserName" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
                 <input asp-for="@Model.Usuario.Email" class="form-control" />
                 <label asp-for="@Model.Usuario.Email" class="control-label" aria-required="true">Correo</label>
-                <span asp-validation-for="@Model.Usuario.Email" class="text-danger"></span>
+                <span asp-validation-for="Usuario.Email" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
@@ -60,3 +60,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

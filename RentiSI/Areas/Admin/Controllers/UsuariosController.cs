@@ -91,43 +91,32 @@ namespace RentiSI.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _userManager.FindByIdAsync(usuarioVM.Usuario.Id);
-                if (user != null)
+                var usuario =  await _userManager.FindByIdAsync(usuarioVM.Usuario.Id);
+                if (usuario != null)
                 {
 
                     if (usuarioVM.Usuario.PasswordHash != null)
                     {
-                        var token = await _userManager.GeneratePasswordResetTokenAsync(user.Result);
-                        result = await _userManager.ResetPasswordAsync(user.Result, token, usuarioVM.Usuario.PasswordHash);
+                        result = await _userManager.ChangePasswordAsync(usuario, usuario.PasswordHash, usuarioVM.Usuario.PasswordHash);
 
                     }
 
                     var rol = ObtenerRoles(usuarioVM.Usuario.Id).Result;
 
-                    var respuestaEliminarRol = await RemoveRoleFromUserAsync(user, rol.FirstOrDefault());
+                    var respuestaEliminarRol = await RemoveRoleFromUserAsync(usuario, rol.FirstOrDefault());
                     if (respuestaEliminarRol)
                     {
-                        await AgregarRol(user, usuarioVM.Rol);
+                        await AgregarRol(usuario, usuarioVM.Rol);
                     }
 
-                    user.Result.Nombre = usuarioVM.Usuario.Nombre;
-                    user.Result.UserName = usuarioVM.Usuario.UserName;
-                    var usuario = await _userManager.UpdateAsync(user.Result);
-                    if (usuario.Succeeded)
+                    usuario.Nombre = usuarioVM.Usuario.Nombre;
+                    usuario.UserName = usuarioVM.Usuario.UserName;
+                    usuario.Email = usuarioVM.Usuario.Email;
+                    var resultado =  await _userManager.UpdateAsync(usuario);
+                    if (resultado.Succeeded)
                     {
                         return RedirectToAction(nameof(Index));
                     }
-                }
-            }
-
-            foreach (var campo in ModelState.Keys)
-            {
-                var erroresCampo = ModelState[campo].Errors;
-                foreach (var error in erroresCampo)
-                {
-                    // Aquí puedes hacer lo que necesites con los errores, como registrarlos o mostrarlos en la vista
-                    var mensajeError = error.ErrorMessage;
-                    // Puedes hacer algo con el mensaje de error, como agregarlo a una lista para mostrar en la vista
                 }
             }
 
@@ -139,17 +128,17 @@ namespace RentiSI.Areas.Admin.Controllers
             var usuario = await _userManager.FindByIdAsync(usuarioId);
             return await _userManager.GetRolesAsync(usuario);
         }
-        private async Task<bool> RemoveRoleFromUserAsync(Task<ApplicationUser>usuarioId, string rol)
+        private async Task<bool> RemoveRoleFromUserAsync(ApplicationUser usuarioId, string rol)
         {
-            var result = await _userManager.RemoveFromRoleAsync(usuarioId.Result, rol);
+            var result = await _userManager.RemoveFromRoleAsync(usuarioId, rol);
             return result.Succeeded;
 
          }
 
 
-         private async Task<bool> AgregarRol(Task<ApplicationUser> usuario, string rol)
+         private async Task<bool> AgregarRol(ApplicationUser usuario, string rol)
          {
-             var resultado = await _userManager.AddToRoleAsync(usuario.Result, rol);
+             var resultado = await _userManager.AddToRoleAsync(usuario, rol);
              return resultado.Succeeded;
         }
 
