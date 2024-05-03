@@ -11,5 +11,6 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
     {
         void BloquearUsuario(string IdUsuario);
         void DesbloquearUsuario(string IdUsuario);
+        string HashPassword(string password);
     }
 }

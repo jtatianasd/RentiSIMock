@@ -25,5 +25,13 @@ namespace RentiSI.Utilidades
                 Description = "La contraseña debe tener al menos un caracter especial"
             };
         }
+        public override IdentityError PasswordTooShort(int length)
+        {
+            return new IdentityError()
+            {
+                Code = nameof(PasswordTooShort),
+                Description = "La contraseña debe tener al 6 digitos"
+            };
+        }
     }
 }
