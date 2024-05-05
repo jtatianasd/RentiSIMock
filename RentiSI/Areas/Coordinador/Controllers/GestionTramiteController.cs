@@ -57,11 +57,6 @@ namespace RentiSI.Areas.Coordinador.Controllers
                 var gestionTramite = _contenedorTrabajo.GestionTramite.GetAll(gestion => gestion.GestionId == responseViewModel.GestionTramite.GestionId).FirstOrDefault();
                 if (gestionTramite != null)
                 {
-                    if (responseViewModel.GestionTramite.EsGestionTramite)
-                    {
-                        gestionTramite.FechaResultado = responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
-                    }
-
 
                     if(!EsTramiteFinalizado(responseViewModel))
                     {
@@ -72,6 +67,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
                     gestionTramite.Observacion = responseViewModel.GestionTramite.Observacion;
                     gestionTramite.EsGestionTramite = responseViewModel.GestionTramite.EsGestionTramite;
                     gestionTramite.IdDetalleEstado = responseViewModel.GestionTramite.IdDetalleEstado;
+                    gestionTramite.FechaResultado = responseViewModel.GestionTramite.FechaResultado = DateTime.Now;
 
                     InsertarCasuistica(responseViewModel);
 

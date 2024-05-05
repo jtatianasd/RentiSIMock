@@ -22,6 +22,9 @@ namespace RentiSI.AccesoDatos.Data.Repository
             var result = from tramite in _db.Tramite
                          join gestion in _db.Gestion
                          on tramite.Id equals gestion.Id_Tramite
+                         join reasignacion in _db.Reasignacion
+                         on gestion.Id_Tramite equals reasignacion.Id_Tramite into reasignacionLeftJoin
+                         from reasignacionTramite in reasignacionLeftJoin.DefaultIfEmpty()
                          join transito in _db.OrganismosDeTransito
                          on tramite.OrganismoDeTransitoId equals transito.Id
                          join detalleEstado in _db.TipoDetalleEstado
@@ -31,16 +34,17 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join usuarios in _db.ApplicationUser
                          on gestion.IdUsuarioGestion equals usuarios.Id into usuariosLeftJoin
                          from gestionUsuarios in usuariosLeftJoin.DefaultIfEmpty()
-                         where gestion.EsGestionTramite == false && gestion.EsReasignacion == true
+                         where gestion.EsGestionTramite == false && gestion.EsReasignacion == true && reasignacionTramite.EsReasignado == null
                          select new ReasignacionVM
                          {
                              Tramite = tramite,
                              Gestion = gestion,
+                             Reasignacion = reasignacionTramite ?? new Reasignacion(),
                              OrganismosDeTransito = transito,
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(gc => gc.TipoCasuistica.Descripcion)),
                              UsuarioGestion= gestionUsuarios.Nombre,
-                             DetalleEstado = detalleEstado
-                         };
+                             DetalleEstado = detalleEstado,
+                             TiempoGestionReasignacion = Utilidades.FechasHelper.CalcularDiasHabiles(gestion.FechaResultado, null )                      };
 
             return result.ToList();
         }

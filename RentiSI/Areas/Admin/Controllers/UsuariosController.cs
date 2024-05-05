@@ -19,8 +19,6 @@ namespace RentiSI.Areas.Admin.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-        private readonly RoleManager<Role> _roleManager;
-
         public UsuariosController(IContenedorTrabajo contenedorTrabajo, UserManager<ApplicationUser> userManager)
         {
             _contenedorTrabajo = contenedorTrabajo;

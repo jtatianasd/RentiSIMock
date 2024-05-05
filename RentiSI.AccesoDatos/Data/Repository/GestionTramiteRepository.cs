@@ -1,12 +1,6 @@
 ﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentiSI.AccesoDatos.Data.Repository
 {
@@ -47,7 +41,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
                              UsuarioTramite = gestionTramiteUsuarios.Nombre,
                              DetalleEstado = detalleEstado,
-                             TiempoGestionTramite = CalcularDiasHabiles(revision.FechaRevision, gestionTramite.FechaResultado),
+                             TiempoGestionTramite = Utilidades.FechasHelper.CalcularDiasHabiles(revision.FechaRevision, gestionTramite.FechaResultado),
 
                          };
 
@@ -86,27 +80,9 @@ namespace RentiSI.AccesoDatos.Data.Repository
             return result;
         }
 
-        private static int CalcularDiasHabiles(DateTime fechaInicio, DateTime? fechaFin)
-        {
-            int diasHabiles = 0;
-
-            // Recorremos cada día entre las fechas
-            for (DateTime fecha = fechaInicio; fecha <= fechaFin; fecha = fecha.AddDays(1))
-            {
-                // Verificamos si el día actual es sábado o domingo
-                if (fecha.DayOfWeek != DayOfWeek.Saturday && fecha.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    // Si no es sábado ni domingo, incrementamos el contador de días hábiles
-                    diasHabiles++;
-                }
-            }
-
-            return diasHabiles;
-        }
 
         public void Actualizar(Gestion Gestion)
         {
-            //_db.Update(Gestion);
             _db.SaveChanges();
         }
     }

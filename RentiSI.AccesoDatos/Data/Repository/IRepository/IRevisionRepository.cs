@@ -10,6 +10,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         ResponseViewModel ObtenerRevisionesPorId(int RevisionId);
 
         void Actualizar(Revision Revision);
+
+        void ActualizarUsuarioRevision(int TramiteId, string? UsuarioRevision);
     }
 
 }

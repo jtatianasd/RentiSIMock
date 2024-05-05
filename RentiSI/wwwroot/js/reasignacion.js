@@ -17,7 +17,23 @@ function cargarDatatable() {
             { "data": "usuarioGestion", "width": "15%" },
             { "data": "organismosDeTransito.municipio", "width": "20%" },
             { "data": "detalleEstado.descripcionDetalle", "width": "20%" },
-            { "data": "nombreCasuisticas", "width": "15%" }
+            { "data": "nombreCasuisticas", "width": "15%" },
+            { "data": "tiempoGestionReasignacion", "width": "15%" },
+            {
+                "data": { reasignacionId: "reasignacion.reasignacionId", tramiteId: "tramite.id" },
+                "render": function (data) {
+
+                    return `<div class="text-center">
+                                <a href="/Coordinador/Reasignacion/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <i class="far fa-edit"></i> Gestionar
+                                </a>
+                                &nbsp;
+                          </div>
+                         `;
+
+                }, "width": "25%"
+            }
+
         ],
         "language": {
             "decimal": "",
