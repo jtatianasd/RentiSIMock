@@ -1,15 +1,15 @@
 ﻿@using RentiSI.Utilidades
-@model RentiSI.Modelos.viewModels.UsuarioVM
+@model RentiSI.Modelos.viewModels.RolVM
 @{
-    ViewData["Title"] = "Actualizar password de Usuario";
-    var ParametrosBotones = new { LabelBoton = "Actualizar contraseña Usuario", ClaseBoton = "success" };
+    ViewData["Title"] = "Actualizar rol de Usuario";
+    var ParametrosBotones = new { LabelBoton = "Actualizar rol de Usuario", ClaseBoton = "success" };
 }
 
-<h1 class="text-center">Actualizar password de Usuario</h1>
+<h1 class="text-center">Actualizar rol de Usuario</h1>
 
 <div class="row">
     <div class="col-md-8 offset-2">
-        <form method="POST" asp-action="Edit">
+        <form method="POST" asp-action="EditRol">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.Usuario.Id" asp-for="Usuario.Id" />
@@ -25,11 +25,19 @@
                 <label asp-for="@Model.Usuario.Email" class="control-label" aria-required="true">Correo</label>
                 <span asp-validation-for="Usuario.Email" class="text-danger"></span>
             </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="@Model.Password" class="form-control" type="password" autocomplete="new-password" />
-                <label asp-for="@Model.Password" class="control-label">Contraseña</label>
-                <span asp-validation-for="@Model.Password" class="text-danger"></span>
+            <div class="form-group row">
+                <div class="col-4"><h4><small>Rol de Usuario:</small></h4></div>
+                <div class="col-6">
+                    <select class="form-select" id="selectRol" name="Rol" asp-for="@Model.Rol">
+                        <option value="-">Seleccione un rol</option>
+                        <option value="@CNT.Administrador">@CNT.Administrador</option>
+                        <option value="@CNT.Usuario">@CNT.Usuario</option>
+                        <option value="@CNT.Cliente">@CNT.Cliente</option>
+                        <option value="@CNT.Coordinador">@CNT.Coordinador</option>
+                        <option value="@CNT.Operativo">@CNT.Operativo</option>
+                        <option value="@CNT.OperativoImpronta">@CNT.OperativoImpronta</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group-row mt-3">
