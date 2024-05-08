@@ -13,14 +13,13 @@ function cargarDatatable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "id", "width": "5%" },
+            { "data": "numeroPlaca", "width": "15%" },
             {
                 "data": "fechaCreacion", "width": "10%", render: function (data) {
                     var fecha = new Date(data);
                     return fecha.toLocaleDateString('es-ES');
                 }
             },
-            { "data": "numeroPlaca", "width": "15%" },
             {
                 "data": "financiacion", "width": "5%", "render": function (data) {
                     if (data) {
