@@ -26,7 +26,7 @@ function cargarDatatable() {
                 "render": function (data, type, row) {
                     if (data > 0) {
                         return `<div class="text-center">
-                                <a href="/Coordinador/Recepcion/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Coordinador/Recepcion/Edit/${data}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
@@ -35,7 +35,7 @@ function cargarDatatable() {
                     }
                     else {
                         return `<div class="text-center">
-                                <a href="/Coordinador/Recepcion/Create/${row.tramiteId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Coordinador/Recepcion/Create/${row.tramiteId}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Gestionar
                                 </a>
                                 &nbsp;

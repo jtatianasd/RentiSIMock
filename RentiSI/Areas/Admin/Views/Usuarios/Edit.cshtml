@@ -15,13 +15,13 @@
             <input type="hidden" asp-for="@Model.Usuario.Id" asp-for="Usuario.Id" />
 
             <div class="form-floating mb-3">
-                <input asp-for="@Model.Usuario.Nombre" class="form-control" aria-required="true" autocomplete="Nombre" />
+                <input asp-for="@Model.Usuario.Nombre" class="form-control" aria-required="true" />
                 <label asp-for="@Model.Usuario.Nombre" class="control-label">Nombre</label>
                 <span asp-validation-for="@Model.Usuario.Nombre" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="@Model.Usuario.Email" class="form-control" />
+                <input asp-for="@Model.Usuario.Email" class="form-control" readonly="true" />
                 <label asp-for="@Model.Usuario.Email" class="control-label" aria-required="true">Correo</label>
                 <span asp-validation-for="Usuario.Email" class="text-danger"></span>
             </div>

@@ -51,7 +51,7 @@ function cargarDatatable() {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                                <a href="/Cliente/Asignaciones/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Cliente/Asignaciones/Edit/${data}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;

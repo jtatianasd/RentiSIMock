@@ -50,7 +50,7 @@ function cargarDatatable() {
                 "render": function (data) {
                     if (data.revision.revisionId > 0) {
                         return `<div class="text-center">
-                                <a href="/Operativo/Revision/Edit/${data.revision.revisionId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Operativo/Revision/Edit/${data.revision.revisionId}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;

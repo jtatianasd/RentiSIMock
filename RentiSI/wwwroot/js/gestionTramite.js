@@ -46,7 +46,7 @@ function cargarDatatable() {
                     if (data.gestionTramite.gestionId > 0) {
 
                         return `<div class="text-center">
-                                <a href="/Coordinador/GestionTramite/Edit/${data.gestionTramite.gestionId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Coordinador/GestionTramite/Edit/${data.gestionTramite.gestionId}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
@@ -54,7 +54,7 @@ function cargarDatatable() {
                          `;
                     } else {
                         return `<div class="text-center">
-                                <a href="/Coordinador/GestionTramite/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/Coordinador/GestionTramite/Create/${data.tramite.id}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Gestionar
                                 </a>
                                 &nbsp;

@@ -52,7 +52,7 @@ function cargarDatatable() {
                 "render": function (data) {
                     if (data.impronta.improntaId > 0) {
                         return `<div class="text-center">
-                                <a href="/OperativoImpronta/GestionImpronta/Edit/${data.impronta.improntaId}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/OperativoImpronta/GestionImpronta/Edit/${data.impronta.improntaId}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Editar
                                 </a>
                                 &nbsp;
@@ -62,7 +62,7 @@ function cargarDatatable() {
                     else
                     {
                         return `<div class="text-center">
-                                <a href="/OperativoImpronta/GestionImpronta/Create/${data.tramite.id}" class="btn btn-success text-white" style="cursor:pointer; width:120px;">
+                                <a href="/OperativoImpronta/GestionImpronta/Create/${data.tramite.id}" class="btn btn-success" style="cursor:pointer; width:120px;">
                                 <i class="far fa-edit"></i> Gestionar
                                 </a>
                                 &nbsp;

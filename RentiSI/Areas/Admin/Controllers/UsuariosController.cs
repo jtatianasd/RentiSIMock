@@ -33,9 +33,13 @@ namespace RentiSI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_contenedorTrabajo.Usuario.GetAll());
+            return View();
         }
-
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _contenedorTrabajo.Usuario.GetAll() });
+        }
         [HttpGet]
         public IActionResult Bloquear(string id)
         {
