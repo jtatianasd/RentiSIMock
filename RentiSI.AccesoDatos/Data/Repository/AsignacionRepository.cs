@@ -1,5 +1,6 @@
 ﻿using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
+using RentiSI.Modelos.viewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,16 @@ namespace RentiSI.AccesoDatos.Data.Repository
                 Error = "Placa no válida, los formatos admitidos son: ABC-123 o S12345 o R12345";
             }
             return Error;
+        }
+
+        public void ActualizarOrganismoTransito(Tramite tramite)
+        {
+            var ObjTramite = _db.Tramite.FirstOrDefault(s => s.Id == tramite.Id);
+            if(ObjTramite != null)
+            {
+                ObjTramite.OrganismoDeTransitoId = tramite.OrganismoDeTransitoId;
+                _db.SaveChanges();
+            }
         }
     }
 }

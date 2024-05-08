@@ -18,7 +18,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         {
             var result = from tramite in _db.Tramite
                          join revision in _db.Revision
-                         on tramite.Id equals revision.Id_Tramite 
+                         on tramite.Id equals revision.Id_Tramite
                          join recepcion in _db.Recepcion
                          on tramite.Id equals recepcion.Id_Tramite
                          join impronta in _db.Impronta
@@ -37,7 +37,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,
                              FechaImpronta = impronta.FechaResultadoImpronta.ToString("dd-MM-yyyy"),
-        };
+                         };
 
             return result.ToList();
 
@@ -58,7 +58,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                           select new ResponseViewModel
                           {
                               Tramite = tramite,
-                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy"): null,
+                              FechaRecepcion = recepcion.FechaRecepcion.HasValue ? recepcion.FechaRecepcion.Value.ToString("dd-MM-yyyy") : null,
                               FechaAsignacion = tramite.FechaCreacion.HasValue ? tramite.FechaCreacion.Value.ToString("dd-MM-yyyy") : null,
                               Observacion = recepcion.Observacion,
                               Revision = revision,
@@ -74,6 +74,21 @@ namespace RentiSI.AccesoDatos.Data.Repository
             _db.Update(revision);
             _db.SaveChanges();
         }
+
+        public void ActualizarUsuarioRevision(int TramiteId, string? UsuarioRevision)
+        {
+            var objRevision = _db.Revision.FirstOrDefault(s => s.Id_Tramite == TramiteId);
+            if (objRevision == null)
+            {
+                return;
+            }
+
+            objRevision.IdUsuarioRevision = UsuarioRevision;
+            objRevision.EsReasignacion = true;
+            objRevision.EsRevision = false;
+            _db.SaveChanges();
+        }
+
 
     }
 }

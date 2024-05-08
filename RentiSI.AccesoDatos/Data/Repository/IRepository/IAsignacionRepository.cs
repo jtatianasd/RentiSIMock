@@ -12,5 +12,7 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         bool ExistePlaca(string NumeroPlaca);
         string validarPlacas(string placa);
         void Actualizar(Tramite tramite);
+
+        void ActualizarOrganismoTransito(Tramite tramite);
     }
 }

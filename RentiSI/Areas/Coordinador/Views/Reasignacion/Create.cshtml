@@ -1,76 +1,58 @@
-﻿@model RentiSI.Modelos.viewModels.ImprontaVM
+﻿@model RentiSI.Modelos.viewModels.ReasignacionVM
 @{
-    ViewData["Title"] = "Reasignacion Tramites";
-    var ParametrosBotones = new { LabelBoton = "Gestionar", ClaseBoton = "success" };
+    ViewData["Title"] = "Reasignación Tramites";
+    var ParametrosBotones = new { LabelBoton = "Reasignar", ClaseBoton = "success" };
 }
 
 <div class="container mt-3 d-flex justify-content-center">
     <div class="row">
         <div class="col-4 offset-4">
             <h3>
-                <small class="text-body-secondary">Reasignacion Tramites</small>
+                <small class="text-body-secondary">Reasignación Trámites</small>
             </h3>
         </div>
 
         <form method="POST" asp-action="Create" enctype="multipart/form-data">
             <input type="hidden" asp-for="Tramite.Id" />
-            <input type="hidden" asp-for="Tramite.FechaNegocio" />
             <input type="hidden" asp-for="Tramite.NumeroPlaca" />
+            <input type="hidden" asp-for="Gestion.IdDetalleEstado" />
             <div class="col-12 offset-1 mt-4">
                 <div class="form-group row">
                     <div class="col-3">
-                        <label class="fw-bold">Número de placa</label>
+                        <label class="fw-bold">Fecha Reasignación</label>
                     </div>
                     <div class="col-6">
-                        <label asp-for="@Model.Tramite.NumeroPlaca" class="form-control">@Model.Tramite.NumeroPlaca </label>
+                        <label asp-for="@Model.Gestion.FechaResultado">@Model.Gestion.FechaResultado</label>
                     </div>
                 </div>
-                <br />
-                <div class="form-group row">
+
+                <div class="row mt-4 mb-4">
                     <div class="col-3">
-                        <label class="fw-bold">Reasignar el tramite</label>
+                        <label class="fw-bold">Última Revisión</label>
+                    </div>
+                    <div class="col-6">
+                        @Html.DropDownListFor(m => m.Gestion.IdUsuarioGestion, Model.ListaUsuarios,
+                                 "-Por favor seleccione un usuario-", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-3">
+                        <label class="fw-bold">Organismo de trnsito</label>
                     </div>
                     <div class="col-6">
                         @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
                                  "-Por favor seleccione un organismo de transito-", new { @class = "form-control" })
                     </div>
                 </div>
-                <br />
-                <br />
-                <div class="form-group row">
+                <div class="row mt-2 mb-2">
                     <div class="col-3">
-                        <label class="fw-bold">Organismo de transito</label>
+                        <label class="fw-bold">Observación</label>
                     </div>
                     <div class="col-6">
-                        @Html.DropDownListFor(m => m.Tramite.OrganismoDeTransitoId, Model.ListaOrganismosTransito,
-                                 "-Por favor seleccione un organismo de transito-", new { @class = "form-control", disabled = "disabled" })
+                        <textarea class="form-control" id="Observacion" rows="3" asp-for="@Model.Reasignacion.Observaciones">@Model.Reasignacion.Observaciones"</textarea>
                     </div>
                 </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label class="fw-bold">Resuelto</label>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-check form-switch">
-                            <input asp-for="Impronta.EsResuelto" class="form-check-input" type="checkbox" id="resueltoSwitch">
-                            <span asp-validation-for="Impronta.EsResuelto" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label class="fw-bold">Observaciones</label>
-                    </div>
-                    <div class="col-6">
-                        <textarea asp-for="Impronta.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
-                        <span asp-validation-for="Impronta.Observaciones" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <br />
-                <div class="form-group-row">
+                <div class="form-group-row mt-4">
                     <div class="col-8">
                         <partial name="_VistaCrearVolver" model="ParametrosBotones" />
                     </div>
