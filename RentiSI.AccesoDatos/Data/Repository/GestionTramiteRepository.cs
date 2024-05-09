@@ -30,8 +30,10 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          on gestionTramite.IdUsuarioGestion equals usuarios.Id into usuariosLeftJoin
                          from gestionTramiteUsuarios in usuariosLeftJoin.DefaultIfEmpty()
                          join detalleEstado in _db.TipoDetalleEstado
-                         on gestionTramite.IdDetalleEstado equals detalleEstado.IdTipoDetalleEstado
-                         where revision.EsRevision == true && gestionTramite.EsGestionTramite == false && gestionTramite.EsReasignacion == false
+                         on gestionTramite.IdDetalleEstado equals detalleEstado.IdTipoDetalleEstado into detalleEstadoLeftJoin
+                         from detalleEstadoGestion in detalleEstadoLeftJoin.DefaultIfEmpty()
+                         where revision.EsRevision == true && (gestionTramite.EsGestionTramite == false || gestionTramite.EsGestionTramite == null)
+                         && gestionTramite.EsReasignacion != true
                          select new ResponseViewModel
                          {
                              OrganismosDeTransito = transito,
@@ -40,7 +42,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                              GestionTramite = gestionTramite ?? new Gestion(),
                              NombreCasuisticas = string.Join(", ", casuisticaJoin.Select(rc => rc.TipoCasuistica.Descripcion)),
                              UsuarioTramite = gestionTramiteUsuarios.Nombre,
-                             DetalleEstado = detalleEstado,
+                             DetalleEstado = detalleEstadoGestion,
                              TiempoGestionTramite = Utilidades.FechasHelper.CalcularDiasHabiles(revision.FechaRevision, gestionTramite.FechaResultado),
 
                          };
@@ -83,6 +85,20 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
         public void Actualizar(Gestion Gestion)
         {
+            _db.SaveChanges();
+        }
+
+        public void ActualizarEsRevision(int? TramiteId)
+        {
+            var objRevision = _db.Gestion.FirstOrDefault(s => s.Id_Tramite == TramiteId);
+            if (objRevision == null)
+            {
+                return;
+            }
+
+
+            objRevision.EsReasignacion = false;
+
             _db.SaveChanges();
         }
     }

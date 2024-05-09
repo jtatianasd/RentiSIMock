@@ -80,7 +80,12 @@ function cargarDatatable() {
                 "previous": "Anterior"
             }
         },
-        "width": "100%"
+        "width": "100%",
+        "rowCallback": function (row, data) {
+            if (data.revision && data.revision.esReasignacion) {
+                $(row).addClass('reassigned-row'); // Agregar una clase para cambiar el color de fondo
+            }
+        }
     });
 }
 

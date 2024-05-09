@@ -66,6 +66,11 @@ namespace RentiSI.Areas.Operativo.Controllers
 
                 InsertarRevisionCasuistica(responseViewModel);
 
+                if(revision.EsReasignacion)
+                {
+                    _contenedorTrabajo.GestionTramite.ActualizarEsRevision(revision.Id_Tramite);
+                }
+
                 _contenedorTrabajo.Revision.Actualizar(revision);
 
             }

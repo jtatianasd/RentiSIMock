@@ -40,3 +40,7 @@ body {
 .usuarios .fa-add:before, .fa-plus:before {
     padding-right: 5px
 }
+
+.table > tbody > .reassigned-row > * {
+    background-color: #ffcccc !important;
+}

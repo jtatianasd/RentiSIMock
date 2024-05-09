@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
-using System.Security.Claims;
 
 namespace RentiSI.Areas.Coordinador.Controllers
 {

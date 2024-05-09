@@ -10,6 +10,8 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         ResponseViewModel ObtenerGestionesTramitesPorId(int GestionId);
 
         void Actualizar(Gestion Gestion);
+
+        void ActualizarEsRevision(int? TramiteId);
     }
 
 }
