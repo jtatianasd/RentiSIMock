@@ -42,7 +42,7 @@ namespace RentiSI.Areas.Cliente.Controllers
             }
             catch (Exception ex)
             {
-                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+                
                 return View();
             } 
         }
@@ -58,33 +58,26 @@ namespace RentiSI.Areas.Cliente.Controllers
                     string placaValida = _contenedorTrabajo.Asignacion.validarPlacas(tramiteVM.Tramite.NumeroPlaca);
                     if (string.IsNullOrEmpty(placaValida))
                     {
-                        if (!_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
+                        if (_contenedorTrabajo.Asignacion.ExistePlaca(tramiteVM.Tramite.NumeroPlaca))
                         {
+                            TempData["Mensaje"] = "La placa ya se encuentra registrada, aun asi se creó en el sistema.";
+                        }
                             _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
                             _contenedorTrabajo.Save();
-
-                            return RedirectToAction(nameof(Index));
-                        }
-                        else
-                        {
-                            errorLog.RegistrarError("La placa ya existe", nameof(AsignacionesController));
-                            ModelState.AddModelError("Tramite.NumeroPlaca", "La placa ya existe");
-                        }
+                            return RedirectToAction(nameof(Index));   
                     }
                     else
                     {
-                        errorLog.RegistrarError(placaValida, nameof(AsignacionesController));
+                     
                         ModelState.AddModelError("Tramite.NumeroPlaca", placaValida);
                     }
-
                 }
             }
             catch (Exception ex)
             {
-
-                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+               
             }
-           
+
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
             return View(tramiteVM);
         }
@@ -115,7 +108,7 @@ namespace RentiSI.Areas.Cliente.Controllers
             }
             catch (Exception ex)
             {
-                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+               
                 return View();
             }
 
@@ -139,7 +132,7 @@ namespace RentiSI.Areas.Cliente.Controllers
             }
             catch (Exception ex)
             {
-                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+               
             }
 
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();

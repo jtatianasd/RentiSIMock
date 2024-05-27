@@ -33,7 +33,12 @@
         </thead>
     </table>
 </div>
-
+@if (TempData["Mensaje"] != null)
+{
+    <script>
+        alert("@TempData["Mensaje"]");
+    </script>
+}
 @section Scripts {
     <script src="~/js/asignacion.js"></script>
 }
