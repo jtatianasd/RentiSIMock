@@ -35,7 +35,7 @@ namespace RentiSI.Areas.Cliente.Controllers
             {
                 TramiteVM tramiteVM = new TramiteVM()
                 {
-                    Tramite = new RentiSI.Modelos.Tramite(),
+                    Tramite = new Tramite(),
                     ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
                 };
                 return View(tramiteVM);

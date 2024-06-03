@@ -41,13 +41,13 @@ namespace RentiSI.Areas.Coordinador.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ReasignacionVM  reasignacionVM)
+        public IActionResult Create(ReasignacionVM reasignacionVM)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                 
+
                     reasignacionVM.Reasignacion.EsReasignado = true;
                     reasignacionVM.Reasignacion.FechaReasignacion = DateTime.Now;
                     reasignacionVM.Reasignacion.Id_Tramite = reasignacionVM.Tramite.Id;
@@ -83,7 +83,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
         private ReasignacionVM ObtenerDatosVistaCrear(int TramiteId)
         {
 
-            var usuariosRole = _userManager.GetUsersInRoleAsync("Administrador").Result.ToList();
+            var usuariosRole = _userManager.GetUsersInRoleAsync("Operativo").Result.ToList();
             var selectListItems = usuariosRole.Select(user => new SelectListItem
             {
                 Text = user.Nombre,
@@ -94,7 +94,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
             {
                 ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
                 Gestion = _contenedorTrabajo.GestionTramite.GetAll(gestion => gestion.Id_Tramite == TramiteId).FirstOrDefault(),
-                ListaUsuarios = new UsariosRoles(_userManager).ObtenerUsuariosPorRol("Administrador"),
+                ListaUsuarios = new UsariosRoles(_userManager).ObtenerUsuariosPorRol("Operativo"),
                 Tramite = _contenedorTrabajo.Tramite.Get(TramiteId)
             };
 

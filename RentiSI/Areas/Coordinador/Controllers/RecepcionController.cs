@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
+using RentiSI.Areas.Cliente.Controllers;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
+using RentiSI.Utilidades;
 
 namespace RentiSI.Areas.Coordinador.Controllers
 {
@@ -12,6 +14,8 @@ namespace RentiSI.Areas.Coordinador.Controllers
         private readonly IContenedorTrabajo _contenedorTrabajo;
 
         private readonly UserManager<ApplicationUser> _userManager;
+
+        private ErrorLog errorLog = new ErrorLog();
 
         public RecepcionController(IContenedorTrabajo contenedorTrabajo, UserManager<ApplicationUser> userManager)
         {
@@ -45,16 +49,24 @@ namespace RentiSI.Areas.Coordinador.Controllers
         [HttpPost]
         public IActionResult Update(ResponseViewModel responseViewModel)
         {
-
-            var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.Recepcion.RecepcionId).FirstOrDefault();
-            if (recepcion != null)
+            try
             {
-                recepcion.Observacion = responseViewModel.Recepcion.Observacion;
-                recepcion.FechaRecepcion = DateTime.Now;
-                recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
-                recepcion.EsRecepcion = responseViewModel.Recepcion.EsRecepcion;
 
-                _contenedorTrabajo.Recepcion.Actualizar(recepcion);
+                var recepcion = _contenedorTrabajo.Recepcion.GetAll(recepcion => recepcion.RecepcionId == responseViewModel.Recepcion.RecepcionId).FirstOrDefault();
+                if (recepcion != null)
+                {
+                    recepcion.Observacion = responseViewModel.Recepcion.Observacion;
+                    recepcion.FechaRecepcion = DateTime.Now;
+                    recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
+                    recepcion.EsRecepcion = responseViewModel.Recepcion.EsRecepcion;
+
+                    _contenedorTrabajo.Recepcion.Actualizar(recepcion);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                errorLog.RegistrarError(ex.Message, nameof(RecepcionController));
             }
 
             return RedirectToAction(nameof(Index));
@@ -64,15 +76,22 @@ namespace RentiSI.Areas.Coordinador.Controllers
         [HttpPost]
         public IActionResult Create(ResponseViewModel responseViewModel)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                responseViewModel.Recepcion.FechaRecepcion = DateTime.Now;
-                responseViewModel.Recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
-                responseViewModel.Recepcion.Id_Tramite = responseViewModel.Tramite.Id;
-                _contenedorTrabajo.Recepcion.Add(responseViewModel.Recepcion);
-                _contenedorTrabajo.Save();
-            }
+                if (!ModelState.IsValid)
+                {
+                    responseViewModel.Recepcion.FechaRecepcion = DateTime.Now;
+                    responseViewModel.Recepcion.IdUsuarioRecepcion = _userManager.GetUserId(User);
+                    responseViewModel.Recepcion.Id_Tramite = responseViewModel.Tramite.Id;
+                    _contenedorTrabajo.Recepcion.Add(responseViewModel.Recepcion);
+                    _contenedorTrabajo.Save();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                errorLog.RegistrarError(ex.Message, nameof(RecepcionController));
+            }
 
             return RedirectToAction(nameof(Index));
 
@@ -86,7 +105,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
             {
                 ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
                 Tramite = tramite,
-                FechaAsignacion  = tramite.FechaCreacion.Value.ToString("dd-MM-yyyy")
+                FechaAsignacion = tramite.FechaCreacion.Value.ToString("dd-MM-yyyy")
             };
 
             return View(responseViewModel);
