@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
+using RentiSI.Utilidades;
 using System.Security.Claims;
 
 namespace RentiSI.Areas.Operativo.Controllers
@@ -14,6 +14,8 @@ namespace RentiSI.Areas.Operativo.Controllers
         private readonly IContenedorTrabajo _contenedorTrabajo;
 
         private readonly UserManager<ApplicationUser> _userManager;
+
+        private ErrorLog errorLog = new ErrorLog();
 
         public RevisionController(IContenedorTrabajo contenedorTrabajo, UserManager<ApplicationUser> userManager)
         {
@@ -47,32 +49,40 @@ namespace RentiSI.Areas.Operativo.Controllers
                                                      .ToArray();
                 revisiones.Impronta = _contenedorTrabajo.GestionImpronta.GetAll(impronta => impronta.Id_Tramite == revisiones.Tramite.Id).FirstOrDefault();
             }
+
             return View(revisiones);
         }
 
         [HttpPost]
         public IActionResult Update(ResponseViewModel responseViewModel)
         {
-
-            var revision = _contenedorTrabajo.Revision.GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).FirstOrDefault();
-            if (revision != null)
+            try
             {
-                revision.FechaRevision = DateTime.Now;
-                revision.EsRevision = responseViewModel.Revision.EsRevision;
-                revision.Observacion = responseViewModel.Revision.Observacion;
-                revision.IdUsuarioRevision = _userManager.GetUserId(User);
-                revision.TipificacionTramiteRevision = responseViewModel.Revision.TipificacionTramiteRevision;
-                revision.NumeroGuia = responseViewModel.Revision.NumeroGuia;
 
-                InsertarRevisionCasuistica(responseViewModel);
-
-                if(revision.EsReasignacion)
+                var revision = _contenedorTrabajo.Revision.GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).FirstOrDefault();
+                if (revision != null)
                 {
-                    _contenedorTrabajo.GestionTramite.ActualizarEsRevision(revision.Id_Tramite);
+                    revision.FechaRevision = DateTime.Now;
+                    revision.EsRevision = responseViewModel.Revision.EsRevision;
+                    revision.Observacion = responseViewModel.Revision.Observacion;
+                    revision.IdUsuarioRevision = _userManager.GetUserId(User);
+                    revision.TipificacionTramiteRevision = responseViewModel.Revision.TipificacionTramiteRevision;
+                    revision.NumeroGuia = responseViewModel.Revision.NumeroGuia;
+
+                    InsertarRevisionCasuistica(responseViewModel);
+
+                    if (revision.EsReasignacion)
+                    {
+                        _contenedorTrabajo.GestionTramite.ActualizarEsRevision(revision.Id_Tramite);
+                    }
+
+                    _contenedorTrabajo.Revision.Actualizar(revision);
+
                 }
-
-                _contenedorTrabajo.Revision.Actualizar(revision);
-
+            }
+            catch (Exception ex)
+            {
+                errorLog.RegistrarError(ex.Message, nameof(RevisionController));
             }
 
             return RedirectToAction(nameof(Index));
@@ -82,31 +92,37 @@ namespace RentiSI.Areas.Operativo.Controllers
 
         private void InsertarRevisionCasuistica(ResponseViewModel responseViewModel)
         {
-
-            if (responseViewModel.Revision.RevisionId != 0)
+            try
             {
-                var revisionCasuistica = _contenedorTrabajo.RevisionCasuistica.
-                                           GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).ToArray();
-
-                if (revisionCasuistica.Any())
+                if (responseViewModel.Revision.RevisionId != 0)
                 {
-                    //Se remueven antes de actualizarlos
-                    _contenedorTrabajo.RevisionCasuistica.RemoveRange(revisionCasuistica);
-                    _contenedorTrabajo.Save();
+                    var revisionCasuistica = _contenedorTrabajo.RevisionCasuistica.
+                                               GetAll(revision => revision.RevisionId == responseViewModel.Revision.RevisionId).ToArray();
+
+                    if (revisionCasuistica.Any())
+                    {
+                        //Se remueven antes de actualizarlos
+                        _contenedorTrabajo.RevisionCasuistica.RemoveRange(revisionCasuistica);
+                        _contenedorTrabajo.Save();
+                    }
+                }
+
+                if (responseViewModel.SelectedCasuisticasIds != null)
+                {
+                    foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
+                    {
+                        _contenedorTrabajo.RevisionCasuistica.Add(new RevisionCasuistica()
+                        {
+                            RevisionId = responseViewModel.Revision.RevisionId,
+                            CasuisticaId = casuisticaId
+                        });
+                        _contenedorTrabajo.Save();
+                    }
                 }
             }
-
-            if (responseViewModel.SelectedCasuisticasIds != null)
+            catch (Exception ex)
             {
-                foreach (var casuisticaId in responseViewModel.SelectedCasuisticasIds)
-                {
-                    _contenedorTrabajo.RevisionCasuistica.Add(new RevisionCasuistica()
-                    {
-                        RevisionId = responseViewModel.Revision.RevisionId,
-                        CasuisticaId = casuisticaId
-                    });
-                    _contenedorTrabajo.Save();
-                }
+                errorLog.RegistrarError(ex.Message, nameof(RevisionController));
             }
         }
 
@@ -121,5 +137,5 @@ namespace RentiSI.Areas.Operativo.Controllers
 
     }
 
-  
+
 }

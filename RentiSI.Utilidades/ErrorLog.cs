@@ -23,23 +23,24 @@ namespace RentiSI.Utilidades
             {
 
             }
-        }   
-        public void RegistrarError(string ex,string nombreArchivo)
+        }
+        public void RegistrarError(string ex, string nombreArchivo)
         {
             try
             {
                 CrearDirectorio();
+
                 // Obtener la fecha y hora actual
                 string fechaHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 // Construir el mensaje de registro con la fecha, hora y detalles del error
                 string mensajeLog = $"\n[{fechaHora}] Error: {ex}";
 
-                string Archivo = nombreArchivo+"."+DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                string Archivo = nombreArchivo + "." + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
 
                 // Crear el archivo en el directorio predeterminado
-                string fullPath=Path.Combine(rutaArchivoLog, Archivo);
-                if(!File.Exists(fullPath))
+                string fullPath = Path.Combine(rutaArchivoLog, Archivo);
+                if (!File.Exists(fullPath))
                 {
                     using (FileStream fs = File.Create(fullPath))
                     {
@@ -52,7 +53,7 @@ namespace RentiSI.Utilidades
             }
             catch (Exception)
             {
-             
+
             }
         }
     }
