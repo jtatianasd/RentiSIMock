@@ -60,6 +60,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
                     if(!EsTramiteFinalizado(responseViewModel))
                     {
                         gestionTramite.EsReasignacion = true;
+                        _contenedorTrabajo.Reasignacion.ActualizarReasignacion(gestionTramite.Id_Tramite);
                     }
                    
                     gestionTramite.IdUsuarioGestion = _userManager.GetUserId(User);

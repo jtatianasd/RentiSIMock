@@ -48,19 +48,28 @@ namespace RentiSI.Areas.Coordinador.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    reasignacionVM.Reasignacion.EsReasignado = true;
-                    reasignacionVM.Reasignacion.FechaReasignacion = DateTime.Now;
-                    reasignacionVM.Reasignacion.Id_Tramite = reasignacionVM.Tramite.Id;
-                    reasignacionVM.Reasignacion.IdUsuarioReasignacion = _userManager.GetUserId(User);
-                    _contenedorTrabajo.Reasignacion.Add(reasignacionVM.Reasignacion);
-
+                    var gestionTramite = _contenedorTrabajo.Reasignacion.GetAll(reasignacion => reasignacion.Id_Tramite == reasignacionVM.Tramite.Id).FirstOrDefault();
+                    if(gestionTramite == null)
+                    {
+                        reasignacionVM.Reasignacion.EsReasignado = true;
+                        reasignacionVM.Reasignacion.FechaReasignacion = DateTime.Now;
+                        reasignacionVM.Reasignacion.Id_Tramite = reasignacionVM.Tramite.Id;
+                        reasignacionVM.Reasignacion.IdUsuarioReasignacion = _userManager.GetUserId(User);
+                        _contenedorTrabajo.Reasignacion.Add(reasignacionVM.Reasignacion);
+                    }
+                    else
+                    {
+                        gestionTramite.EsReasignado = true;
+                        _contenedorTrabajo.Reasignacion.Actualizar(gestionTramite);
+                    }
+                                    
 
                     //Actualizar organismo tránsito
                     _contenedorTrabajo.Asignacion.ActualizarOrganismoTransito(reasignacionVM.Tramite);
 
 
                     //Actualizar usuario revisión
-                    _contenedorTrabajo.Revision.ActualizarUsuarioRevision(reasignacionVM.Tramite.Id, reasignacionVM.Gestion.IdUsuarioGestion);
+                    _contenedorTrabajo.Revision.ActualizarUsuarioRevision(reasignacionVM.Tramite.Id, reasignacionVM.Revision.IdUsuarioRevision);
 
 
                     _contenedorTrabajo.Save();
@@ -94,6 +103,7 @@ namespace RentiSI.Areas.Coordinador.Controllers
             {
                 ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
                 Gestion = _contenedorTrabajo.GestionTramite.GetAll(gestion => gestion.Id_Tramite == TramiteId).FirstOrDefault(),
+                Revision = _contenedorTrabajo.Revision.GetAll(gestion => gestion.Id_Tramite == TramiteId).FirstOrDefault(),
                 ListaUsuarios = new UsariosRoles(_userManager).ObtenerUsuariosPorRol("Operativo"),
                 Tramite = _contenedorTrabajo.Tramite.Get(TramiteId)
             };

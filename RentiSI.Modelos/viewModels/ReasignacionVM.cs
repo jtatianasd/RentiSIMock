@@ -13,6 +13,7 @@ namespace RentiSI.Modelos.viewModels
         public Gestion? Gestion { get; set; }
         public TipoDetalleEstado? DetalleEstado { get; set; }
 
+        public Revision? Revision { get; set; }
         public Reasignacion? Reasignacion { get; set; }
         public IEnumerable<SelectListItem>? ListaUsuarios { get; set; }
         public IEnumerable<SelectListItem>? ListaDetalleEstado { get; set; }

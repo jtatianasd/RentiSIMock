@@ -12,6 +12,9 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
     {
         IEnumerable<ReasignacionVM> ObtenerReasignaciones();
         IEnumerable<ReasignacionVM> ObtenerReasignacionesPorId(int? id);
-        void Actualizar(ReasignacionVM reasignacion);
+
+        void Actualizar(Reasignacion reasignacion);
+
+        void ActualizarReasignacion(int? tramiteId);
     }
 }

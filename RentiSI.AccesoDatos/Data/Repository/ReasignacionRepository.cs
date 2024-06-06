@@ -29,7 +29,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
                          join usuarios in _db.ApplicationUser
                          on gestion.IdUsuarioGestion equals usuarios.Id into usuariosLeftJoin
                          from gestionUsuarios in usuariosLeftJoin.DefaultIfEmpty()
-                         where gestion.EsGestionTramite == false && gestion.EsReasignacion == true && reasignacionTramite.EsReasignado == null
+                         where gestion.EsGestionTramite == false && gestion.EsReasignacion == true && (reasignacionTramite.EsReasignado == null || reasignacionTramite.EsReasignado == false)
                          select new ReasignacionVM
                          {
                              Tramite = tramite,
@@ -43,22 +43,39 @@ namespace RentiSI.AccesoDatos.Data.Repository
 
             return result.ToList();
         }
+
         public IEnumerable<ReasignacionVM> ObtenerReasignacionesPorId(int? id)
         {
             var result = from tramite in _db.Tramite
                          join gestion in _db.Gestion
                          on tramite.Id equals gestion.Id_Tramite
+                         join revision in _db.Revision
+                         on tramite.Id equals revision.Id_Tramite
                          where gestion.GestionId == id
                          select new ReasignacionVM
                          {
                              Tramite = tramite,
-                             Gestion = gestion
+                             Gestion = gestion,
+                             Revision = revision,
                          };
             return result.ToList();
         }
+
         //Actaulizar provisional
-        public void Actualizar(ReasignacionVM reasignacion)
+        public void Actualizar(Reasignacion reasignacion)
         {
+            _db.SaveChanges();
+        }  
+        
+        public void ActualizarReasignacion(int? tramiteId)
+        {
+            var objReasignacion = _db.Reasignacion.FirstOrDefault(s => s.Id_Tramite == tramiteId);
+            if(objReasignacion == null)
+            {
+                return;
+            }
+
+            objReasignacion.EsReasignado = false;
             _db.SaveChanges();
         }   
     }

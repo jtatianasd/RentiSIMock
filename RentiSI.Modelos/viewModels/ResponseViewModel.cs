@@ -15,6 +15,8 @@ namespace RentiSI.Modelos.viewModels
         public RevisionCasuistica? RevisionCasuistica { get; set; }
         public Impronta? Impronta { get; set; }
         public Gestion? GestionTramite { get; set; }
+
+        public Reasignacion? Reasignacion { get; set; }
         public TipoDetalleEstado? DetalleEstado { get; set; }
         public string? FechaImpronta { get; set; }
         public string? NombreCasuisticas { get; set; }
