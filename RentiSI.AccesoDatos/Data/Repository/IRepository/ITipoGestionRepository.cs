@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentiSI.AccesoDatos.Data.Repository.IRepository
 {
-    public interface ITipoTramiteRepository : IRepository<TipoTramite>
+    public interface ITipoGestionRepository : IRepository<TipoGestion>
     {
-        IEnumerable<SelectListItem> GetListaTipoTramite();
     }
 }

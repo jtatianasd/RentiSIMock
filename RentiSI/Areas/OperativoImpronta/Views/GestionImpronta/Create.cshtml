@@ -16,13 +16,14 @@
             <input type="hidden" asp-for="Tramite.Id" />
             <input type="hidden" asp-for="Tramite.FechaNegocio" />    
             <input type="hidden" asp-for="Tramite.OrganismoDeTransitoId" />
+            <input type="hidden" asp-for="Tramite.NumeroPlaca" value="Tramite.NumeroPlaca" />
             <div class="col-12 offset-1 mt-4">
                 <div class="form-group row">
                     <div class="col-3">
                         <label class="fw-bold">Número de placa</label>
                     </div>
                     <div class="col-6">
-                        <input asp-for="Tramite.NumeroPlaca" class="form-control" readonly="true" />
+                        <label asp-for="Tramite.NumeroPlaca">Tramite.NumeroPlaca</label>
                     </div>
                 </div>
                 <br />

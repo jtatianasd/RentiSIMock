@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RentiSI.AccesoDatos.Data.Repository.IRepository;
+using RentiSI.Areas.Operativo.Controllers;
 using RentiSI.Modelos;
 using RentiSI.Modelos.viewModels;
 using RentiSI.Utilidades;
@@ -36,8 +37,9 @@ namespace RentiSI.Areas.Cliente.Controllers
                 TramiteVM tramiteVM = new TramiteVM()
                 {
                     Tramite = new Tramite(),
-                    ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
-                };
+                    ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                    ListaTipoGestion = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("TIPO_GESTION")
+            };
                 return View(tramiteVM);
             }
             catch (Exception ex)
@@ -64,6 +66,9 @@ namespace RentiSI.Areas.Cliente.Controllers
                         }
                             _contenedorTrabajo.Asignacion.Add(tramiteVM.Tramite);
                             _contenedorTrabajo.Save();
+
+                            InsertarTipoGestion(tramiteVM);
+
                             return RedirectToAction(nameof(Index));   
                     }
                     else
@@ -79,6 +84,7 @@ namespace RentiSI.Areas.Cliente.Controllers
             }
 
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+            tramiteVM.ListaTipoGestion = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("TIPO_GESTION");
             return View(tramiteVM);
         }
 
@@ -96,8 +102,12 @@ namespace RentiSI.Areas.Cliente.Controllers
                 TramiteVM tramiteVM = new TramiteVM()
                 {
                     Tramite = new Tramite(),
-                    ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito()
-                };
+                    ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito(),
+                    ListaTipoGestion = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("TIPO_GESTION"),
+                    SelectedTipoGestionIds = _contenedorTrabajo.TipoGestion.GetAll(tipoGestion => tipoGestion.TramiteId == id)
+                                                     .Select(tipoGestion => tipoGestion.TipoGestionId)
+                                                     .ToArray()
+            };
 
                 if (id != null)
                 {
@@ -126,6 +136,9 @@ namespace RentiSI.Areas.Cliente.Controllers
                     //Logica para actualizar en BD
                     _contenedorTrabajo.Asignacion.Actualizar(tramiteVM.Tramite);
                     _contenedorTrabajo.Save();
+
+                    InsertarTipoGestion(tramiteVM);
+
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -136,7 +149,44 @@ namespace RentiSI.Areas.Cliente.Controllers
             }
 
             tramiteVM.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
+            tramiteVM.ListaTipoGestion = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("TIPO_GESTION");
             return View(tramiteVM);
+        }
+
+        private void InsertarTipoGestion(TramiteVM tramiteVM)
+        {
+            try
+            {
+                if (tramiteVM.Tramite.Id != 0)
+                {
+                    var tipoRevision = _contenedorTrabajo.TipoGestion.
+                                               GetAll(tipoGestion => tipoGestion.TramiteId == tramiteVM.Tramite.Id).ToArray();
+
+                    if (tipoRevision.Any())
+                    {
+                        //Se remueven antes de actualizarlos
+                        _contenedorTrabajo.TipoGestion.RemoveRange(tipoRevision);
+                        _contenedorTrabajo.Save();
+                    }
+                }
+
+                if (tramiteVM.SelectedTipoGestionIds != null)
+                {
+                    foreach (var tipoGestionId in tramiteVM.SelectedTipoGestionIds)
+                    {
+                        _contenedorTrabajo.TipoGestion.Add(new TipoGestion()
+                        {
+                            TramiteId = tramiteVM.Tramite.Id,
+                            TipoGestionId = tipoGestionId
+                        });
+                        _contenedorTrabajo.Save();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorLog.RegistrarError(ex.Message, nameof(AsignacionesController));
+            }
         }
     }
 }

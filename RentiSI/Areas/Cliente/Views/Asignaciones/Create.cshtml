@@ -15,7 +15,7 @@
         <form method="POST" asp-action="Create" enctype="multipart/form-data">
             <div class="col-12 offset-1 mt-4">
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <label class="fw-bold">Número de placa</label>
                     </div>
                     <div class="col-8">
@@ -24,10 +24,8 @@
                     </div>
                 </div>
 
-                <br />
-
-                <div class="form-group row">
-                    <div class="col-4">
+                <div class="row mt-2 mb-2">
+                    <div class="col-3">
                         <label class="fw-bold">Financiación</label>
                     </div>
                     <div class="col-8">
@@ -38,9 +36,8 @@
                     </div>
                 </div>
 
-                <br />
-                <div class="form-group row">
-                    <div class="col-4">
+                <div class="row mt-2 mb-2">
+                    <div class="col-3">
                         <label class="fw-bold">Impronta</label>
                     </div>
                     <div class="col-8">
@@ -52,8 +49,8 @@
                 </div>
 
                 <br />
-                <div class="form-group row">
-                    <div class="col-4">
+                <div class="row mt-2 mb-2">
+                    <div class="col-3">
                         <label class="fw-bold">Fecha de Negocio</label>
                     </div>
                     <div class="col-8">
@@ -61,9 +58,9 @@
                         <span asp-validation-for="Tramite.FechaNegocio" class="text-danger"></span>
                     </div>
                 </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-4">
+
+                <div class="row mt-2 mb-2">
+                    <div class="col-3">
                         <label class="fw-bold">Organismo de Tránsito</label>
                     </div>
                     <div class="col-8">
@@ -72,10 +69,20 @@
                             <span class="text-danger">@Html.ValidationMessageFor(m => m.Tramite.OrganismoDeTransitoId)</span>
                     </div>
                 </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label class="fw-bold">Observaciones</label>
+                <div class="row mt-2 mb-2">
+                    <div class="col-3">
+                        <label class="fw-bold">Tipo Gestión</label>
+                    </div>
+                    <div class="col-8">
+
+                        @Html.ListBoxFor(x => x.SelectedTipoGestionIds, Model.ListaTipoGestion, new { @class = "form-control" })
+                        <span><label class="text-warning"><i class="fa-solid fa-circle-info"></i>Para seleccionar multiples registros, presione la tecla ctrl y posteriormente seleccione el tipo gestión</label></span>
+                        <div class="text-danger">@Html.ValidationMessageFor(m => m.SelectedTipoGestionIds)</div>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-3">
+                        <label class="fw-bold">Observación</label>
                     </div>
                     <div class="col-8">
                         <textarea asp-for="Tramite.Observaciones" class="form-control" id="Observaciones" rows="3"></textarea>
@@ -83,7 +90,7 @@
                     </div>
                 </div>
 
-                <div class="form-group-row mt-4">
+                <div class="form-group-row mt-3">
                     <div class="col-8 text-center">
                         <partial name="_VistaCrearVolver" model="ParametrosBotones" />
                     </div>

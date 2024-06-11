@@ -50,7 +50,7 @@
                         @if (User.IsInRole(CNT.OperativoImpronta) || User.IsInRole(CNT.Administrador))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="OperativoImpronta" asp-controller="GestionImpronta" asp-action="Index">Gestion de Improntas</a>
+                                <a class="nav-link text-dark" asp-area="OperativoImpronta" asp-controller="GestionImpronta" asp-action="Index">Gestión Improntas</a>
                             </li>
                         }
                         @if (User.IsInRole(CNT.Operativo) || User.IsInRole(CNT.Administrador))
@@ -62,7 +62,7 @@
                         @if (User.IsInRole(CNT.Coordinador) || User.IsInRole(CNT.Administrador))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Coordinador" asp-controller="GestionTramite" asp-action="Index">Gestión de Tramites</a>
+                                <a class="nav-link text-dark" asp-area="Coordinador" asp-controller="GestionTramite" asp-action="Index">Gestión Trámites</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Coordinador" asp-controller="Reasignacion" asp-action="Index">Reasignación</a>

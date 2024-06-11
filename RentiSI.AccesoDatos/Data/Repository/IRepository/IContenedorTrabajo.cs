@@ -17,12 +17,14 @@ namespace RentiSI.AccesoDatos.Data.Repository.IRepository
         IGestionImprontaRepository GestionImpronta { get; }
         ITipoCasuisticaRepository TipoCasuistica { get; }
         ITramiteCasuisticaRepository TramiteCasuistica { get; }
-        ITipoTramiteRepository TipoTramite { get; }
+        ITipoGestionRepository TipoTramite { get; }
         IRevisionCasuisticaRepository RevisionCasuistica { get; }
         IGestionCasuisticaRepository GestionCasuistica { get; }
         IGestionTramiteRepository GestionTramite { get; }
         ITipoRechazoRepository TipoRechazo { get; }
         IReasignacionRepository Reasignacion { get; }
+
+        ITipoGestionRepository TipoGestion { get; }
         void Save();
     }
 }

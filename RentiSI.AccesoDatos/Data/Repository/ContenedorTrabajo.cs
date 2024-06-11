@@ -23,12 +23,13 @@ namespace RentiSI.AccesoDatos.Data.Repository
             GestionImpronta = new GestionImprontaRepository(_db);
             TipoCasuistica = new TipoCasuisticaRepository(_db);
             TramiteCasuistica = new TramiteCasuisticaRepository(_db);
-            TipoTramite = new TipoTramiteRepository(_db);
+            TipoTramite = new TipoGestionRepository(_db);
             RevisionCasuistica = new RevisionCasuisticaRepository(_db);
             GestionTramite = new GestionTramiteRepository(_db);
             TipoRechazo = new TipoRechazoRepository(_db);
             GestionCasuistica = new GestionCasuisticaRepository(_db);
             Reasignacion = new ReasignacionRepository(_db);
+            TipoGestion = new TipoGestionRepository(_db);
 
         }
         public IUsuarioRepository Usuario { get; private set; }
@@ -40,13 +41,16 @@ namespace RentiSI.AccesoDatos.Data.Repository
         public IGestionImprontaRepository GestionImpronta { get; private set; }
         public ITipoCasuisticaRepository TipoCasuistica { get; private set; }
         public ITramiteCasuisticaRepository TramiteCasuistica { get; private set; }
-        public ITipoTramiteRepository TipoTramite { get; private set; }
+        public ITipoGestionRepository TipoTramite { get; private set; }
         public IRevisionCasuisticaRepository RevisionCasuistica { get; private set; }
         public IGestionCasuisticaRepository GestionCasuistica { get; private set; }
         public IGestionTramiteRepository GestionTramite { get; private set; }
         public ITipoRechazoRepository TipoRechazo { get; private set; }
         public IReasignacionRepository Reasignacion { get; private set; }
-        public void Dispose()
+
+        public ITipoGestionRepository TipoGestion { get; private set; }
+
+    public void Dispose()
         {
             _db.Dispose();
         }

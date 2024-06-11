@@ -4,6 +4,14 @@ $(document).ready(function () {
     cargarDatatable();
 });
 
+function FormatoFecha(dateString) {
+    var fecha = new Date(dateString);
+    var day = ("0" + fecha.getDate()).slice(-2);
+    var month = ("0" + (fecha.getMonth() + 1)).slice(-2);
+    var year = fecha.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
 
 function cargarDatatable() {
     dataTable = $("#tblAsignaciones").DataTable({
@@ -16,12 +24,11 @@ function cargarDatatable() {
             { "data": "numeroPlaca", "width": "15%" },
             {
                 "data": "fechaCreacion", "width": "10%", render: function (data) {
-                    var fecha = new Date(data);
-                    return fecha.toLocaleDateString('es-ES');
+                    return data ? FormatoFecha(data) : '';
                 }
             },
             {
-                "data": "financiacion", "width": "5%", "render": function (data) {
+                "data": "financiacion", "width": "10%", "render": function (data) {
                     if (data) {
                         return "Sí";
                     } else {
@@ -30,7 +37,7 @@ function cargarDatatable() {
                 }
             },
             {
-                "data": "impronta", "width": "5%", "render": function (data) {
+                "data": "impronta", "width": "10%", "render": function (data) {
                     if (data) {
                         return "Sí";
                     } else {
@@ -40,8 +47,7 @@ function cargarDatatable() {
             },
             {
                 "data": "fechaNegocio", "width": "10%", render: function (data) {
-                    var fecha = new Date(data);
-                    return fecha.toLocaleDateString('es-ES');
+                    return data ? FormatoFecha(data) : '';
                 }
             },
             { "data": "organismosDeTransito.municipio", "width": "15%" },

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentiSI.AccesoDatos;
 
@@ -11,9 +12,11 @@ using RentiSI.AccesoDatos;
 namespace RentiSI.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240610173507_ModificarEntidadTipogestion")]
+    partial class ModificarEntidadTipogestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -495,15 +498,15 @@ namespace RentiSI.AccesoDatos.Migrations
 
             modelBuilder.Entity("RentiSI.Modelos.TipoGestion", b =>
                 {
-                    b.Property<int>("TramiteId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TipoGestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("TramiteId", "TipoGestionId");
+                    b.Property<int>("TramiteId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("TipoGestionId");
+                    b.HasKey("TipoGestionId");
+
+                    b.HasIndex("TramiteId");
 
                     b.ToTable("TipoTramite");
                 });
@@ -757,7 +760,7 @@ namespace RentiSI.AccesoDatos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RentiSI.Modelos.Tramite", "Tramite")
+                    b.HasOne("RentiSI.Modelos.TipoGestion", "TipoGestionTramite")
                         .WithMany()
                         .HasForeignKey("TramiteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -765,7 +768,7 @@ namespace RentiSI.AccesoDatos.Migrations
 
                     b.Navigation("TipoCasuistica");
 
-                    b.Navigation("Tramite");
+                    b.Navigation("TipoGestionTramite");
                 });
 
             modelBuilder.Entity("RentiSI.Modelos.Tramite", b =>

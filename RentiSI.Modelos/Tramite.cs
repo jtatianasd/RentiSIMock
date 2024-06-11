@@ -12,16 +12,16 @@ namespace RentiSI.Modelos
     {
         [Key]
         public int Id { get; set; }
-        [Display(Name = "Fecha de Creación")]
+        [Display(Name = "Fecha de creación")]
         public DateTime? FechaCreacion { get; set; }
-        [Required(ErrorMessage = "El numero de placa es requerido")]
+        [Required(ErrorMessage = "El número de placa es requerido")]
         public string NumeroPlaca { get; set; }
         public bool Financiacion { get; set; }
         public bool Impronta { get; set; }
         public DateTime? FechaNegocio { get; set; }
         public string? Observaciones { get; set; }
         [Display(Name = "Organismo de Transito Id")]
-        [Required(ErrorMessage = "El campo Organismo De Transito es requerido")]
+        [Required(ErrorMessage = "El campo organismo de tránsito es requerido")]
         public int? OrganismoDeTransitoId { get; set; }
         [ForeignKey("OrganismoDeTransitoId")]
         public OrganismosDeTransito? OrganismosDeTransito { get; set; }

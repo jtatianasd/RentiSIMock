@@ -19,6 +19,14 @@ $(document).ready(function () {
     });
 });
 
+function FormatoFecha(dateString) {
+    var fecha = new Date(dateString);
+    var day = ("0" + fecha.getDate()).slice(-2);
+    var month = ("0" + (fecha.getMonth() + 1)).slice(-2);
+    var year = fecha.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
 
 function cargarDatatable() {
     dataTable = $("#tblGestionImpronta").DataTable({
@@ -34,8 +42,7 @@ function cargarDatatable() {
             { "data": "nombreCasuisticas", "width": "20%" },
             {
                 "data": "recepcion.fechaRecepcion", "width": "5%", render: function (data) {
-                    var fecha = new Date(data);
-                    return fecha.toLocaleDateString('es-ES');
+                    return data ? FormatoFecha(data) : '';
                 }
             },
             {

@@ -41,7 +41,6 @@ namespace RentiSI.Areas.Operativo.Controllers
             var revisiones = _contenedorTrabajo.Revision.ObtenerRevisionesPorId(revisionId);
             if (revisiones != null)
             {
-                revisiones.ListaTipoTramite = _contenedorTrabajo.TipoTramite.GetListaTipoTramite();
                 revisiones.ListaOrganismosTransito = _contenedorTrabajo.OrganismoTransito.GetListaOrganismosTransito();
                 revisiones.ListaCasuisticas = _contenedorTrabajo.TipoCasuistica.GetListaTipoCasuisticaPorModulo("REVISION_GESTION_TRAMITES");
                 revisiones.SelectedCasuisticasIds = _contenedorTrabajo.RevisionCasuistica.GetAll(revision => revision.RevisionId == revisionId)
