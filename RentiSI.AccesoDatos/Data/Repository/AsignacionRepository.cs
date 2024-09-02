@@ -40,7 +40,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
         {
             string Error = "";
 
-            if (Regex.IsMatch(placa, @"^[A-Za-z]{3}-\d{3}$"))
+            if (Regex.IsMatch(placa, @"^[A-Za-z]{3}\d{3}$"))
             {
                 Error = "";
             }
@@ -54,7 +54,7 @@ namespace RentiSI.AccesoDatos.Data.Repository
             }
             else
             {
-                Error = "Placa no válida, los formatos admitidos son: ABC-123 o S12345 o R12345";
+                Error = "Placa no válida, los formatos admitidos son: ABC123 o S12345 o R12345";
             }
             return Error;
         }
